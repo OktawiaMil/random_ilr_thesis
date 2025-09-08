@@ -4,8 +4,8 @@ library(dplyr)
 
 #' Create dataset for analysis from raw taxa and task data (from ML Repo)
 #'
-#' @param taxa_table
-#' @param task_table
+#' @param taxa_table Data frame with predictors (X)
+#' @param task_table Data frame with outcome
 #'
 #' @return Data frame, each row corresponds to one subject, each column
 #'   corresponds to one "organism" (no grouping to one taxonomic level)
@@ -27,9 +27,11 @@ prep_taxa_data <- function(taxa_table, task_table) {
       task_table |>
         rename(sample_id = `#SampleID`)
     )
+  return(task_merged)
 }
 
-#' Function that adds specified pseudo-count to the data and converts it into proportions
+#' Function that adds specified pseudo-count to the data
+#' and converts it into proportions
 pseudo_count_proportion <- function(data, pseudo_count = 1 / 2) {
   if (!is.numeric(pseudo_count)) {
     stop("Argument `pseudo_count` must be numeric.")

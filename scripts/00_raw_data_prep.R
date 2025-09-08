@@ -1,4 +1,5 @@
-# The purpose of this script is to prepare all datasets for the supervised part of the analysis
+# The purpose of this script is to prepare all datasets for
+# the supervised part of the analysis
 
 # Libraries
 library(here)
@@ -23,7 +24,8 @@ if (!dir.exists(directory_preproc)) {
 }
 
 # Assign correct name to each file
-# If a file has in its name "taxatable" - this dataset has only predictors - name it with _x
+# If a file has in its name "taxatable" - this dataset has only predictors
+# ==> name it with _x
 name_from_file <- function(f) {
   m <- stringr::str_match(basename(f), "^task(\\d+)_(taxatable|task)")
   paste0("task", m[, 2], ifelse(m[, 3] == "taxatable", "_x", "_y"))
@@ -99,7 +101,8 @@ process_task <- function(id, drop_extra = character(), fix_otu = FALSE) {
   )
 }
 
-# ControlVar present in tasks 3, 5, 6, 7 - remove them when forming predictors set
+# ControlVar present in tasks 3, 5, 6, 7
+# ==> remove them when forming predictors set
 tasks_with_controlvar <- c(3, 5, 6, 7)
 
 # OTU ID fix needed in these tasks
