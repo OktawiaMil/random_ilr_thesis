@@ -4,6 +4,55 @@ library(glmnet)
 library(dplyr)
 library(tibble)
 
+#' Grouped + stratified train/test split
+#'
+#' Splits a dataset into training and test sets using stratification on an
+#' outcome column and, when provided, grouping by an ID column so that all
+#' rows for the same subject/ID remain in the same split. The ID column is
+#' removed from the outputs and the outcome column is renamed to `outcome`.
+#'
+#' @param df Data frame to split into train/test.
+#' @param id_col Character or NULL; name of the ID column to group by. If
+#'   `NULL`, grouping is not applied.
+#' @param outcome_name Character; name of the outcome column used for
+#'   stratification.
+#' @param prop Numeric in (0, 1); proportion of data assigned to the training
+#'   set. Defaults to 0.8.
+#' @param seed Integer or NULL; random seed for reproducibility.
+#'
+#' @return A list with elements `train` and `test`, each a data frame where
+#'   `outcome_name` has been renamed to `outcome` and, when `id_col` is
+#'   provided, the ID column has been removed.
+#'
+#' @examples NULL
+split_grouped_stratified <- function(
+  df,
+  id_col,
+  outcome_name,
+  prop = 0.8,
+  seed = NULL
+) {
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
+  split <- group_initial_split(
+    df,
+    group = !!sym(id_col),
+    strata = !!sym(outcome_name),
+    prop = prop
+  )
+
+  train <- training(split) |>
+    select(-all_of(id_col)) |>
+    rename(outcome = all_of(outcome_name))
+
+  test <- testing(split) |>
+    select(-all_of(id_col)) |>
+    rename(outcome = all_of(outcome_name))
+
+  list(train = train, test = test)
+}
+
 #' Train and evaluate a classification model
 #'
 #' Fits one of: LASSO (glmnet), Random Forest (ranger via parsnip), or
@@ -22,16 +71,10 @@ library(tibble)
 #'  `metric_set(accuracy, roc_auc, brier_class)`.
 #' @param cv_nfolds Integer; number of CV folds for `cv.glmnet`.
 #' @return A list with:
-#'   - `perf_metrics`: tibble with metrics as specified by `my_metrics`,
+#'   - `perf_metrics`: tibble with metrics obtained on test data as
+#'  specified by `my_metrics`,
 #'   - `roc_curve`: tibble with ROC curve.
-#'
-#' @details
-#' The function enforces a consistent positive-class convention: the
-#' positive class is the second factor level of `outcome`. For LASSO,
-#' the target is encoded as 0/1 with 1 = positive. For RF/XGBoost, the
-#' predicted probability of the positive class is extracted from
-#' `.pred_<positive>` and used for ROC/AUC and Brier.
-#'
+#' @example NULL
 #' @export
 train_evaluate_one <- function(
   train_data,
