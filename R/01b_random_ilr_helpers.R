@@ -82,3 +82,85 @@ aug_dataset_randomilr <- function(
   res <- list(train_data = train, test_data = test)
   return(res)
 }
+
+# For aug_in_p: keep first K predictors (columns) consistently for train/test
+# df - augmented dataset
+# k - number of columns to select from df
+# outcome_col - name of the column with the outcome variable
+select_first_k_predictors <- function(df, k, outcome_col = "outcome") {
+  predictors <- setdiff(names(df), outcome_col)
+  k <- max(1L, min(length(predictors), as.integer(k)))
+  keep <- c(predictors[seq_len(k)], outcome_col)
+  df[, keep, drop = FALSE]
+}
+
+# Stratified sampling by outcome to a target size
+# Function used to sample train and test datasets fro aug factors < max_factor
+# df - augmented dataset
+# target_n - target number of rows to select from df
+# outcome_col - name of the column with the outcome variable
+# seed - numeric, used to set seed to make the rows sampling reproducible
+stratified_sample_n <- function(
+  df,
+  target_n,
+  outcome_col = "outcome",
+  seed = NULL
+) {
+  n <- nrow(df)
+  if (is.null(target_n) || target_n >= n) {
+    return(df)
+  }
+  target_n <- max(1L, as.integer(target_n))
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
+
+  # Class counts and proportions
+  cls <- df[[outcome_col]]
+  if (!is.factor(cls)) {
+    cls <- factor(cls)
+  }
+  tab <- table(cls)
+  props <- as.numeric(tab) / sum(tab)
+  levels_vec <- names(tab)
+
+  # Allocate per class with rounding that preserves total
+  raw_targets <- props * target_n
+  # Round to integer
+  base_targets <- floor(raw_targets)
+  # How many samples we still need to hit the goal
+  remainder <- target_n - sum(base_targets)
+  if (remainder > 0) {
+    # Check in which level after rounding down the diff
+    # bewteen the number of integer samples and panned samples is the biggest
+    frac <- raw_targets - base_targets
+    ord <- order(frac, decreasing = TRUE)
+    # Give +1 to the top remainder classes:
+    base_targets[ord[seq_len(remainder)]] <- base_targets[ord[seq_len(
+      remainder
+    )]] +
+      1L
+  }
+
+  # Sample within each class
+  out_list <- vector("list", length(levels_vec))
+  names(out_list) <- levels_vec
+  for (i in seq_along(levels_vec)) {
+    lev <- levels_vec[i]
+    # Target sample size for the analysed class
+    target_i <- base_targets[i]
+    # Get rows of df that are in considered class (level)
+    grp <- df[df[[outcome_col]] == lev, , drop = FALSE]
+    k <- min(nrow(grp), target_i)
+    if (k <= 0) {
+      out_list[[i]] <- grp[0, , drop = FALSE]
+    } else if (k >= nrow(grp)) {
+      out_list[[i]] <- grp
+    } else {
+      idx <- sample.int(nrow(grp), size = k, replace = FALSE)
+      out_list[[i]] <- grp[idx, , drop = FALSE]
+    }
+  }
+
+  bind_rows(out_list)
+}
