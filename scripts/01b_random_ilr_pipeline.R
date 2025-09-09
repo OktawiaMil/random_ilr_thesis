@@ -1,9 +1,9 @@
-## Modified random ILR pipeline
+## Random ILR pipeline
 ## - Builds augmented data for max_factor
 ## - Trains all models (lasso, random_forest, xgboost)
 ## - Iteratively reduces augmentation to factors: (max_factor-1) : 2
-## - For aug_in_n: stratified row downsampling
-## - For aug_in_p: deterministic column subset per factor
+## - For aug_in_n: row downsampling
+## - For aug_in_p: column subset per factor
 ## - Saves results in out_dir
 
 ## Libraries
@@ -16,7 +16,7 @@ suppressPackageStartupMessages({
   library(compositions)
 })
 
-## Robust sourcing of helpers from R/
+## Robust sourcing of helpers from R/ folder
 script_args <- commandArgs(trailingOnly = FALSE)
 script_path <- normalizePath(sub(
   "--file=",
@@ -90,9 +90,9 @@ df_x <- read.csv(file_x)
 df_y <- read.csv(file_y) |>
   mutate(Var = as.factor(Var))
 
-## Build augmented dataset at max_factor ----
+## Build augmented dataset at max_factor (no split) ----
 set.seed(split_seed)
-aug_data <- aug_dataset_randomilr(
+aug_full <- build_augmented_randomilr_full(
   x_data = df_x,
   y_data = df_y,
   multiplier = max_factor,
@@ -104,8 +104,16 @@ aug_data <- aug_dataset_randomilr(
   density = skew_sym_density_num
 )
 
-train_full <- aug_data$train_data
-test_full <- aug_data$test_data
+## Create grouped+stratified split for max_factor ----
+split_max <- split_grouped_stratified(
+  df = aug_full,
+  id_col = "sample_id",
+  outcome_name = "Var",
+  prop = 0.8,
+  seed = split_seed
+)
+train_full <- split_max$train
+test_full <- split_max$test
 
 ## Model configs ----
 model_seed_val <- 2025
@@ -196,44 +204,46 @@ save_results <- function(train_df, test_df, aug_factor_now) {
 save_results(train_full, test_full, aug_factor_now = max_factor)
 
 ## Iteratively reduce augmentation factor from  max_factor-1 to 2 ----
-# Below loop creates augmented datasets fro auf.factors (max_factor-1):2
-# Fits 3 considered models and saves the obtained results
+# Below loop creates augmented datasets for aug_factors: (max_factor-1):2
+# For aug_in_n: keep the first n * f rows of aug_full (nested transforms)
+# For aug_in_p: keep the first K predictors consistently across splits
 for (f in seq(from = max_factor - 1, to = 2, by = -1)) {
   if (aug_strategy == "aug_in_n") {
-    # Stratified row downsampling within each split
-    # Compute target number of rows in train and test data:
-    train_target <- floor(nrow(train_full) * f / max_factor)
-    test_target <- floor(nrow(test_full) * f / max_factor)
-    # Sample train dataset for augmentation factor f:
-    train_f <- stratified_sample_n(
-      train_full,
-      train_target,
-      outcome_col = "outcome",
-      seed = split_seed + f
+    # Nested rows: take first n0 * f rows from the max dataset
+    n0 <- nrow(df_y)
+    take_n <- n0 * f
+    aug_f <- aug_full[seq_len(take_n), , drop = FALSE]
+    # Split grouped+stratified for this factor
+    split_f <- split_grouped_stratified(
+      df = aug_f,
+      id_col = "sample_id",
+      outcome_name = "Var",
+      prop = 0.8,
+      seed = split_seed
     )
-    # Sample test dataset for augmentation factor f:
-    test_f <- stratified_sample_n(
-      test_full,
-      test_target,
-      outcome_col = "outcome",
-      seed = split_seed + f + 1000L
-    )
+    train_f <- split_f$train
+    test_f <- split_f$test
   } else if (aug_strategy == "aug_in_p") {
     # Number of predictors in dataset augmented by max_factor:
-    predictors_full <- setdiff(names(train_full), "outcome")
+    predictors_full <- setdiff(names(aug_full), c("sample_id", "Var"))
     total_pred_cols <- length(predictors_full)
     # Number of columns to sample for factor f:
     k_cols <- floor(total_pred_cols * f / max_factor)
-    train_f <- select_first_k_predictors(
-      train_full,
+    aug_f <- select_first_k_predictors(
+      aug_full,
       k_cols,
-      outcome_col = "outcome"
+      outcome_col = "Var"
     )
-    test_f <- select_first_k_predictors(
-      test_full,
-      k_cols,
-      outcome_col = "outcome"
+    # Split grouped+stratified for this factor
+    split_f <- split_grouped_stratified(
+      df = aug_f,
+      id_col = "sample_id",
+      outcome_name = "Var",
+      prop = 0.8,
+      seed = split_seed
     )
+    train_f <- split_f$train
+    test_f <- split_f$test
   } else {
     stop("Unsupported aug_strategy: ", aug_strategy)
   }
