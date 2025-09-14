@@ -1,4 +1,4 @@
----
+﻿---
 title: "Density Impact"
 author: ""
 date: today
@@ -62,13 +62,13 @@ To understand the impact of density of skew-symmetric matrix on the GHL matrix, 
 $$x \in S^{4}, \; x=\bigl[\,x_{1},\,x_{2},\,x_{3},\,x_{4}\,\bigr]$$
 
 $$
-\operatorname{ilr}(x)=\operatorname{clr}(x)\,\mathrm{L}_{-1}=\bigl[\,y_{1},\,y_{2},\,y_{3}\,\bigr],
+\mathrm{ilr}(x)=\mathrm{clr}(x)\,\mathrm{L}_{-1}=\bigl[\,y_{1},\,y_{2},\,y_{3}\,\bigr],
 $$
 
 where $L_1$ is the GHL matrix without last column and $dim\bigl(L_{-1}\bigr) = 4 \times 3$. The centered log-ratio transformation is given by:
 
 $$
-\operatorname{clr}(x)=\Bigl[\,\ln\frac{x_{1}}{g(x)},\,\ln\frac{x_{2}}{g(x)},\,\ln\frac{x_{3}}{g(x)},\,\ln\frac{x_{4}}{g(x)}\,\Bigr],
+\mathrm{clr}(x)=\Bigl[\,\ln\frac{x_{1}}{g(x)},\,\ln\frac{x_{2}}{g(x)},\,\ln\frac{x_{3}}{g(x)},\,\ln\frac{x_{4}}{g(x)}\,\Bigr],
 $$
 
 where $g(x)$ is a geometric mean of vector $\mathbf{x}$ entries. Let's represent GHL matrix with the removed last column as follows:
@@ -78,7 +78,7 @@ L_{-1} = \begin{bmatrix}a_{1} & b_{1} & c_{1} \\a_{2} & b_{2} & c_{2} \\a_{3} & 
 $$
 
 $$
-\begin{aligned}\operatorname{ilr}(x)&=\operatorname{clr}(x)\,\mathrm{L}_{-1} \\
+\begin{aligned}\mathrm{ilr}(x)&=\mathrm{clr}(x)\,\mathrm{L}_{-1} \\
 &=\Bigl[\,a_{1}\ln\frac{x_{1}}{g(x)}+a_{2}\ln\frac{x_{2}}{g(x)}+a_{3}\ln\frac{x_{3}}{g(x)}+a_{4}\ln\frac{x_{4}}{g(x)},\;\\ & \,b_{1}\ln\frac{x_{1}}{g(x)}+b_{2}\ln\frac{x_{2}}{g(x)}+b_{3}\ln\frac{x_{3}}{g(x)}+b_{4}\ln\frac{x_{4}}{g(x)}, \;\\ 
 & \,c_{1}\ln\frac{x_{1}}{g(x)}+c_{2}\ln\frac{x_{2}}{g(x)}+c_{3}\ln\frac{x_{3}}{g(x)}+c_{4}\ln\frac{x_{4}}{g(x)},
 \Bigr] \\

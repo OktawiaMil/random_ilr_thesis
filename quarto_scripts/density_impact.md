@@ -2,14 +2,6 @@
 
 2025-09-14
 
-- [<span class="toc-section-number">1</span> Theoretical
-  overview](#theoretical-overview)
-- [<span class="toc-section-number">2</span> Analysis](#analysis)
-  - [<span class="toc-section-number">2.1</span> Contribution to
-    numerator vs denominator](#contribution-to-numerator-vs-denominator)
-  - [<span class="toc-section-number">2.2</span> Top 5
-    contributors](#top-5-contributors)
-
 ## Theoretical overview
 
 The purpose of this document is to show the influence of the density of
@@ -34,7 +26,7 @@ compositional vector $\mathbf{x},\, \mathbf{x} \in S^4$:
 $$x \in S^{4}, \; x=\bigl[\,x_{1},\,x_{2},\,x_{3},\,x_{4}\,\bigr]$$
 
 $$
-\operatorname{ilr}(x)=\operatorname{clr}(x)\,\mathrm{L}_{-1}=\bigl[\,y_{1},\,y_{2},\,y_{3}\,\bigr],
+\mathrm{ilr}(x)=\mathrm{clr}(x)\,\mathrm{L}_{-1}=\bigl[\,y_{1},\,y_{2},\,y_{3}\,\bigr],
 $$
 
 where $L_1$ is the GHL matrix without last column and
@@ -42,7 +34,7 @@ $dim\bigl(L_{-1}\bigr) = 4 \times 3$. The centered log-ratio
 transformation is given by:
 
 $$
-\operatorname{clr}(x)=\Bigl[\,\ln\frac{x_{1}}{g(x)},\,\ln\frac{x_{2}}{g(x)},\,\ln\frac{x_{3}}{g(x)},\,\ln\frac{x_{4}}{g(x)}\,\Bigr],
+\mathrm{clr}(x)=\Bigl[\,\ln\frac{x_{1}}{g(x)},\,\ln\frac{x_{2}}{g(x)},\,\ln\frac{x_{3}}{g(x)},\,\ln\frac{x_{4}}{g(x)}\,\Bigr],
 $$
 
 where $g(x)$ is a geometric mean of vector $\mathbf{x}$ entries. Let’s
@@ -53,7 +45,7 @@ L_{-1} = \begin{bmatrix}a_{1} & b_{1} & c_{1} \\a_{2} & b_{2} & c_{2} \\a_{3} & 
 $$
 
 $$
-\begin{aligned}\operatorname{ilr}(x)&=\operatorname{clr}(x)\,\mathrm{L}_{-1} \\
+\begin{aligned}\mathrm{ilr}(x)&=\mathrm{clr}(x)\,\mathrm{L}_{-1} \\
 &=\Bigl[\,a_{1}\ln\frac{x_{1}}{g(x)}+a_{2}\ln\frac{x_{2}}{g(x)}+a_{3}\ln\frac{x_{3}}{g(x)}+a_{4}\ln\frac{x_{4}}{g(x)},\;\\ & \,b_{1}\ln\frac{x_{1}}{g(x)}+b_{2}\ln\frac{x_{2}}{g(x)}+b_{3}\ln\frac{x_{3}}{g(x)}+b_{4}\ln\frac{x_{4}}{g(x)}, \;\\ 
 & \,c_{1}\ln\frac{x_{1}}{g(x)}+c_{2}\ln\frac{x_{2}}{g(x)}+c_{3}\ln\frac{x_{3}}{g(x)}+c_{4}\ln\frac{x_{4}}{g(x)},
 \Bigr] \\
@@ -110,9 +102,6 @@ $|w_1|, |w_2|, \dots, |w_p|$.
 ## Analysis
 
 Helper functions used in this script:
-
-<details class="code-fold">
-<summary>Code</summary>
 
 ``` r
 # Function that takes the GHL matrix and:
@@ -191,8 +180,6 @@ density_impact <- function(seed_start = 2025, n_org_features, density, top_k, n_
 }
 ```
 
-</details>
-
 In the below analysis the following scenario is considered:
 
 - input data has $20$ covariates,
@@ -215,9 +202,6 @@ versus a denominator across all new ILR coordinates (this is, as shown
 above, determined by the GHL-matrix coefficients). The bars represent
 the average number of occurrences per original feature over the $100$
 simulations.
-
-<details class="code-fold">
-<summary>Code</summary>
 
 ``` r
 # label: simulation_num_denom
@@ -291,7 +275,7 @@ results |>
     )
 ```
 
-</details>
+    Joining with `by = join_by(density, feature)`
 
 ![](density_impact_files/graphics/unnamed-chunk-1-1.png)
 
@@ -302,9 +286,6 @@ GHL matrix, the plot below displays the expected number of random ILR
 coordinates in which a given original feature ranks among the five most
 influential features, i.e., where it has one of the five largest
 absolute coefficients in the corresponding column of the GHL matrix.
-
-<details class="code-fold">
-<summary>Code</summary>
 
 ``` r
 results |>
@@ -342,7 +323,5 @@ results |>
         legend.text = element_text(size = 14)
     )
 ```
-
-</details>
 
 ![](density_impact_files/graphics/top_k_contr-1.png)
