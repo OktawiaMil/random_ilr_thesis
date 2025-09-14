@@ -33,7 +33,7 @@ knitr:
 #| message: false
 #| warning: false
 # Create/clean graphics directory (absolute), set fig.path (relative)
-graphics_abs <- here::here("quatro_scripts", "density_impact_files", "graphics")
+graphics_abs <- here::here("quarto_scripts", "density_impact_files", "graphics")
 if (dir.exists(graphics_abs)) {
     unlink(graphics_abs, recursive = TRUE, force = TRUE)
 }
@@ -78,17 +78,18 @@ L_{-1} = \begin{bmatrix}a_{1} & b_{1} & c_{1} \\a_{2} & b_{2} & c_{2} \\a_{3} & 
 $$
 
 $$
-\begin{aligned}\mathrm{ilr}(x)&=\mathrm{clr}(x)\,\mathrm{L}_{-1} \\
-&=\Bigl[\,a_{1}\ln\frac{x_{1}}{g(x)}+a_{2}\ln\frac{x_{2}}{g(x)}+a_{3}\ln\frac{x_{3}}{g(x)}+a_{4}\ln\frac{x_{4}}{g(x)},\;\\ & \,b_{1}\ln\frac{x_{1}}{g(x)}+b_{2}\ln\frac{x_{2}}{g(x)}+b_{3}\ln\frac{x_{3}}{g(x)}+b_{4}\ln\frac{x_{4}}{g(x)}, \;\\ 
-& \,c_{1}\ln\frac{x_{1}}{g(x)}+c_{2}\ln\frac{x_{2}}{g(x)}+c_{3}\ln\frac{x_{3}}{g(x)}+c_{4}\ln\frac{x_{4}}{g(x)},
+\begin{aligned}
+\mathrm{ilr}(x) &= \mathrm{clr}(x)\,\mathrm{L}_{-1} \\
+&= \Bigl[\,
+    a_{1}\ln\frac{x_{1}}{g(x)} + a_{2}\ln\frac{x_{2}}{g(x)} + a_{3}\ln\frac{x_{3}}{g(x)} + a_{4}\ln\frac{x_{4}}{g(x)},\;
+    b_{1}\ln\frac{x_{1}}{g(x)} + b_{2}\ln\frac{x_{2}}{g(x)} + b_{3}\ln\frac{x_{3}}{g(x)} + b_{4}\ln\frac{x_{4}}{g(x)},\;
+    c_{1}\ln\frac{x_{1}}{g(x)} + c_{2}\ln\frac{x_{2}}{g(x)} + c_{3}\ln\frac{x_{3}}{g(x)} + c_{4}\ln\frac{x_{4}}{g(x)}\,
 \Bigr] \\
-&=\Biggl[\,\ln\frac{x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}}{\bigl[g(x)\bigr]^{a_{1}+a_{2}+a_{3}+a_{4}}},\; \ln\frac{x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}}{\bigl[g(x)\bigr]^{b_{1}+b_{2}+b_{3}+b_{4}}},\; 
-\ln\frac{x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}}{\bigl[g(x)\bigr]^{c_{1}+c_{2}+c_{3}+c_{4}}}
-\Biggr] \\
+&= \Biggl[\,\ln\frac{x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}}{\bigl[g(x)\bigr]^{a_{1}+a_{2}+a_{3}+a_{4}}},\; \ln\frac{x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}}{\bigl[g(x)\bigr]^{b_{1}+b_{2}+b_{3}+b_{4}}},\; 
+\ln\frac{x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}}{\bigl[g(x)\bigr]^{c_{1}+c_{2}+c_{3}+c_{4}}}\Biggr] \\
 &= \Bigl[\,\ln\!\bigl(x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}\bigr),\; 
 \ln\!\bigl(x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}\bigr),\; 
-\ln\!\bigl(x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}\bigr)
-\Bigr]
+\ln\!\bigl(x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}\bigr)\Bigr]
 \end{aligned}
 $$
 
