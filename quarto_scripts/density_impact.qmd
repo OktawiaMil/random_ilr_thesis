@@ -35,7 +35,7 @@ knitr:
 # Create/clean graphics directory (absolute), set fig.path (relative)
 graphics_abs <- here::here("quatro_scripts", "density_impact_files", "graphics")
 if (dir.exists(graphics_abs)) {
-  unlink(graphics_abs, recursive = TRUE, force = TRUE)
+    unlink(graphics_abs, recursive = TRUE, force = TRUE)
 }
 dir.create(graphics_abs, recursive = TRUE, showWarnings = FALSE)
 knitr::opts_chunk$set(fig.path = "density_impact_files/graphics/")
@@ -118,75 +118,77 @@ Helper functions used in this script:
 #| label: helper_funs
 # Function that takes the GHL matrix and:
 # 1. determines if original feature x_i contributes to the ilr coordinate in numerator or denominator
-# 2. determines top k contributors for each of the 
-understand_randilr <- function(ghl, org_feature_names, top_k){
- abs_ghl  <- abs(ghl) 
- sign_ghl <- sign(ghl)
- 
- ghl_summary <- map(c(1:ncol(ghl)), function(j) {
-   # Pull the j-th column
-    abs_col <- abs_ghl[ , j]
-    sign_col <- sign_ghl[, j]
-    column <- ghl[ , j]
-  
-    # Get names of the original features that go into numerator (have positive 'coefficient' in the GHL mat.):
-    pos <- org_feature_names[sign_col ==  1]
-    # Get names of the original features that go into denominator
-    neg <- org_feature_names[sign_col == -1]
-  
-    # top-k absolute contributors and the values of their coeffs (not absolute, just as is)
-    idx <- order(abs_col, decreasing = TRUE)[1:top_k]
-    top_k_tbl <- tibble(
-      feature = org_feature_names[idx],
-      coef    = column[idx]
+# 2. determines top k contributors for each of the
+understand_randilr <- function(ghl, org_feature_names, top_k) {
+    abs_ghl <- abs(ghl)
+    sign_ghl <- sign(ghl)
+
+    ghl_summary <- map(c(1:ncol(ghl)), function(j) {
+        # Pull the j-th column
+        abs_col <- abs_ghl[, j]
+        sign_col <- sign_ghl[, j]
+        column <- ghl[, j]
+
+        # Get names of the original features that go into numerator (have positive 'coefficient' in the GHL mat.):
+        pos <- org_feature_names[sign_col == 1]
+        # Get names of the original features that go into denominator
+        neg <- org_feature_names[sign_col == -1]
+
+        # top-k absolute contributors and the values of their coeffs (not absolute, just as is)
+        idx <- order(abs_col, decreasing = TRUE)[1:top_k]
+        top_k_tbl <- tibble(
+            feature = org_feature_names[idx],
+            coef    = column[idx]
+        )
+
+        # number of distinct absolute values of coeff
+        unique_coefs <- length(unique(abs_col))
+
+        list(
+            column = j,
+            unique_coefs = unique_coefs,
+            numerator = pos,
+            denominator = neg,
+            top_k_contribution = top_k_tbl
+        )
+    })
+
+    # Return tibble
+    tibble(
+        column = map_dbl(ghl_summary, ~ .x$column),
+        unique_coefs = map_dbl(ghl_summary, ~ .x$unique_coefs),
+        numerator = map(ghl_summary, ~ .x$numerator),
+        denominator = map(ghl_summary, ~ .x$denominator),
+        top_contribution = map(ghl_summary, ~ .x$top_k_contribution)
     )
-  
-    # number of distinct absolute values of coeff
-    unique_coefs <- length(unique(abs_col))
-  
-    list(
-      column = j, 
-      unique_coefs = unique_coefs,
-      numerator = pos,
-      denominator = neg,
-      top_k_contribution = top_k_tbl
-    )
-  })
-  
-  # Return tibble
-  tibble(
-    column = map_dbl(ghl_summary, ~.x$column),
-    unique_coefs = map_dbl(ghl_summary, ~.x$unique_coefs),
-    numerator = map(ghl_summary, ~.x$numerator),
-    denominator = map(ghl_summary, ~.x$denominator),
-    top_contribution = map(ghl_summary, ~.x$top_k_contribution)
-  )  
 }
 
 # Function:
 # 1. Constructh square GHL matrix with n_org_features rows and column by using skew-symmetric matrix with `density`
 # 2. Gathers info about contribution to numerator/denominator of each feature and top k contributors
 # 3. repeats 1-2 n_iters times
-density_impact <- function(seed_start = 2025, n_org_features, density, top_k, n_iters = 10){
-  set.seed(seed_start)
-  org_feature_names <- paste0("org_feature", c(1:n_org_features))
-  results <- tibble()
-  
-  for(i in 1:n_iters){
-    # Generate GHL matrix
-    ghl <- create_ghl(n = n_org_features, density = density)
-    ghl_mat <- ghl[, -n_org_features]
-    
-    # Gather info about new features
-    out <- understand_randilr(ghl = ghl_mat, 
-                              org_feature_names = org_feature_names, 
-                              top_k = top_k) |> 
-      mutate(iter = i)
-    
-    results <- results |> 
-      bind_rows(out)
-  }
-  return(results)
+density_impact <- function(seed_start = 2025, n_org_features, density, top_k, n_iters = 10) {
+    set.seed(seed_start)
+    org_feature_names <- paste0("org_feature", c(1:n_org_features))
+    results <- tibble()
+
+    for (i in 1:n_iters) {
+        # Generate GHL matrix
+        ghl <- create_ghl(n = n_org_features, density = density)
+        ghl_mat <- ghl[, -n_org_features]
+
+        # Gather info about new features
+        out <- understand_randilr(
+            ghl = ghl_mat,
+            org_feature_names = org_feature_names,
+            top_k = top_k
+        ) |>
+            mutate(iter = i)
+
+        results <- results |>
+            bind_rows(out)
+    }
+    return(results)
 }
 ```
 
@@ -212,60 +214,68 @@ n_iters <- 100
 seed_start <- 567
 
 results <- tibble(
-  density = c(NA_real_, seq(0.01, 0.09, by = 0.01), seq(0.1, 0.9, by = 0.1))
-)|> 
-  mutate(
-    ghl_analysis = map(density, ~density_impact(seed_start = seed_start,
-                                               n_org_features = org_features,
-                                               density = .x, 
-                                               top_k = top_k,
-                                               n_iters = n_iters))
-    )|> 
-  unnest(ghl_analysis)
+    density = c(NA_real_, seq(0.01, 0.09, by = 0.01), seq(0.1, 0.9, by = 0.1))
+) |>
+    mutate(
+        ghl_analysis = map(density, ~ density_impact(
+            seed_start = seed_start,
+            n_org_features = org_features,
+            density = .x,
+            top_k = top_k,
+            n_iters = n_iters
+        ))
+    ) |>
+    unnest(ghl_analysis)
 
 # We repeat GHL simulation with a given density of skew-symmetric matrix n_iters times
 # For a given density, on average, how many times is the original feature_k selected into numerator vs denominator
 # Max number of occurrence in numerator/ denominator: (n_org_features - 1) * n_iters
 
-results|> 
-  select(density, iter, column, numerator) |> 
-  unnest(numerator)|> 
-  rename(feature = numerator)|> 
-  count(density, feature, name = "numerator")|> 
-  mutate(numerator = numerator/ n_iters)|> 
-  left_join(
-    results|> 
-      select(density, iter, column, denominator)|> 
-      unnest(denominator)|> 
-      rename(feature = denominator)|> 
-      count(density, feature, name = "denominator")|> 
-      mutate(denominator = denominator/ n_iters)
-  )|>
-  pivot_longer(cols = c(denominator, numerator), names_to = "part", values_to = "value") |> 
-  mutate(feature = str_remove(feature, "org_"),
-         feature = fct_reorder(feature, parse_number(feature)),
-         density = if_else(is.na(density), "Default", as.character(density)),
-         density  = factor(density,
-                           levels = c("Default",sort(as.numeric(setdiff(unique(density),"Default"))))),
-         part = str_to_title(part)
-         ) |>
-  ggplot(aes(x = feature, y = value, fill = part))+
-  geom_bar(position="dodge", stat="identity") +
-  facet_wrap(~density, ncol = 3) +
-  theme_bw() +
-  #scale_y_continuous(breaks = scales::breaks_width(10), minor_breaks = NULL) +
-  labs(x = "Original feature",
-       y = paste("Average occurance across", n_iters, "GHL simulations"),
-       title = "Contributions of Original Features to Numerator and Denominator in Random ILR Coordinates",
-       subtitle = paste("Aggregated over", n_iters, "GHL simulations, panels split by GHL density")) +
-  theme(legend.position='bottom',
+results |>
+    select(density, iter, column, numerator) |>
+    unnest(numerator) |>
+    rename(feature = numerator) |>
+    count(density, feature, name = "numerator") |>
+    mutate(numerator = numerator / n_iters) |>
+    left_join(
+        results |>
+            select(density, iter, column, denominator) |>
+            unnest(denominator) |>
+            rename(feature = denominator) |>
+            count(density, feature, name = "denominator") |>
+            mutate(denominator = denominator / n_iters)
+    ) |>
+    pivot_longer(cols = c(denominator, numerator), names_to = "part", values_to = "value") |>
+    mutate(
+        feature = str_remove(feature, "org_"),
+        feature = fct_reorder(feature, parse_number(feature)),
+        density = if_else(is.na(density), "Default", as.character(density)),
+        density = factor(density,
+            levels = c("Default", sort(as.numeric(setdiff(unique(density), "Default"))))
+        ),
+        part = str_to_title(part)
+    ) |>
+    ggplot(aes(x = feature, y = value, fill = part)) +
+    geom_bar(position = "dodge", stat = "identity") +
+    facet_wrap(~density, ncol = 3) +
+    theme_bw() +
+    # scale_y_continuous(breaks = scales::breaks_width(10), minor_breaks = NULL) +
+    labs(
+        x = "Original feature",
+        y = paste("Average occurance across", n_iters, "GHL simulations"),
+        title = "Contributions of Original Features to Numerator and Denominator in Random ILR Coordinates",
+        subtitle = paste("Aggregated over", n_iters, "GHL simulations, panels split by GHL density")
+    ) +
+    theme(
+        legend.position = "bottom",
         legend.title = element_blank(),
         plot.title = element_text(size = 18),
         axis.title.x = element_text(size = 14),
         axis.title.y = element_text(size = 14),
-        axis.text.x = element_text(size=14, angle = 90),
-        axis.text.y = element_text(size=14),
-        legend.text = element_text(size=14))
+        axis.text.x = element_text(size = 14, angle = 90),
+        axis.text.y = element_text(size = 14),
+        legend.text = element_text(size = 14)
+    )
 
 ```
 
@@ -275,33 +285,38 @@ For a selected density of the skew-symmetric matrix used to generate the GHL mat
 
 ```{r}
 #| label: top_k_contr
-results |> 
-  select(iter, column, density, top_contribution) |> 
-  unnest(top_contribution) |> 
-  count(density, feature, name = "times_top_k") |> 
-  mutate(
-    times_top_k = times_top_k/n_iters,
-    density = if_else(is.na(density), "Default", as.character(density)),
-    density  = factor(density,
-                      levels = c("Default",sort(as.numeric(setdiff(unique(density),"Default"))))),
-    feature = str_remove(feature, "org_"),
-    feature = fct_reorder(feature, parse_number(feature))
-    ) |> 
-  ggplot(aes(x = feature, y = times_top_k)) +
-  geom_point()+
-  facet_wrap(~density, ncol = 3) +
-  theme_bw() +
-  #scale_y_continuous(breaks = scales::breaks_width(10), minor_breaks = NULL) +
-  labs(x = "Original feature",
-       y = paste("Average number across", n_iters, "GHL simulations"),
-       title = paste("Mean Number of ILR Coordinates in Which a Feature Ranks Top", top_k, "Contributor"),
-       subtitle = paste("Aggregated over", n_iters, "GHL simulations, panels split by GHL density")) +
-    theme(legend.position='bottom',
+results |>
+    select(iter, column, density, top_contribution) |>
+    unnest(top_contribution) |>
+    count(density, feature, name = "times_top_k") |>
+    mutate(
+        times_top_k = times_top_k / n_iters,
+        density = if_else(is.na(density), "Default", as.character(density)),
+        density = factor(density,
+            levels = c("Default", sort(as.numeric(setdiff(unique(density), "Default"))))
+        ),
+        feature = str_remove(feature, "org_"),
+        feature = fct_reorder(feature, parse_number(feature))
+    ) |>
+    ggplot(aes(x = feature, y = times_top_k)) +
+    geom_point() +
+    facet_wrap(~density, ncol = 3) +
+    theme_bw() +
+    # scale_y_continuous(breaks = scales::breaks_width(10), minor_breaks = NULL) +
+    labs(
+        x = "Original feature",
+        y = paste("Average number across", n_iters, "GHL simulations"),
+        title = paste("Mean Number of ILR Coordinates in Which a Feature Ranks Top", top_k, "Contributor"),
+        subtitle = paste("Aggregated over", n_iters, "GHL simulations, panels split by GHL density")
+    ) +
+    theme(
+        legend.position = "bottom",
         legend.title = element_blank(),
         plot.title = element_text(size = 18),
         axis.title.x = element_text(size = 14),
         axis.title.y = element_text(size = 14),
-        axis.text.x = element_text(size=14, angle = 90),
-        axis.text.y = element_text(size=14),
-        legend.text = element_text(size=14))
+        axis.text.x = element_text(size = 14, angle = 90),
+        axis.text.y = element_text(size = 14),
+        legend.text = element_text(size = 14)
+    )
 ```

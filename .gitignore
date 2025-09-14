@@ -6,5 +6,5 @@
 .vscode/
 *.txt
 *.csv
-\# Quarto/R Markdown generated artifacts
-**/*_files/
+\# Quarto generated artifacts
+**/density_impact_files/libs
