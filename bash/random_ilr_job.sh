@@ -47,6 +47,6 @@ concurrency="${SPLIT_WORKERS:-${SLURM_CPUS_PER_TASK:-1}}"
 echo "Running with parallel splits: $concurrency concurrent Rscript processes"
 
 # Execute commands in parallel; one command per process
-printf '%s\n' "${cmds[@]}" | xargs -n1 -P "$concurrency" -I CMD bash -lc "CMD"
+printf '%s\n' "${cmds[@]}" | xargs -r -P "$concurrency" -I {} bash -lc "{}"
 
 echo "All tasks completed for dataset=$dataset"
