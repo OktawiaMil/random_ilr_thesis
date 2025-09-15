@@ -3,8 +3,8 @@
 set -euo pipefail
 
 export SCRATCH_BASE="/dss/dsshome1/0E/$USER"
-export DATA_DIR="$SCRATCH_BASE/random_ilr_thesis/data"
-export OUT_DIR="$SCRATCH_BASE/random_ilr_thesis/results"
+export DATA_DIR="$SCRATCH_BASE/random_ilr_thesis/data/data_preproc"
+export OUT_DIR="$SCRATCH_BASE/random_ilr_thesis/results/rodriguez"
 export LOG_DIR="$SCRATCH_BASE/random_ilr_thesis/logs"
 mkdir -p "$DATA_DIR" "$OUT_DIR" "$LOG_DIR"
 
