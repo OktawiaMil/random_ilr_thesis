@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH -p lrz-v100x2 
+#SBATCH -p lrz-v100x2
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=9
-#SBATCH --time=11:00:00
+#SBATCH --time=12:00:00
 #SBATCH -o /dss/dsshome1/0E/di97ceh/random_ilr_thesis/logs/%x_%j.out
 #SBATCH -e /dss/dsshome1/0E/di97ceh/random_ilr_thesis/logs/%x_%j.err
 #SBATCH --container-image=/dss/dsshome1/0E/di97ceh/containers/randomilr_env_comp.sqsh
-#SBATCH --container-mounts=/dss/dsshome1/0E/di97ceh/random_ilr_thesis:/workspace,/dss/dsshome1/0E/di97ceh/random_ilr_thesis/data:/data,/dss/dsshome1/0E/di97ceh/random_ilr_thesis/results:/results
+#SBATCH --container-mounts=/dss/dsshome1/0E/di97ceh/random_ilr_thesis:/workspace,/dss/dsshome1/0E/di97ceh/random_ilr_thesis/data/data_preproc:/data,/dss/dsshome1/0E/di97ceh/random_ilr_thesis/results/rodriguez:/results
 
 set -euo pipefail
 

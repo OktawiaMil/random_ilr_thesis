@@ -7,14 +7,13 @@ export OUT_DIR="$SCRATCH_BASE/random_ilr_thesis/results/random_ilr"
 export LOG_DIR="$SCRATCH_BASE/random_ilr_thesis/logs"
 mkdir -p "$DATA_DIR" "$OUT_DIR" "$LOG_DIR"
 
-datasets=(1 2 3 4 5 6 7 8 9 10 11 12)
+datasets=(1)
 TOTAL=${#datasets[@]}
 
 # Max number of array tasks that can run concurrently
 PARALLEL=4
 
 sbatch \
-  --export=ALL,DATA_DIR="$DATA_DIR",OUT_DIR="$OUT_DIR",SPLITS=20,AUG_FACTOR=5 \
+  --export=ALL,DATA_DIR="$DATA_DIR",OUT_DIR="$OUT_DIR",SPLITS=2,AUG_FACTOR=2 \
   --array=0-$((TOTAL-1))%${PARALLEL} \
-  random_ilr_job.sh
-
+  test_job.sh
