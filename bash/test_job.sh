@@ -6,7 +6,7 @@
 #SBATCH --time=00:15:00
 #SBATCH -o /dss/dsshome1/0E/di97ceh/random_ilr_thesis/logs/%x_%j.out
 #SBATCH -e /dss/dsshome1/0E/di97ceh/random_ilr_thesis/logs/%x_%j.err
-#SBATCH --container-image=/dss/dsshome1/0E/di97ceh/containers/randomilr_env.sqsh
+#SBATCH --container-image=/dss/dsshome1/0E/di97ceh/containers/random_ilr_env.sqsh
 #SBATCH --container-mounts=/dss/dsshome1/0E/di97ceh/random_ilr_thesis:/workspace,/dss/dsshome1/0E/di97ceh/random_ilr_thesis/data/data_preproc:/data,/dss/dsshome1/0E/di97ceh/random_ilr_thesis/results/random_ilr:/results
 
 set -euo pipefail
