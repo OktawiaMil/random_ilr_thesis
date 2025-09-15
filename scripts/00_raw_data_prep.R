@@ -74,7 +74,7 @@ process_task <- function(id, drop_extra = character(), fix_otu = FALSE) {
   dat <- prep_taxa_data(taxa_table = x, task_table = y)
 
   # Prepare predictors - remove outcome variable and id (and optional extras)
-  preds <- dat %>% select(-any_of(c("Var", "sample_id", drop_extra)))
+  preds <- dat |> select(-any_of(c("Var", "sample_id", drop_extra)))
 
   # Compute both pseudo-count versions and bind sample_id
   pcs <- pc_variants(preds, dat$sample_id)
@@ -96,7 +96,7 @@ process_task <- function(id, drop_extra = character(), fix_otu = FALSE) {
 
   # Write outcome data
   readr::write_csv(
-    dat %>% select(sample_id, Var),
+    dat |> select(sample_id, Var),
     file.path(directory_preproc, paste0("task", id, "_preproc_y.csv"))
   )
 }
