@@ -207,51 +207,61 @@ save_results(train_full, test_full, aug_factor_now = max_factor)
 # Below loop creates augmented datasets for aug_factors: (max_factor-1):2
 # For aug_in_n: keep the first n * f rows of aug_full (nested transforms)
 # For aug_in_p: keep the first K predictors consistently across splits
-for (f in seq(from = max_factor - 1, to = 2, by = -1)) {
-  if (aug_strategy == "aug_in_n") {
-    # Nested rows: take first n0 * f rows from the max dataset
-    n0 <- nrow(df_y)
-    take_n <- n0 * f
-    aug_f <- aug_full[seq_len(take_n), , drop = FALSE]
-    # Split grouped+stratified for this factor
-    split_f <- split_grouped_stratified(
-      df = aug_f,
-      id_col = "sample_id",
-      outcome_name = "Var",
-      prop = 0.8,
-      seed = split_seed
-    )
-    train_f <- split_f$train
-    test_f <- split_f$test
-  } else if (aug_strategy == "aug_in_p") {
-    # Number of predictors in dataset augmented by max_factor:
-    predictors_full <- setdiff(names(aug_full), c("sample_id", "Var"))
-    total_pred_cols <- length(predictors_full)
-    # Number of columns to sample for factor f:
-    k_cols <- floor(total_pred_cols * f / max_factor)
-    aug_f <- select_first_k_predictors(
-      aug_full,
-      k_cols,
-      outcome_col = "Var"
-    )
-    # Split grouped+stratified for this factor
-    split_f <- split_grouped_stratified(
-      df = aug_f,
-      id_col = "sample_id",
-      outcome_name = "Var",
-      prop = 0.8,
-      seed = split_seed
-    )
-    train_f <- split_f$train
-    test_f <- split_f$test
-  } else {
-    stop("Unsupported aug_strategy: ", aug_strategy)
+# Code is executed for max_factor > 2 (otherwise it doesn't make sense)
+if (max_factor > 2) {
+  for (f in seq(from = max_factor - 1, to = 2, by = -1)) {
+    if (aug_strategy == "aug_in_n") {
+      # Nested rows: take first n0 * f rows from the max dataset
+      n0 <- nrow(df_y)
+      take_n <- n0 * f
+      aug_f <- aug_full[seq_len(take_n), , drop = FALSE]
+      # Split grouped+stratified for this factor
+      split_f <- split_grouped_stratified(
+        df = aug_f,
+        id_col = "sample_id",
+        outcome_name = "Var",
+        prop = 0.8,
+        seed = split_seed
+      )
+      train_f <- split_f$train
+      test_f <- split_f$test
+    } else if (aug_strategy == "aug_in_p") {
+      # Number of predictors in dataset augmented by max_factor:
+      predictors_full <- setdiff(names(aug_full), c("sample_id", "Var"))
+      total_pred_cols <- length(predictors_full)
+      # Number of columns to sample for factor f:
+      k_cols <- floor(total_pred_cols * f / max_factor)
+      aug_f <- select_first_k_predictors(
+        aug_full,
+        k_cols,
+        outcome_col = "Var"
+      )
+      # Split grouped+stratified for this factor
+      split_f <- split_grouped_stratified(
+        df = aug_f,
+        id_col = "sample_id",
+        outcome_name = "Var",
+        prop = 0.8,
+        seed = split_seed
+      )
+      train_f <- split_f$train
+      test_f <- split_f$test
+    } else {
+      stop("Unsupported aug_strategy: ", aug_strategy)
+    }
+    # Train models & save it results
+    save_results(train_f, test_f, aug_factor_now = f)
   }
-  # Train models & save it results
-  save_results(train_f, test_f, aug_factor_now = f)
 }
 
+# If max_factor == 2 -> computation was done only for 1 factor
+# Make the correct printing of used factors
+factors_used <- if (max_factor > 2) {
+  seq(max_factor, 2L)
+} else {
+  max_factor
+}
 message(
   "Done. Saved results for augmentation factors: ",
-  paste(c(max_factor, seq(max_factor - 1L, 2L)), collapse = ", ")
+  paste(factors_used, collapse = ", ")
 )

@@ -71,14 +71,14 @@ build_augmented_randomilr_full <- function(
       id_col = id_col,
       density = density
     ) |>
-      arrange(across(all_of(id_col)))
+      arrange(across(any_of(id_col)))
 
     # Create within-ID index to impose nested row blocks
     df <- df |>
-      group_by(across(all_of(id_col))) |>
+      group_by(across(any_of(id_col))) |>
       mutate(.rep_idx = row_number()) |>
       ungroup() |>
-      arrange(.rep_idx, across(all_of(id_col))) |>
+      arrange(.rep_idx, across(any_of(id_col))) |>
       select(-.rep_idx)
   } else {
     df <- aug_p_randilr(
@@ -88,7 +88,7 @@ build_augmented_randomilr_full <- function(
       multiplier = multiplier,
       density = density
     ) |>
-      arrange(across(all_of(id_col)))
+      arrange(across(any_of(id_col)))
   }
 
   df
