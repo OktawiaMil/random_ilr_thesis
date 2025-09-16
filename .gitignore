@@ -8,6 +8,8 @@ results/
 temp/
 data/data_raw/*.txt
 data/data_preproc/*.csv
+logs/*.err
+logs/*.out
 \# Quarto generated artifacts
 **/density_impact_files/libs
 .Renviron

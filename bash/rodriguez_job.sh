@@ -6,7 +6,7 @@
 #SBATCH --time=12:00:00
 #SBATCH -o /dss/dsshome1/0E/di97ceh/random_ilr_thesis/logs/%x_%j.out
 #SBATCH -e /dss/dsshome1/0E/di97ceh/random_ilr_thesis/logs/%x_%j.err
-#SBATCH --container-image=/dss/dsshome1/0E/di97ceh/containers/randomilr_env_comp.sqsh
+#SBATCH --container-image=/dss/dsshome1/0E/di97ceh/containers/random_ilr_env.sqsh
 #SBATCH --container-mounts=/dss/dsshome1/0E/di97ceh/random_ilr_thesis:/workspace,/dss/dsshome1/0E/di97ceh/random_ilr_thesis/data/data_preproc:/data,/dss/dsshome1/0E/di97ceh/random_ilr_thesis/results/rodriguez:/results
 
 set -euo pipefail
@@ -43,6 +43,6 @@ concurrency="${SPLIT_WORKERS:-${SLURM_CPUS_PER_TASK:-1}}"
 echo "Running with parallel splits: $concurrency concurrent Rscript processes"
 
 # Execute commands in parallel; one command per process
-printf '%s\n' "${cmds[@]}" | xargs -n1 -P "$concurrency" -I CMD bash -lc "CMD"
+printf '%s\n' "${cmds[@]}" | xargs -r -P "$concurrency" -I {} bash -lc "{}"
 
 echo "All tasks completed for dataset=$dataset"
