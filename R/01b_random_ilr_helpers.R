@@ -13,14 +13,21 @@ library(rlang)
 #' @param k Integer; number of predictor columns to keep.
 #' @param outcome_col Character; name of the outcome column. Defaults to
 #'   "outcome".
+#' @param id_col Character; name of the ID column. Defaults to "id".
 #'
-#' @return A data frame with `k` predictors plus the outcome column.
+#' @return A data frame with first `k` predictors plus the outcome and
+#' id column.
 #'
 #' @examples NULL
-select_first_k_predictors <- function(df, k, outcome_col = "outcome") {
-  predictors <- setdiff(names(df), outcome_col)
+select_first_k_predictors <- function(
+  df,
+  k,
+  outcome_col = "outcome",
+  id_col = "id"
+) {
+  predictors <- setdiff(names(df), c(outcome_col, id_col))
   k <- max(1L, min(length(predictors), as.integer(k)))
-  keep <- c(predictors[seq_len(k)], outcome_col)
+  keep <- c(predictors[seq_len(k)], outcome_col, id_col)
   df[, keep, drop = FALSE]
 }
 

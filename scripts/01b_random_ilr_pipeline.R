@@ -234,7 +234,8 @@ if (max_factor > 2) {
       aug_f <- select_first_k_predictors(
         aug_full,
         k_cols,
-        outcome_col = "Var"
+        outcome_col = "Var",
+        id_col = "sample_id"
       )
       # Split grouped+stratified for this factor
       split_f <- split_grouped_stratified(
