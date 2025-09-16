@@ -33,7 +33,7 @@ knitr:
 #| message: false
 #| warning: false
 # Create/clean graphics directory (absolute), set fig.path (relative)
-graphics_abs <- here::here("quatro_scripts", "density_impact_files", "graphics")
+graphics_abs <- here::here("quarto_scripts", "density_impact_files", "graphics")
 if (dir.exists(graphics_abs)) {
     unlink(graphics_abs, recursive = TRUE, force = TRUE)
 }
