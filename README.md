@@ -33,7 +33,8 @@ Adjust folders as needed for your workflow. Ensure `.gitignore` excludes large o
 
 1. Clone the repository.
 2. Open the project in your preffered IDE.
-3. Run `renv::restore()`. This will restore the environment needed to reproduce the analysis done in this project. 
+3. Open the `.RProj` file.
+4. Run `renv::restore()`. This will restore the environment needed to reproduce the analysis done in this project. 
 
 
 ### Running the Pipeline

@@ -4,7 +4,10 @@
 .Ruserdata
 .Rprofile
 .vscode/
+results/
+temp/
 data/data_raw/*.txt
 data/data_preproc/*.csv
 \# Quarto generated artifacts
 **/density_impact_files/libs
+.Renviron
