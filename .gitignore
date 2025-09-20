@@ -4,12 +4,29 @@
 .Ruserdata
 .Rprofile
 .vscode/
-results/
+
+\# Ignoring big files with results:
+results/rodriguez/*
+!results/rodriguez/
+results/random_ilr/*
+!results/random_ilr/
+results/benchmark/*
+!results/benchmark/
+results/results_aggregated/*
+!results/results_aggregated/
+
+\# Ignoring ad-hoc files.rd
 temp/
+
+\# Ignoring input data
 data/data_raw/*.txt
 data/data_preproc/*.csv
+
+\# Ignoring files with error/ output logs
 logs/*.err
 logs/*.out
+
 \# Quarto generated artifacts
 **/density_impact_files/libs
 .Renviron
+
