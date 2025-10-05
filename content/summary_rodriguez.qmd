@@ -18,8 +18,8 @@ editor: visual
 knitr:
   opts_chunk:
     fig.path: _figures/summary_rodriguez/
-    fig.width: 6.299
-    fig.height: 4.724
+    fig.width: 18
+    fig.height: 13.5
 ---
 
 ```{r}
@@ -405,4 +405,3 @@ browsable(tagList(
 ))
 ```
 :::
-
