@@ -108,13 +108,13 @@ boxplot_perf_metric <- function(
     theme(
       legend.position = "bottom",
       legend.title = element_blank(),
-      plot.title = element_text(size = 18),
+      plot.title = element_text(size = 16),
       plot.subtitle = element_text(size = 14),
       axis.title.x = element_text(size = 14),
       axis.title.y = element_text(size = 14),
-      axis.text.x = element_text(size = 14),
-      axis.text.y = element_text(size = 14),
-      legend.text = element_text(size = 14)
+      axis.text.x = element_text(size = 12, angle = 90),
+      axis.text.y = element_text(size = 12),
+      legend.text = element_text(size = 12)
     )
 }
 
@@ -213,7 +213,11 @@ roc_curve_summary <- function(aug_res, sel_id) {
     theme_bw() +
     theme(
       plot.title = element_text(size = 16),
-      plot.subtitle = element_text(size = 12),
+      plot.subtitle = element_text(size = 14),
+      axis.title.x = element_text(size = 14),
+      axis.title.y = element_text(size = 14),
+      axis.text.x = element_text(size = 12, angle = 90),
+      axis.text.y = element_text(size = 12),
       strip.text = element_text(size = 12)
     )
 }

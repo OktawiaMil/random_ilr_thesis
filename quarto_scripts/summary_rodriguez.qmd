@@ -1,6 +1,6 @@
 ---
 title: "Results Summary: Rodriguez Augmentation Methods"
-author: ""
+author: "Oktawia Miluch"
 date: today
 format:
   html:
@@ -10,10 +10,6 @@ format:
     fig-format: png
     code-fold: true
     embed-resources: true
-  gfm:
-    toc: true
-    number-sections: true
-    code-fold: true
 execute:
   echo: true
   warning: false
@@ -22,8 +18,8 @@ editor: visual
 knitr:
   opts_chunk:
     fig.path: figures/summary_rodriguez/
-    fig.width: 15
-    fig.height: 12
+    fig.width: 18
+    fig.height: 13.5
 ---
 
 ```{r}
@@ -190,7 +186,7 @@ browsable(tagList(
 #| label: save-rodriguez-latex
 #| echo: false
 
-output_dir <- here::here("quarto_scripts", "tables")
+output_dir <- here::here("quarto_scripts", "tables", "summary_rodriguez")
 metric <- "roc_auc"
 model_name <- "lasso"
 aug_factors <- sort(unique(lasso_pc_half$augmentation_factor))

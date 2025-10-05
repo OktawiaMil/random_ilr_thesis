@@ -1,0 +1,20 @@
+project:
+  type: website
+  output-dir: docs
+  resources:
+    - quarto_scripts/figures/
+
+website:
+  title: "Random ILR Thesis"
+  navbar:
+    left:
+      - text: "Density Impact"
+        href: quarto_scripts/density_impact.qmd
+      - text: "Rodriguez Summary"
+        href: quarto_scripts/summary_rodriguez.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+

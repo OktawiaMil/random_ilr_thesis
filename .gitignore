@@ -27,6 +27,13 @@ logs/*.err
 logs/*.out
 
 \# Quarto generated artifacts
-**/density_impact_files/libs
 .Renviron
+
+
+/.quarto/
+**/*.quarto_ipynb
+# Quarto caches and rendered artifacts
+quarto_scripts/.quarto/
+quarto_scripts/figures/
+quarto_scripts/*.html
 

@@ -1,6 +1,6 @@
-﻿---
+---
 title: "Density Impact"
-author: ""
+author: "Oktawia Miluch"
 date: today
 format:
   html:
@@ -8,11 +8,6 @@ format:
     number-sections: true
     theme: cosmo
     df-print: paged
-    fig-format: png
-    code-fold: true
-  gfm:
-    toc: true
-    number-sections: true
     fig-format: png
     code-fold: true
 execute:
@@ -23,9 +18,10 @@ editor: visual
 knitr:
   opts_chunk:
     fig.path: figures/density_impact/
-    fig.width: 15
-    fig.height: 12
+    fig.width: 18
+    fig.height: 13.5
 ---
+
 
 ```{r}
 #| label: setup
@@ -212,7 +208,7 @@ In the below analysis the following scenario is considered:
 For every original feature, count how often it appears in a numerator versus a denominator across all new ILR coordinates (this is, as shown above, determined by the GHL-matrix coefficients). The bars represent the average number of occurrences per original feature over the $100$ simulations.
 
 ```{r}
-# label: simulation_num_denom
+#| label: den_num_plot
 org_features <- 20
 top_k <- 5
 n_iters <- 100
@@ -236,7 +232,7 @@ results <- tibble(
 # For a given density, on average, how many times is the original feature_k selected into numerator vs denominator
 # Max number of occurrence in numerator/ denominator: (n_org_features - 1) * n_iters
 
-results |>
+data_plt1 <- results |>
     select(density, iter, column, numerator) |>
     unnest(numerator) |>
     rename(feature = numerator) |>
@@ -259,7 +255,34 @@ results |>
             levels = c("Default", sort(as.numeric(setdiff(unique(density), "Default"))))
         ),
         part = str_to_title(part)
-    ) |>
+    )
+
+data_plt1 |>
+    filter(density %in% c("Default", seq(0.01, 0.09, by = 0.01))) |>
+    ggplot(aes(x = feature, y = value, fill = part)) +
+    geom_bar(position = "dodge", stat = "identity") +
+    facet_wrap(~density, ncol = 3) +
+    theme_bw() +
+    labs(
+        x = "Original feature",
+        y = paste("Average occurance across", n_iters, "GHL simulations"),
+        title = "Contributions of Original Features to Numerator and Denominator in Random ILR Coordinates",
+        subtitle = paste("Aggregated over", n_iters, "GHL simulations, panels split by GHL density")
+    ) +
+    theme(
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        plot.title = element_text(size = 16),
+        plot.subtitle = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.x = element_text(size = 12, angle = 90),
+        axis.text.y = element_text(size = 12),
+        legend.text = element_text(size = 12)
+    )
+
+data_plt1 |>
+    filter(density %in% c("Default", seq(0.1, 0.9, by = 0.1))) |>
     ggplot(aes(x = feature, y = value, fill = part)) +
     geom_bar(position = "dodge", stat = "identity") +
     facet_wrap(~density, ncol = 3) +
@@ -274,12 +297,13 @@ results |>
     theme(
         legend.position = "bottom",
         legend.title = element_blank(),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 16),
+        plot.subtitle = element_text(size = 14),
         axis.title.x = element_text(size = 14),
         axis.title.y = element_text(size = 14),
-        axis.text.x = element_text(size = 14, angle = 90),
-        axis.text.y = element_text(size = 14),
-        legend.text = element_text(size = 14)
+        axis.text.x = element_text(size = 12, angle = 90),
+        axis.text.y = element_text(size = 12),
+        legend.text = element_text(size = 12)
     )
 
 ```
@@ -290,7 +314,7 @@ For a selected density of the skew-symmetric matrix used to generate the GHL mat
 
 ```{r}
 #| label: top_k_contr
-results |>
+data_plt2 <- results |>
     select(iter, column, density, top_contribution) |>
     unnest(top_contribution) |>
     count(density, feature, name = "times_top_k") |>
@@ -302,12 +326,14 @@ results |>
         ),
         feature = str_remove(feature, "org_"),
         feature = fct_reorder(feature, parse_number(feature))
-    ) |>
+    )
+
+data_plt2 |>
+    filter(density %in% c("Default", seq(0.01, 0.09, by = 0.01))) |>
     ggplot(aes(x = feature, y = times_top_k)) +
     geom_point() +
     facet_wrap(~density, ncol = 3) +
     theme_bw() +
-    # scale_y_continuous(breaks = scales::breaks_width(10), minor_breaks = NULL) +
     labs(
         x = "Original feature",
         y = paste("Average number across", n_iters, "GHL simulations"),
@@ -317,11 +343,36 @@ results |>
     theme(
         legend.position = "bottom",
         legend.title = element_blank(),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 16),
+        plot.subtitle = element_text(size = 14),
         axis.title.x = element_text(size = 14),
         axis.title.y = element_text(size = 14),
-        axis.text.x = element_text(size = 14, angle = 90),
-        axis.text.y = element_text(size = 14),
-        legend.text = element_text(size = 14)
+        axis.text.x = element_text(size = 12, angle = 90),
+        axis.text.y = element_text(size = 12),
+        legend.text = element_text(size = 12)
+    )
+
+data_plt2 |>
+    filter(density %in% c("Default", seq(0.1, 0.9, by = 0.1))) |>
+    ggplot(aes(x = feature, y = times_top_k)) +
+    geom_point() +
+    facet_wrap(~density, ncol = 3) +
+    theme_bw() +
+    labs(
+        x = "Original feature",
+        y = paste("Average number across", n_iters, "GHL simulations"),
+        title = paste("Mean Number of ILR Coordinates in Which a Feature Ranks Top", top_k, "Contributor"),
+        subtitle = paste("Aggregated over", n_iters, "GHL simulations, panels split by GHL density")
+    ) +
+    theme(
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        plot.title = element_text(size = 16),
+        plot.subtitle = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.x = element_text(size = 12, angle = 90),
+        axis.text.y = element_text(size = 12),
+        legend.text = element_text(size = 12)
     )
 ```
