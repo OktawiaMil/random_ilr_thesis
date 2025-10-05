@@ -22,7 +22,7 @@ execute:
 editor: visual
 knitr:
   opts_chunk:
-    fig.out: density_impact_files/graphics/
+    fig.path: figures/density_impact/
     fig.width: 15
     fig.height: 12
 ---
@@ -32,13 +32,16 @@ knitr:
 #| include: false
 #| message: false
 #| warning: false
-# Create/clean graphics directory (absolute), set fig.path (relative)
-graphics_abs <- here::here("quarto_scripts", "density_impact_files", "graphics")
-if (dir.exists(graphics_abs)) {
-    unlink(graphics_abs, recursive = TRUE, force = TRUE)
-}
+# Create/clean graphics directory, set fig.path
+graphics_abs <- here::here("quarto_scripts", "figures", "density_impact")
 dir.create(graphics_abs, recursive = TRUE, showWarnings = FALSE)
-knitr::opts_chunk$set(fig.path = "density_impact_files/graphics/")
+
+# clean contents but keep folder
+to_remove <- list.files(graphics_abs, all.files = TRUE, full.names = TRUE, no.. = TRUE)
+unlink(to_remove, recursive = TRUE, force = TRUE)
+
+# ensure knitr writes to the selected path
+knitr::opts_chunk$set(fig.path = "figures/density_impact/")
 
 # Libraries
 library(augmenter)
@@ -59,19 +62,21 @@ The purpose of this document is to show the influence of the density of a skew-s
 
 To understand the impact of density of skew-symmetric matrix on the GHL matrix, and in consequence on the random ilr transformation, one needs to understand first in terms of the formulas how is the GHL matrix used in the random ilr transformation. In order to achieve it, let's have a look on the below example with the use of the four dimensional compositional vector $\mathbf{x},\, \mathbf{x} \in S^4$:
 
-$$x \in S^{4}, \; x=\bigl[\,x_{1},\,x_{2},\,x_{3},\,x_{4}\,\bigr]$$
+$$
+\mathbf{x} \in S^{4}, \; \mathbf{x}=\bigl[\,x_{1},\,x_{2},\,x_{3},\,x_{4}\,\bigr]
+$$
 
 $$
 \mathrm{ilr}(x)=\mathrm{clr}(x)\,\mathrm{L}_{-1}=\bigl[\,y_{1},\,y_{2},\,y_{3}\,\bigr],
 $$
 
-where $L_1$ is the GHL matrix without last column and $dim\bigl(L_{-1}\bigr) = 4 \times 3$. The centered log-ratio transformation is given by:
+where $L_{-1}$ is the GHL matrix without last column and $dim\bigl(L_{-1}\bigr) = 4 \times 3$. The centered log-ratio transformation is given by:
 
 $$
 \mathrm{clr}(x)=\Bigl[\,\ln\frac{x_{1}}{g(x)},\,\ln\frac{x_{2}}{g(x)},\,\ln\frac{x_{3}}{g(x)},\,\ln\frac{x_{4}}{g(x)}\,\Bigr],
 $$
 
-where $g(x)$ is a geometric mean of vector $\mathbf{x}$ entries. Let's represent GHL matrix with the removed last column as follows:
+where $g(x)$ is a geometric mean of the entries of a vector $\mathbf{x}$ . Let's represent the GHL matrix with the removed last column as follows:
 
 $$
 L_{-1} = \begin{bmatrix}a_{1} & b_{1} & c_{1} \\a_{2} & b_{2} & c_{2} \\a_{3} & b_{3} & c_{3} \\a_{4} & b_{4} & c_{4}\end{bmatrix}
@@ -108,7 +113,7 @@ In such a case original features $x_1, x_3$ contribute to the new coordinate in 
 
 The strength of the contribution of a given original feature to the new random ilr coordinate depends on the absolute value of the coefficient from the GHL matrix. For example, the contribution of $x_1$ to ilr coordinate $y_1$ depends on the $|a_1|$. In the below analysis term **top k contributor** will be used.
 
-**Top k contributor**: Feature $x_j$ coming from compositional vector $\mathbf{x}, \, \mathbf{x} \in S^p$ is considered as the top $k$ contributor to the new ilr coordinate $y_i, \, y_i = \ln\!\bigl(x_{1}^{w_{1}}x_{2}^{w_{2}} \dots x_{p}^{w_{p}}\bigr) \; \text{where} \; \mathbf{y} = \bigl(y_1, y_2, \dots, y_{p-1} \bigr)$ when the absolute value of the coefficient from GHL matrix associated with $x_i$ ranks within top $k$ largest absolute coefficients $|w_1|, |w_2|, \dots, |w_p|$.
+**Top k contributor**: Feature $x_j$ coming from compositional vector $\mathbf{x}, \, \mathbf{x} \in S^p$ is considered as the top $k$ contributor to the new ilr coordinate $y_i, \, y_i = \ln\!\bigl(x_{1}^{w_{1}}x_{2}^{w_{2}} \dots x_{p}^{w_{p}}\bigr) \; \text{where} \; \mathbf{y} = \bigl(y_1, y_2, \dots, y_{p-1} \bigr)$ when the absolute value of the coefficient from GHL matrix associated with $x_j$ ranks within top $k$ largest absolute coefficients $|w_1|, |w_2|, \dots, |w_p|$.
 
 ## Analysis
 
@@ -164,7 +169,7 @@ understand_randilr <- function(ghl, org_feature_names, top_k) {
 }
 
 # Function:
-# 1. Constructh square GHL matrix with n_org_features rows and column by using skew-symmetric matrix with `density`
+# 1. Construct square GHL matrix with n_org_features rows and column by using skew-symmetric matrix with `density`
 # 2. Gathers info about contribution to numerator/denominator of each feature and top k contributors
 # 3. repeats 1-2 n_iters times
 density_impact <- function(seed_start = 2025, n_org_features, density, top_k, n_iters = 10) {
@@ -198,7 +203,7 @@ In the below analysis the following scenario is considered:
 
 -   analyzed density of skew-symmetric matrix : default density (very sparse skew-symmetric matrix) and $\delta \in (0.01, 0.02, \dots, 0.1, 0.2, 0.3, \dots, 0.9)$,
 
--   for each density level of a skew-symmetric matrix, 100 independent GHL matrices are generated,
+-   for each density level of a skew-symmetric matrix, $100$ independent GHL matrices are generated,
 
 -   for a given GHL matrix, the proportion of times when a given original feature contributes to the numerator vs. denominator along with the top $5$ contributors are analyzed.
 

@@ -7,6 +7,7 @@ format:
     toc: true
     number-sections: true
     theme: cosmo
+    fig-format: png
     code-fold: true
     embed-resources: true
   gfm:
@@ -18,6 +19,11 @@ execute:
   warning: false
   message: false
 editor: visual
+knitr:
+  opts_chunk:
+    fig.path: figures/summary_rodriguez/
+    fig.width: 15
+    fig.height: 12
 ---
 
 ```{r}
@@ -28,8 +34,27 @@ library(purrr)
 library(dplyr)
 library(tidyr)
 library(stringr)
+library(ggplot2)
+library(viridis)
+library(crosstalk)
+library(DT)
+library(htmltools)
+library(kableExtra)
 
+# Create/clean graphics directory, set fig.path
+graphics_abs <- here::here("quarto_scripts", "figures", "summary_rodriguez")
+dir.create(graphics_abs, recursive = TRUE, showWarnings = FALSE)
+
+# clean contents but keep folder
+to_remove <- list.files(graphics_abs, all.files = TRUE, full.names = TRUE, no.. = TRUE)
+unlink(to_remove, recursive = TRUE, force = TRUE)
+
+# ensure knitr writes to the selected path
+knitr::opts_chunk$set(fig.path = "figures/summary_rodriguez/")
+
+# Source helpers
 source(file.path(here::here(), "R", "summary_Rodriguez_helpers.R"))
+source(file.path(here::here(), "R", "quarto_scripts_helpers.R"))
 
 # Read in aggregated results from Rodriguez augmentation methods
 data_dir <- here::here("results", "results_aggregated")
@@ -64,19 +89,15 @@ walk2(benchmark_data, benchmark_names, ~ assign(.y, .x, envir = .GlobalEnv))
 rm(benchmark_data)
 ```
 
-## Interactive Summary Table - pseudo-count $1/2$
+## LASSO - Pseudo-count $1/2$
+
+### Interactive Summary Table
 
 Use the controls to explore how Rodriguez augmentation strategies compare with their benchmarks in terms of the mean performance metric. You can choose among three performance metrics and four augmentation factors. Results are shown for experiments using data with a **pseudo-count of** $\mathbf{1/2}$.
 
 ```{r}
 #| label: rodriguez-dashboard
 #| echo: false
-
-library(crosstalk)
-library(DT)
-library(htmltools)
-library(kableExtra)
-
 lasso_summary_wide <- build_summary_dataset(
     benchmark = benchmark_lasso_pc_half,
     aug_results = lasso_pc_half
@@ -193,4 +214,198 @@ for (aug_factor in aug_factors) {
 }
 ```
 
-##
+### Boxplots of performance metrics
+
+#### ROC AUC
+
+```{r}
+#| echo: false
+#| include: false
+af_choices <- sort(unique(lasso_pc_half$augmentation_factor))
+ids_avail <- sort(unique(as.numeric(lasso_pc_half$data_id)))
+
+```
+
+::: panel-tabset
+```{r}
+#| echo: false
+#| results: asis
+#| label: roc_auc_lasso_rod
+
+for (k in af_choices) {
+  cat("### k = ", k, "\n\n", sep = "")
+  print(
+    boxplot_perf_metric(
+      aug_res  = lasso_pc_half,
+      benchmark_res = benchmark_lasso_pc_half,
+      plot_metric = "roc_auc",
+      aug_factor = k
+    )
+  )
+  cat("\n\n")
+}
+```
+:::
+
+### Missclasification Rate
+
+::: panel-tabset
+```{r}
+#| echo: false
+#| results: asis
+#| label: misclas_lasso_rod
+
+for (k in af_choices) {
+  cat("### k = ", k, "\n\n", sep = "")
+  print(
+    boxplot_perf_metric(
+      aug_res  = lasso_pc_half,
+      benchmark_res = benchmark_lasso_pc_half,
+      plot_metric = "misclassification_rate",
+      aug_factor = k
+    )
+  )
+  cat("\n\n")
+}
+```
+:::
+
+#### Brier Score
+
+::: panel-tabset
+```{r}
+#| echo: false 
+#| label: brier_lasso_rod
+#| results: asis  
+
+for (k in af_choices) {
+  cat("### k = ", k, "\n\n", sep = "")
+  print(
+    boxplot_perf_metric(
+      aug_res  = lasso_pc_half,
+      benchmark_res = benchmark_lasso_pc_half,
+      plot_metric = "brier_class",
+      aug_factor = k
+    )
+  )
+  cat("\n\n")
+}
+```
+:::
+
+### ROC Curve
+
+::: panel-tabset
+```{r}
+#| echo: false
+#| results: asis  
+#| label: roc_curve_lasso
+
+for (k in ids_avail) {
+  cat("### k = ", k, "\n\n", sep = "")
+  print(
+    roc_curve_summary(
+      aug_res  = lasso_pc_half,
+      sel_id = k
+    )
+  )
+  cat("\n\n")
+}
+```
+
+## RF - Pseudo-count $1/2$
+
+TODO: why summary for RF is not rendering????
+
+```{r}
+#| label: summary_tab_rf
+#| echo: false
+
+rf_summary_wide <- build_summary_dataset(
+    benchmark = benchmark_random_forest_pc_half,
+    aug_results = random_forest_pc_half
+)
+
+rf_summary_formatted <- format_summary_table(
+    rf_summary_wide,
+    digits = 3,
+    format = "html"
+)
+
+name_map <- c(
+    "Augmentation factor" = "augmentation_factor",
+    "Metric" = ".metric",
+    "Dataset" = "data_id",
+    "Proportion" = "proportion",
+    "Standard ILR" = "standard_ilr",
+    "Aitchison Mixup" = "aitchison_mixup",
+    "Comp. Cutmix" = "comp_cutmix",
+    "Comp. Feature Dropout" = "comp_feature"
+)
+
+rf_summary_formatted <- rf_summary_formatted |>
+    rename(!!!name_map) |>
+    mutate(
+        `Augmentation factor` = factor(`Augmentation factor`, levels = sort(unique(`Augmentation factor`))),
+        Metric = factor(Metric, levels = sort(unique(Metric))),
+        Dataset = as.integer(Dataset)
+    ) |>
+    arrange(`Augmentation factor`, Metric, Dataset) |>
+    select(
+        `Augmentation factor`,
+        Metric,
+        Dataset,
+        `Proportion`,
+        `Standard ILR`,
+        `Aitchison Mixup`,
+        `Comp. Cutmix`,
+        `Comp. Feature Dropout`
+    )
+
+table_container <- htmltools::withTags(table(
+    class = "display",
+    thead(
+        tr(
+            th(rowspan = 2, "Augmentation factor"),
+            th(rowspan = 2, "Metric"),
+            th(rowspan = 2, "Dataset"),
+            th(colspan = 2, "Benchmark"),
+            th(rowspan = 2, "Aitchison Mixup"),
+            th(rowspan = 2, "Comp. Cutmix"),
+            th(rowspan = 2, "Comp. Feature Dropout")
+        ),
+        tr(
+            th("Proportion"),
+            th("Standard ILR")
+        )
+    )
+))
+
+shared_rf <- SharedData$new(
+    rf_summary_formatted,
+    key = ~ paste(Metric, `Augmentation factor`, Dataset)
+)
+
+controls <- bscols(
+    widths = c(6, 6),
+    filter_select("metric_filter", "Performance metric", shared_rf, ~Metric),
+    filter_select("factor_filter", "Augmentation factor", shared_rf, ~`Augmentation factor`)
+)
+
+browsable(tagList(
+    controls,
+    datatable(
+        shared_rf,
+        escape = FALSE,
+        rownames = FALSE,
+        container = table_container,
+        options = list(
+            dom = "tip",
+            pageLength = 12,
+            ordering = FALSE,
+            autoWidth = TRUE
+        )
+    )
+))
+```
+:::

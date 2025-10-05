@@ -1,13 +1,9 @@
 <!-- TODO: adjust this file along with adding new code files -->
 <!-- TODO 2: once you set up renv, change the structure of setup section  -->
 
-# random_ilr_thesis
+# Overview
 
-Master’s thesis repository containing data preparation and analysis code in R.
-
-## Overview
-
-This project organizes R scripts, data assets, and outputs for a thesis project. Scripts in `R/` are typically numbered to indicate execution order (e.g., `R/00_data_prep`). Data is expected under `data/` and results under `outputs/`.
+This repository contains the code in R used for the master’s thesis introducing the random ilr data augmentation techniques. This project organizes R scripts, data sets, and outputs for a thesis project. Scripts in `R/` are typically numbered to indicate execution order (e.g., `R/00_data_prep` should be executed as first). Data is expected under `data/` and results are saved under `results/`.
 
 ## Project Structure
 
