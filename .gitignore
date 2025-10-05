@@ -26,14 +26,16 @@ data/data_preproc/*.csv
 logs/*.err
 logs/*.out
 
-\# Quarto generated artifacts
 .Renviron
 
-
+\# Quarto generated artifacts
 /.quarto/
 **/*.quarto_ipynb
-# Quarto caches and rendered artifacts
-quarto_scripts/.quarto/
-quarto_scripts/figures/
-quarto_scripts/*.html
 
+
+# Quarto caches and rendered artifacts
+content/_figures/*
+!content/_figures/
+content/_tables/*
+!content/_tables/
+content/_freeze/
