@@ -243,5 +243,75 @@
     "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "Impact of the augmentation factor on the predictive perfromance",
     "text": "Impact of the augmentation factor on the predictive perfromance\n\nROC AUC\n\n\n\nMissclasification Rate"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html",
+    "href": "content/summary_random_ilr_pc_half.html",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "",
+    "text": "The table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor\n\n\n\n\n\n\n\n\n\n\n\n\n\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDefault0.10.5"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table",
+    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "",
+    "text": "The table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics",
+    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "",
+    "text": "One tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
+    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "",
+    "text": "The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDefault0.10.5"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table-1",
+    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "2.1 Interactive Summary Table",
+    "text": "2.1 Interactive Summary Table\nThe table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-1",
+    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "2.2 Boxplots of performance metrics",
+    "text": "2.2 Boxplots of performance metrics\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n2.2.1 ROC AUC\n\n2.2.1.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.1.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.1.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2 Misclassification Rate\n\n2.2.2.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
+    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "2.3 Impact of the augmentation factor on the predictive perfromance",
+    "text": "2.3 Impact of the augmentation factor on the predictive perfromance\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n2.3.1 ROC AUC\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.3.2 Misclassification Rate\n\nDefault0.10.5"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table-2",
+    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "3.1 Interactive Summary Table",
+    "text": "3.1 Interactive Summary Table\nThe table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-2",
+    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "3.2 Boxplots of performance metrics",
+    "text": "3.2 Boxplots of performance metrics\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n3.2.1 ROC AUC\n\n3.2.1.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.1.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.1.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2 Misclassification Rate\n\n3.2.2.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
+    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "section": "3.3 Impact of the augmentation factor on the predictive perfromance",
+    "text": "3.3 Impact of the augmentation factor on the predictive perfromance\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n3.3.1 ROC AUC\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.3.2 Misclassification Rate\n\nDefault0.10.5"
   }
 ]

@@ -1,0 +1,596 @@
+---
+title: "Results Summary: random ILR Augmentation Methods - Pseudo-count $0.5$"
+author: "Oktawia Miluch"
+date: today
+bibliography: ../references.bib
+link-citations: true
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+    fig-format: png
+    code-fold: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+knitr:
+  opts_chunk:
+    fig.path: _figures/summary_random_ilr_pc_half/
+    fig.width: 18
+    fig.height: 13.5
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(here)
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(viridis)
+library(crosstalk)
+library(DT)
+library(htmltools)
+library(kableExtra)
+
+# Create/clean graphics directory, set fig.path
+graphics_abs <- here::here("content", "_figures", "summary_random_ilr_pc_half")
+dir.create(graphics_abs, recursive = TRUE, showWarnings = FALSE)
+
+# clean contents but keep folder
+to_remove <- list.files(
+  graphics_abs,
+  all.files = TRUE,
+  full.names = TRUE,
+  no.. = TRUE
+)
+unlink(to_remove, recursive = TRUE, force = TRUE)
+
+# ensure knitr writes to the selected path
+knitr::opts_chunk$set(
+  fig.path   = "_figures/summary_random_ilr_pc_half/",
+  fig.width  = 18,
+  fig.height = 13.5
+)
+
+# Source helpers
+source(file.path(here::here(), "R", "summary_random_ilr_helpers.R"))
+source(file.path(here::here(), "R", "summary_quarto_docs_helpers.R"))
+
+# Read in aggregated results from random ILR augmentation methods
+data_dir <- here::here("results", "results_aggregated")
+rod_files <- list.files(
+  data_dir,
+  pattern = "^random_ilr.*_pc_half$",
+  full.names = TRUE
+)
+
+rod_names <- rod_files |>
+  basename() |>
+  str_remove("^random_ilr_")
+
+rod_data <- map(rod_files, readRDS)
+
+walk2(rod_data, rod_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(rod_data)
+
+# Read in benchmark models
+benchmark_files <- list.files(
+  data_dir,
+  pattern = "^benchmark.*_pc_half$",
+  full.names = TRUE
+)
+
+benchmark_names <- benchmark_files |>
+  basename()
+
+benchmark_data <- map(benchmark_files, readRDS)
+
+walk2(benchmark_data, benchmark_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(benchmark_data)
+```
+
+# Logistic regression with $\text{L}_1$ penalty 
+## Interactive Summary Table
+The table below shows the mean of the selected performance metric for the chosen augmentation factor.
+```{r}
+#| label: lasso-dashboard
+#| echo: false
+#| results: asis
+
+create_summary_dashboard_random_ilr(
+  benchmark = benchmark_lasso_pc_half,
+  aug_results = lasso_pc_half,
+  id_prefix = "lasso_random_ilr_pc05"
+)
+
+```
+
+```{r}
+#| label: lasso-save-latex
+#| echo: false
+
+save_metric_table_latex_random_ilr(
+  benchmark = benchmark_lasso_pc_half,
+  aug_results = lasso_pc_half,
+  model_name = "lasso",
+  output_dir = here::here("content", "_tables", "summary_random_ilr_pc_half")
+)
+
+```
+
+## Boxplots of performance metrics
+
+One tabset with a box plot corresponds to a single augmentation factor in the section below.
+
+### ROC AUC
+#### Density default
+
+::: panel-tabset
+```{r}
+#| label: lasso_roc_auc_boxplot_den_def
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  aug_results = lasso_pc_half, 
+  benchmark_results = benchmark_lasso_pc_half,
+  metric = "roc_auc", 
+  sel_density = NA_real_
+  )
+
+```
+:::
+
+#### Density = 0.1
+
+::: panel-tabset
+```{r}
+#| label: lasso_roc_auc_boxplot_den_01
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  aug_results = lasso_pc_half, 
+  benchmark_results = benchmark_lasso_pc_half,
+  metric = "roc_auc", 
+  sel_density = 0.1
+  )
+
+```
+:::
+
+#### Density = 0.5
+
+::: panel-tabset
+```{r}
+#| label: lasso_roc_auc_boxplot_den_05
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  aug_results = lasso_pc_half, 
+  benchmark_results = benchmark_lasso_pc_half,
+  metric = "roc_auc", 
+  sel_density = 0.5
+  )
+
+```
+:::
+
+
+### Misclassification Rate
+#### Density default
+
+::: panel-tabset
+```{r}
+#| label: lasso_mis_clas_boxplot_den_def
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  aug_results = lasso_pc_half, 
+  benchmark_results = benchmark_lasso_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = NA_real_
+  )
+```
+:::
+
+#### Density = 0.1
+
+::: panel-tabset
+```{r}
+#| label: lasso_mis_clas_boxplot_den_01
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  aug_results = lasso_pc_half, 
+  benchmark_results = benchmark_lasso_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = 0.1
+  )
+```
+:::
+
+#### Density = 0.5
+
+::: panel-tabset
+```{r}
+#| label: lasso_mis_clas_boxplot_den_05
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  aug_results = lasso_pc_half, 
+  benchmark_results = benchmark_lasso_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = 0.5
+  )
+```
+:::
+
+## Impact of the augmentation factor on the predictive perfromance 
+
+The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.
+
+### ROC AUC 
+::: panel-tabset
+```{r}
+#| label: lasso_aug_fac_imp_roc
+#| echo: false
+#| results: asis
+render_aug_imp_tabs(metric = "roc_auc", aug_results = lasso_pc_half)
+```
+:::
+
+### Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: lasso_aug_fac_imp_misclas
+#| echo: false
+#| results: asis
+
+render_aug_imp_tabs(metric = "misclassification_rate", aug_results = lasso_pc_half)
+
+```
+:::
+
+# Random Forest
+## Interactive Summary Table
+The table below shows the mean of the selected performance metric for the chosen augmentation factor.
+```{r}
+#| label: random_forest-dashboard
+#| echo: false
+#| results: asis
+
+create_summary_dashboard_random_ilr(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  id_prefix = "rf_random_ilr_pc05"
+)
+
+```
+
+```{r}
+#| label: random_forest-save-latex
+#| echo: false
+save_metric_table_latex_random_ilr(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  model_name = "random_forest",
+  output_dir = here::here("content", "_tables", "summary_random_ilr_pc_half")
+)
+
+```
+
+## Boxplots of performance metrics
+
+One tabset with a box plot corresponds to a single augmentation factor in the section below.
+
+### ROC AUC
+#### Density default
+
+::: panel-tabset
+```{r}
+#| label: rf_roc_auc_boxplot_den_def
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  metric = "roc_auc", 
+  sel_density = NA_real_
+  )
+
+```
+:::
+
+#### Density = 0.1
+
+::: panel-tabset
+```{r}
+#| label: rf_roc_auc_boxplot_den_01
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  metric = "roc_auc", 
+  sel_density = 0.1
+  )
+
+```
+:::
+
+#### Density = 0.5
+
+::: panel-tabset
+```{r}
+#| label: rf_roc_auc_boxplot_den_05
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  metric = "roc_auc", 
+  sel_density = 0.5
+  )
+
+```
+:::
+
+
+### Misclassification Rate
+#### Density default
+
+::: panel-tabset
+```{r}
+#| label: rf_mis_clas_boxplot_den_def
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = NA_real_
+  )
+```
+:::
+
+#### Density = 0.1
+
+::: panel-tabset
+```{r}
+#| label: rf_mis_clas_boxplot_den_01
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = 0.1
+  )
+```
+:::
+
+#### Density = 0.5
+
+::: panel-tabset
+```{r}
+#| label: rf_mis_clas_boxplot_den_05
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = 0.5
+  )
+```
+:::
+
+## Impact of the augmentation factor on the predictive perfromance 
+
+The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.
+
+### ROC AUC 
+::: panel-tabset
+```{r}
+#| label: random_forest_aug_fac_imp_roc
+#| echo: false
+#| results: asis
+render_aug_imp_tabs(metric = "roc_auc", aug_results = random_forest_pc_half)
+```
+:::
+
+### Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: random_forest_aug_fac_imp_misclas
+#| echo: false
+#| results: asis
+
+render_aug_imp_tabs(metric = "misclassification_rate", aug_results = random_forest_pc_half)
+
+```
+:::
+
+# XGBoost
+## Interactive Summary Table
+The table below shows the mean of the selected performance metric for the chosen augmentation factor.
+
+```{r}
+#| label: xgboost-dashboard
+#| echo: false
+#| results: asis
+
+create_summary_dashboard_random_ilr(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  id_prefix = "xgb_random_ilr_pc05"
+)
+
+```
+
+```{r}
+#| label: xgboost-save-latex
+#| echo: false
+save_metric_table_latex_random_ilr(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  model_name = "xgboost",
+  output_dir = here::here("content", "_tables", "summary_random_ilr_pc_half")
+)
+
+```
+
+## Boxplots of performance metrics
+
+One tabset with a box plot corresponds to a single augmentation factor in the section below.
+
+### ROC AUC
+#### Density default
+
+::: panel-tabset
+```{r}
+#| label: xgb_roc_auc_boxplot_den_def
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  metric = "roc_auc", 
+  sel_density = NA_real_
+  )
+
+```
+:::
+
+#### Density = 0.1
+
+::: panel-tabset
+```{r}
+#| label: xgb_roc_auc_boxplot_den_01
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  metric = "roc_auc", 
+  sel_density = 0.1
+  )
+
+```
+:::
+
+#### Density = 0.5
+
+::: panel-tabset
+```{r}
+#| label: xgb_roc_auc_boxplot_den_05
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  metric = "roc_auc", 
+  sel_density = 0.5
+  )
+
+```
+:::
+
+
+### Misclassification Rate
+#### Density default
+
+::: panel-tabset
+```{r}
+#| label: xgb_mis_clas_boxplot_den_def
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = NA_real_
+  )
+```
+:::
+
+#### Density = 0.1
+
+::: panel-tabset
+```{r}
+#| label: xgb_mis_clas_boxplot_den_01
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = 0.1
+  )
+```
+:::
+
+#### Density = 0.5
+
+::: panel-tabset
+```{r}
+#| label: xgb_mis_clas_boxplot_den_05
+#| echo: false
+#| results: asis
+
+render_boxplot_per_density(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  metric = "misclassification_rate", 
+  sel_density = 0.5
+  )
+```
+:::
+
+## Impact of the augmentation factor on the predictive perfromance 
+
+The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.
+
+### ROC AUC 
+::: panel-tabset
+```{r}
+#| label: xgboost_aug_fac_imp_roc
+#| echo: false
+#| results: asis
+render_aug_imp_tabs(metric = "roc_auc", aug_results = xgboost_pc_half)
+```
+:::
+
+### Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: xgboost_aug_fac_imp_misclas
+#| echo: false
+#| results: asis
+
+render_aug_imp_tabs(metric = "misclassification_rate", aug_results = xgboost_pc_half)
+
+```
+:::
