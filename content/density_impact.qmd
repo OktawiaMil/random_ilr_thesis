@@ -1,4 +1,4 @@
----
+﻿---
 title: "Density Impact"
 author: "Oktawia Miluch"
 date: today
@@ -36,8 +36,12 @@ to_remove <- list.files(graphics_abs, all.files = TRUE, full.names = TRUE, no.. 
 unlink(to_remove, recursive = TRUE, force = TRUE)
 
 # ensure knitr writes to the selected path
-knitr::opts_chunk$set(fig.path = "_figures/density_impact/")
-
+#knitr::opts_chunk$set(fig.path = "_figures/density_impact/")
+knitr::opts_chunk$set(
+  fig.path   = "_figures/density_impact/",
+  fig.width  = 18,
+  fig.height = 13.5
+)
 # Libraries
 library(augmenter)
 library(dplyr)

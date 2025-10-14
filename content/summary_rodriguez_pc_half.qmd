@@ -1,0 +1,538 @@
+﻿---
+title: "Results Summary: Rodriguez Augmentation Methods - Pseudo-count $0.5$"
+author: "Oktawia Miluch"
+date: today
+bibliography: ../references.bib
+link-citations: true
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+    fig-format: png
+    code-fold: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+knitr:
+  opts_chunk:
+    fig.path: _figures/summary_rodriguez_pc_half/
+    fig.width: 18
+    fig.height: 13.5
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(here)
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(viridis)
+library(crosstalk)
+library(DT)
+library(htmltools)
+library(kableExtra)
+
+# Create/clean graphics directory, set fig.path
+graphics_abs <- here::here("content", "_figures", "summary_rodriguez_pc_half")
+dir.create(graphics_abs, recursive = TRUE, showWarnings = FALSE)
+
+# clean contents but keep folder
+to_remove <- list.files(
+  graphics_abs,
+  all.files = TRUE,
+  full.names = TRUE,
+  no.. = TRUE
+)
+unlink(to_remove, recursive = TRUE, force = TRUE)
+
+# ensure knitr writes to the selected path
+knitr::opts_chunk$set(
+  fig.path   = "_figures/summary_rodriguez_pc_half/",
+  fig.width  = 18,
+  fig.height = 13.5
+)
+
+# Source helpers
+source(file.path(here::here(), "R", "summary_rodriguez_helpers.R"))
+source(file.path(here::here(), "R", "summary_quarto_docs_helpers.R"))
+
+# Read in aggregated results from Rodriguez augmentation methods
+data_dir <- here::here("results", "results_aggregated")
+rod_files <- list.files(
+  data_dir,
+  pattern = "^rodriguez.*_pc_half$",
+  full.names = TRUE
+)
+
+rod_names <- rod_files |>
+  basename() |>
+  str_remove("^rodriguez_")
+
+rod_data <- map(rod_files, readRDS)
+
+walk2(rod_data, rod_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(rod_data)
+
+# Read in benchmark models
+benchmark_files <- list.files(
+  data_dir,
+  pattern = "^benchmark.*_pc_half$",
+  full.names = TRUE
+)
+
+benchmark_names <- benchmark_files |>
+  basename()
+
+benchmark_data <- map(benchmark_files, readRDS)
+
+walk2(benchmark_data, benchmark_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(benchmark_data)
+```
+
+# Logistic regression with $\text{L}_1$ penalty - data expressed as proportions
+
+## Interactive Summary Table
+
+Use the controls to explore how the three augmentation strategies analysed in this document (introduced in @gordon2022data) compare with their benchmarks in terms of the mean performance metric. You can choose among two performance metrics and four augmentation factors. Results for the augmentation strategies are shown for experiments using data with a pseudo-count of $\mathbf{0.5}$ and **expressed as proportions**.
+
+```{r}
+#| label: lasso-dashboard
+#| echo: false
+#| results: asis
+create_summary_dashboard(
+  benchmark = benchmark_lasso_pc_half,
+  aug_results = lasso_pc_half,
+  id_prefix = "lasso_pc05"
+)
+```
+
+```{r}
+#| label: save-rodriguez-latex
+#| echo: false
+
+generate_metric_latex(
+  benchmark = benchmark_lasso_pc_half,
+  aug_results = lasso_pc_half,
+  metric = "roc_auc",
+  metric_label = "ROC AUC",
+  pseudo_count = "1/2",
+  model_name = "lasso",
+  table_prefix = "rodriguez",
+  output_dir = here::here("content", "_tables", "summary_rodriguez_pc_half"),
+  caption_fun = function(aug_factor, metric_label, model_name, pseudo_count) {
+    sprintf(
+      "Mean %s of %s Rodriguez augmentations (augmentation factor = %s, pseudo-count = %s)",
+      metric_label,
+      toupper(model_name),
+      aug_factor,
+      pseudo_count
+    )
+  }
+)
+```
+
+## Boxplots of performance metrics
+
+### ROC AUC
+::: panel-tabset
+```{r}
+#| label: lasso_roc_auc_boxplot
+#| echo: false
+#| results: asis
+
+render_metric_panels(
+  aug_results = lasso_pc_half,
+  benchmark_results = benchmark_lasso_pc_half,
+  metric = "roc_auc"
+)
+
+```
+:::
+
+### Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: lasso_mis_clas_boxplot
+#| echo: false
+#| results: asis
+
+render_metric_panels(
+    aug_results = lasso_pc_half,
+    benchmark_results = benchmark_lasso_pc_half,
+    metric = "misclassification_rate"
+)
+
+```
+:::
+
+## ROC Curves
+::: panel-tabset
+```{r}
+#| label: lasso_roc_curve
+#| echo: false
+#| results: asis
+
+render_roc_curve_panels(
+    aug_results = lasso_pc_half
+)
+```
+:::
+
+
+## Impact of the augmentation factor on the predictive perfromance 
+### ROC AUC 
+
+```{r}
+#| label: lasso_aug_fac_imp_roc
+#| echo: false
+#| results: asis
+aug_factor_impact(data = lasso_pc_half, plot_metric = "roc_auc")
+```
+
+### Missclasification Rate
+
+```{r}
+#| label: lasso_aug_fac_imp_misclas
+#| echo: false
+#| results: asis
+aug_factor_impact(data = lasso_pc_half, plot_metric = "misclassification_rate")
+```
+
+# Logistic regression with $\text{L}_1$ penalty - standard ILR–transformed data
+
+## Interactive Summary Table
+
+The table below shows the mean performance for the selected metric ($2$ options available) and augmentation factor ($4$ values available)  for the logistic regression with $\text{L}_1$ penalty trained on data with a pseudo-count of $\mathbf{0.5}$, transformed using the standard ILR transformation.
+
+```{r}
+#| label: lasso-ilr-dashboard
+#| echo: false
+#| results: asis
+create_summary_dashboard(
+  benchmark = benchmark_lasso_pc_half,
+  aug_results = lasso_ilr_pc_half,
+  id_prefix = "lasso_ilr_pc05"
+)
+```
+
+```{r}
+#| label: save-rodriguez-lasso-ilr-latex
+#| echo: false
+
+generate_metric_latex(
+  benchmark = benchmark_lasso_pc_half,
+  aug_results = lasso_ilr_pc_half,
+  metric = "roc_auc",
+  metric_label = "ROC AUC",
+  pseudo_count = "1/2",
+  model_name = "lasso_ilr",
+  table_prefix = "rodriguez",
+  output_dir = here::here("content", "_tables", "summary_rodriguez_pc_half"),
+  caption_fun = function(aug_factor, metric_label, model_name, pseudo_count) {
+    sprintf(
+      "Mean %s of %s Rodriguez augmentations (augmentation factor = %s, pseudo-count = %s)",
+      metric_label,
+      toupper(model_name),
+      aug_factor,
+      pseudo_count
+    )
+  }
+)
+```
+
+## Boxplots of performance metrics
+
+### ROC AUC
+::: panel-tabset
+```{r}
+#| label: lasso_ilr_roc_auc_boxplot
+#| echo: false
+#| results: asis
+
+render_metric_panels(
+  aug_results = lasso_ilr_pc_half,
+  benchmark_results = benchmark_lasso_pc_half,
+  metric = "roc_auc"
+)
+
+```
+:::
+
+### Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: lasso_ilr_mis_clas_boxplot
+#| echo: false
+#| results: asis
+
+render_metric_panels(
+    aug_results = lasso_ilr_pc_half,
+    benchmark_results = benchmark_lasso_pc_half,
+    metric = "misclassification_rate"
+)
+
+```
+:::
+
+## ROC Curves
+::: panel-tabset
+```{r}
+#| label: lasso_ilr_roc_curve
+#| echo: false
+#| results: asis
+
+render_roc_curve_panels(
+    aug_results = lasso_ilr_pc_half
+)
+```
+:::
+
+
+## Impact of the augmentation factor on the predictive perfromance 
+### ROC AUC 
+
+```{r}
+#| label: lasso_ilr_aug_fac_imp_roc
+#| echo: false
+#| results: asis
+aug_factor_impact(data = lasso_ilr_pc_half, plot_metric = "roc_auc")
+```
+
+### Missclasification Rate
+
+```{r}
+#| label: lasso_ilr_aug_fac_imp_misclas
+#| echo: false
+#| results: asis
+aug_factor_impact(data = lasso_ilr_pc_half, plot_metric = "misclassification_rate")
+```
+
+# Random Forest 
+
+## Interactive Summary Table
+
+The table below shows the mean performance for the selected metric ($2$ options available) and augmentation factor ($4$ values available) for the Random Forest trained on data with a pseudo-count of $\mathbf{0.5}$, transformed into proportions.
+
+```{r}
+#| label: rf-dashboard
+#| echo: false
+#| results: asis
+create_summary_dashboard(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  id_prefix = "rf_pc05"
+)
+```
+
+```{r}
+#| label: save-rodriguez-rf-latex
+#| echo: false
+
+generate_metric_latex(
+  benchmark = benchmark_random_forest_pc_half,
+  aug_results = random_forest_pc_half,
+  metric = "roc_auc",
+  metric_label = "ROC AUC",
+  pseudo_count = "1/2",
+  model_name = "random_forest",
+  table_prefix = "rodriguez",
+  output_dir = here::here("content", "_tables", "summary_rodriguez_pc_half"),
+  caption_fun = function(aug_factor, metric_label, model_name, pseudo_count) {
+    sprintf(
+      "Mean %s of %s Rodriguez augmentations (augmentation factor = %s, pseudo-count = %s)",
+      metric_label,
+      toupper(model_name),
+      aug_factor,
+      pseudo_count
+    )
+  }
+)
+```
+
+
+## Boxplots of performance metrics
+
+### ROC AUC
+::: panel-tabset
+```{r}
+#| label: rf_roc_auc_boxplot
+#| echo: false
+#| results: asis
+
+render_metric_panels(
+  aug_results = random_forest_pc_half,
+  benchmark_results = benchmark_random_forest_pc_half,
+  metric = "roc_auc"
+)
+
+```
+:::
+
+### Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: rf_misclass_boxplot
+#| echo: false
+#| results: asis
+
+render_metric_panels(
+  aug_results = random_forest_pc_half,
+  benchmark_results = benchmark_random_forest_pc_half,
+  metric = "misclassification_rate"
+)
+
+```
+:::
+
+## ROC Curves
+::: panel-tabset
+```{r}
+#| label: rf_roc_curve
+#| echo: false
+#| results: asis
+
+render_roc_curve_panels(
+    aug_results = random_forest_pc_half
+)
+```
+:::
+
+
+## Impact of the augmentation factor on the predictive perfromance 
+### ROC AUC 
+
+```{r}
+#| label: rf_aug_fac_imp_roc
+#| echo: false
+#| results: asis
+aug_factor_impact(data = random_forest_pc_half, plot_metric = "roc_auc")
+```
+
+### Missclasification Rate
+
+```{r}
+#| label: rf_aug_fac_imp_misclas
+#| echo: false
+#| results: asis
+aug_factor_impact(data = random_forest_pc_half, plot_metric = "misclassification_rate")
+```
+
+# XGBoost 
+
+## Interactive Summary Table
+
+The table below shows the mean performance for the selected metric ($2$ options available) and augmentation factor ($4$ values available) for the XGBoost trained on data with a pseudo-count of $\mathbf{0.5}$, transformed into proportions.
+
+```{r}
+#| label: xgb-dashboard
+#| echo: false
+#| results: asis
+create_summary_dashboard(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  id_prefix = "xgb_pc05"
+)
+```
+
+```{r}
+#| label: save-rodriguez-xgb-latex
+#| echo: false
+
+generate_metric_latex(
+  benchmark = benchmark_xgboost_pc_half,
+  aug_results = xgboost_pc_half,
+  metric = "roc_auc",
+  metric_label = "ROC AUC",
+  pseudo_count = "1/2",
+  model_name = "xgboost",
+  table_prefix = "rodriguez",
+  output_dir = here::here("content", "_tables", "summary_rodriguez_pc_half"),
+  caption_fun = function(
+    aug_factor,
+    metric_label,
+    model_name,
+    pseudo_count
+  ) {
+    sprintf(
+      "Mean %s of %s Rodriguez augmentations (augmentation factor = %s, pseudo-count = %s)",
+      metric_label,
+      toupper(model_name),
+      aug_factor,
+      pseudo_count
+    )
+  }
+)
+```
+
+## Boxplots of performance metrics
+
+### ROC AUC
+::: panel-tabset
+```{r}
+#| label: xgb_roc_auc_boxplot
+#| echo: false
+#| results: asis
+
+render_metric_panels(
+  aug_results = xgboost_pc_half,
+  benchmark_results = benchmark_xgboost_pc_half,
+  metric = "roc_auc"
+)
+
+```
+:::
+
+### Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: xgb_misclass_boxplot
+#| echo: false
+#| results: asis
+
+render_metric_panels(
+  aug_results = xgboost_pc_half,
+  benchmark_results = benchmark_xgboost_pc_half,
+  metric = "misclassification_rate"
+)
+
+```
+:::
+
+## ROC Curves
+
+::: panel-tabset
+```{r}
+#| label: xgb_roc_curve
+#| echo: false
+#| results: asis
+
+render_roc_curve_panels(
+    aug_results = xgboost_pc_half
+)
+```
+:::
+
+
+## Impact of the augmentation factor on the predictive perfromance 
+### ROC AUC 
+```{r}
+#| label: xgb_aug_fac_imp_roc
+#| echo: false
+#| results: asis
+aug_factor_impact(data = xgboost_pc_half, plot_metric = "roc_auc")
+```
+
+### Missclasification Rate
+```{r}
+#| label: xgb_aug_fac_imp_misclas
+#| echo: false
+#| results: asis
+aug_factor_impact(data = xgboost_pc_half, plot_metric = "misclassification_rate")
+```

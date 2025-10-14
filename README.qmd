@@ -2,7 +2,7 @@
 title: "README"
 format:
   gfm: default
-bibliography: docs/references.bib
+bibliography: references.bib
 link-citations: true
 ---
 

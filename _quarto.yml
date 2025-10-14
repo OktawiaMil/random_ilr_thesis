@@ -3,7 +3,8 @@ project:
   output-dir: docs
   render:
     - content/density_impact.qmd
-    - content/summary_rodriguez.qmd
+    - content/summary_rodriguez_pc_half.qmd
+    - content/summary_rodriguez_pc_max_lib_size.qmd
 
 website:
   title: "Random ILR Thesis"
@@ -11,8 +12,10 @@ website:
     left:
       - text: "Density Impact"
         file: content/density_impact.qmd
-      - text: "Rodriguez Summary"
-        file: content/summary_rodriguez.qmd
+      - text: "Rodriguez Summary - PC 0.5"
+        file: content/summary_rodriguez_pc_half.qmd
+      - text: "Rodriguez Summary - PC 1/MLS"
+        file: content/summary_rodriguez_pc_max_lib_size.qmd
 
 format:
   html:
