@@ -1,53 +1,5 @@
-# Helper functions for `summary_rodriguez.qmd`
-
-# Determine whether smaller or larger velues of performance metric
-# indicate good model's perfromance
-metric_direction <- function(metric) {
-  metric <- tolower(metric)
-  if (metric == "roc_auc") {
-    return("max")
-  }
-  if (metric == "misclassification_rate") {
-    return("min")
-  }
-  "max"
-}
-
-# Make bolded the best perfromance metric for each row (model) in the table
-format_metric_value <- function(
-  value,
-  row_values,
-  metric,
-  digits = 3,
-  format = c("html", "latex")
-) {
-  format <- match.arg(format)
-
-  if (is.na(value)) {
-    return(NA_character_)
-  }
-
-  direction <- metric_direction(metric)
-  target <- if (direction == "max") {
-    suppressWarnings(max(row_values, na.rm = TRUE))
-  } else {
-    suppressWarnings(min(row_values, na.rm = TRUE))
-  }
-
-  if (!is.finite(target)) {
-    target <- NA_real_
-  }
-
-  formatted <- sprintf(paste0("%.", digits, "f"), value)
-  if (!is.na(target) && value == target) {
-    formatted <- if (format == "html") {
-      sprintf("<strong>%s</strong>", formatted)
-    } else {
-      sprintf("\\textbf{%s}", formatted)
-    }
-  }
-  formatted
-}
+# Helper functions for Quarto docs summarising the results
+# of Rodriguez augmentation methods
 
 # Prepare performance metrics for summary tables:
 # - convert accuracy into misclassification_rate (1 - accuracy)
@@ -592,7 +544,9 @@ generate_metric_latex <- function(
   invisible(NULL)
 }
 
-
+# Create boxplots of performance metrics
+# one plot corresponds to one augmentation factor
+# each plot is displayed in separate tabset
 render_metric_panels <- function(
   aug_results,
   benchmark_results,

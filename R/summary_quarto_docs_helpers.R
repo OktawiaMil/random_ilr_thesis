@@ -343,3 +343,53 @@ aug_factor_impact <- function(
 
   return(plot)
 }
+
+# Helper functions used to create summary tables
+# Determine whether smaller or larger values of performance metric
+# indicate good model's perfromance
+metric_direction <- function(metric) {
+  metric <- tolower(metric)
+  if (metric == "roc_auc") {
+    return("max")
+  }
+  if (metric == "misclassification_rate") {
+    return("min")
+  }
+  "max"
+}
+
+# Make bolded the best perfromance metric for each row (model) in the table
+format_metric_value <- function(
+  value,
+  row_values,
+  metric,
+  digits = 3,
+  format = c("html", "latex")
+) {
+  format <- match.arg(format)
+
+  if (is.na(value)) {
+    return(NA_character_)
+  }
+
+  direction <- metric_direction(metric)
+  target <- if (direction == "max") {
+    suppressWarnings(max(row_values, na.rm = TRUE))
+  } else {
+    suppressWarnings(min(row_values, na.rm = TRUE))
+  }
+
+  if (!is.finite(target)) {
+    target <- NA_real_
+  }
+
+  formatted <- sprintf(paste0("%.", digits, "f"), value)
+  if (!is.na(target) && value == target) {
+    formatted <- if (format == "html") {
+      sprintf("<strong>%s</strong>", formatted)
+    } else {
+      sprintf("\\textbf{%s}", formatted)
+    }
+  }
+  formatted
+}
