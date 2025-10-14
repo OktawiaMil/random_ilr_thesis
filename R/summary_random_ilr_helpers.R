@@ -547,6 +547,9 @@ render_boxplot_per_density <- function(
         aug_results <- aug_results |>
             filter(is.na(density))
     }
+    # Filter benchmark - plot only results for standard ILR transformed data
+    benchmark_results <- benchmark_results |>
+        filter(transform == "standard_ilr")
 
     for (k in aug_factors) {
         cat("### ", heading_prefix, k, "\n\n", sep = "")
