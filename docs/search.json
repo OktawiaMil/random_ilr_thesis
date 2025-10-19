@@ -1,206 +1,122 @@
 [
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/pseudo_count_impact.html",
+    "href": "content/pseudo_count_impact.html",
+    "title": "Impact of pseudo-count",
+    "section": "",
+    "text": "The purpose of this document is to analyse how the pseudo-count affects model performance depending on the augmentation strategy and the augmentation factor. In all plots below, the phrase “mean difference of the selected performance metric” for a given augmentation strategy, augmentation factor and dataset refers to:\n\\[\n\\begin{aligned}\n  \\text{Mean difference}\n    &= \\frac{1}{20} \\sum_{i=1}^{20} \\Bigl(\n         \\text{performance metric}_{\\text{pseudo-count}=0.5}(i) \\\\\n    &\\quad - \\text{performance metric}_{\\text{pseudo-count}=1/\\max\\{\\text{library size}\\}}(i)\n       \\Bigr)\n\\end{aligned}\n\\]\nThe mean of the performance metric is computed over \\(20\\) train–test data splits. Below, each plot corresponds to one model (logistic regression with \\(\\text{L}_1\\) penalty, random forest, or XGBoost) and one performance metric (ROC AUC or misclassification rate). Each tabset corresponds to a selected augmentation factor."
+  },
+  {
+    "objectID": "content/pseudo_count_impact.html#roc-auc",
+    "href": "content/pseudo_count_impact.html#roc-auc",
+    "title": "Impact of pseudo-count",
+    "section": "1.1 ROC AUC",
+    "text": "1.1 ROC AUC\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/pseudo_count_impact.html#misclassification-rate",
+    "href": "content/pseudo_count_impact.html#misclassification-rate",
+    "title": "Impact of pseudo-count",
+    "section": "1.2 Misclassification Rate",
+    "text": "1.2 Misclassification Rate\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/pseudo_count_impact.html#roc-auc-1",
+    "href": "content/pseudo_count_impact.html#roc-auc-1",
+    "title": "Impact of pseudo-count",
+    "section": "2.1 ROC AUC",
+    "text": "2.1 ROC AUC\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/pseudo_count_impact.html#misclassification-rate-1",
+    "href": "content/pseudo_count_impact.html#misclassification-rate-1",
+    "title": "Impact of pseudo-count",
+    "section": "2.2 Misclassification Rate",
+    "text": "2.2 Misclassification Rate\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/pseudo_count_impact.html#roc-auc-2",
+    "href": "content/pseudo_count_impact.html#roc-auc-2",
+    "title": "Impact of pseudo-count",
+    "section": "3.1 ROC AUC",
+    "text": "3.1 ROC AUC\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/pseudo_count_impact.html#misclassification-rate-2",
+    "href": "content/pseudo_count_impact.html#misclassification-rate-2",
+    "title": "Impact of pseudo-count",
+    "section": "3.2 Misclassification Rate",
+    "text": "3.2 Misclassification Rate\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_half.html",
+    "href": "content/summary_random_ilr_pc_half.html",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "",
     "text": "The table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor\n\n\n\n\n\n\n\n\n\n\n\n\n\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDefault0.10.5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table",
+    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "",
     "text": "The table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics",
+    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "",
     "text": "One tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
+    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "",
     "text": "The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDefault0.10.5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table-1",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table-1",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table-1",
+    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "2.1 Interactive Summary Table",
     "text": "2.1 Interactive Summary Table\nThe table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics-1",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics-1",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-1",
+    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "2.2 Boxplots of performance metrics",
     "text": "2.2 Boxplots of performance metrics\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n2.2.1 ROC AUC\n\n2.2.1.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.1.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.1.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2 Misclassification Rate\n\n2.2.2.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
+    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "2.3 Impact of the augmentation factor on the predictive perfromance",
     "text": "2.3 Impact of the augmentation factor on the predictive perfromance\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n2.3.1 ROC AUC\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.3.2 Misclassification Rate\n\nDefault0.10.5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table-2",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table-2",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table-2",
+    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "3.1 Interactive Summary Table",
     "text": "3.1 Interactive Summary Table\nThe table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics-2",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics-2",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-2",
+    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "3.2 Boxplots of performance metrics",
     "text": "3.2 Boxplots of performance metrics\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n3.2.1 ROC AUC\n\n3.2.1.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.1.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.1.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2 Misclassification Rate\n\n3.2.2.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
-    "href": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
+    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
+    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
     "section": "3.3 Impact of the augmentation factor on the predictive perfromance",
     "text": "3.3 Impact of the augmentation factor on the predictive perfromance\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n3.3.1 ROC AUC\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.3.2 Misclassification Rate\n\nDefault0.10.5"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "",
-    "text": "Use the controls to explore how the three augmentation strategies analysed in this document (introduced in @gordon2022data) compare with their benchmarks in terms of the mean performance metric. You can choose among two performance metrics and four augmentation factors. Results for the augmentation strategies are shown for experiments using data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\) and expressed as proportions.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "",
-    "text": "Use the controls to explore how the three augmentation strategies analysed in this document (introduced in @gordon2022data) compare with their benchmarks in terms of the mean performance metric. You can choose among two performance metrics and four augmentation factors. Results for the augmentation strategies are shown for experiments using data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\) and expressed as proportions.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "",
-    "text": "k = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "",
-    "text": "k = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-1",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-1",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Interactive Summary Table",
-    "text": "Interactive Summary Table\nThe table below shows the mean performance for the selected metric (\\(2\\) options available) and augmentation factor (\\(4\\) values available) for the logistic regression with \\(\\text{L}_1\\) penalty trained on data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\), transformed using the standard ILR transformation.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-1",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-1",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Boxplots of performance metrics",
-    "text": "Boxplots of performance metrics\n\nROC AUC\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMisclassification Rate\n\nk = 2k = 3k = 4k = 5"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-1",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-1",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "ROC Curves",
-    "text": "ROC Curves\n\nk = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Impact of the augmentation factor on the predictive perfromance",
-    "text": "Impact of the augmentation factor on the predictive perfromance\n\nROC AUC\n\n\n\nMissclasification Rate"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-2",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-2",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Interactive Summary Table",
-    "text": "Interactive Summary Table\nThe table below shows the mean performance for the selected metric (\\(2\\) options available) and augmentation factor (\\(4\\) values available) for the Random Forest trained on data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\), transformed into proportions.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-2",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-2",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Boxplots of performance metrics",
-    "text": "Boxplots of performance metrics\n\nROC AUC\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMisclassification Rate\n\nk = 2k = 3k = 4k = 5"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-2",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-2",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "ROC Curves",
-    "text": "ROC Curves\n\nk = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Impact of the augmentation factor on the predictive perfromance",
-    "text": "Impact of the augmentation factor on the predictive perfromance\n\nROC AUC\n\n\n\nMissclasification Rate"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-3",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-3",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Interactive Summary Table",
-    "text": "Interactive Summary Table\nThe table below shows the mean performance for the selected metric (\\(2\\) options available) and augmentation factor (\\(4\\) values available) for the XGBoost trained on data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\), transformed into proportions.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-3",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-3",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Boxplots of performance metrics",
-    "text": "Boxplots of performance metrics\n\nROC AUC\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMisclassification Rate\n\nk = 2k = 3k = 4k = 5"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-3",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-3",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "ROC Curves",
-    "text": "ROC Curves\n\nk = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
-  },
-  {
-    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-3",
-    "href": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-3",
-    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
-    "section": "Impact of the augmentation factor on the predictive perfromance",
-    "text": "Impact of the augmentation factor on the predictive perfromance\n\nROC AUC\n\n\n\nMissclasification Rate"
-  },
-  {
-    "objectID": "content/density_impact.html",
-    "href": "content/density_impact.html",
-    "title": "Density Impact",
-    "section": "",
-    "text": "The purpose of this document is to show the influence of the density of a skew-symmetric matrix used for a generation of a GHL matrix used in the random ILR augmentation methods.\nReminder: Density \\(\\delta=0.1\\) means that \\(10\\%\\) of the off-diagonal entries in the skew-symmetric matrix \\(S\\) are non-zero; each such non-zero value is drawn from a standard normal distribution (\\(s_{ij}\\sim\\mathcal{N}(0,1)\\)) and \\(s_{ji}=-s_{ij}\\). The default density refers to the very sparse case in which exactly one off-diagonal element in the lower triangle and its mirror element in the upper triangle are non-zero; all other off-diagonal entries are zero.\nTo understand the impact of density of skew-symmetric matrix on the GHL matrix, and in consequence on the random ilr transformation, one needs to understand first in terms of the formulas how is the GHL matrix used in the random ilr transformation. In order to achieve it, let’s have a look on the below example with the use of the four dimensional compositional vector \\(\\mathbf{x},\\, \\mathbf{x} \\in S^4\\):\n\\[\n\\mathbf{x} \\in S^{4}, \\; \\mathbf{x}=\\bigl[\\,x_{1},\\,x_{2},\\,x_{3},\\,x_{4}\\,\\bigr]\n\\]\n\\[\n\\mathrm{ilr}(x)=\\mathrm{clr}(x)\\,\\mathrm{L}_{-1}=\\bigl[\\,y_{1},\\,y_{2},\\,y_{3}\\,\\bigr],\n\\]\nwhere \\(L_{-1}\\) is the GHL matrix without last column and \\(dim\\bigl(L_{-1}\\bigr) = 4 \\times 3\\). The centered log-ratio transformation is given by:\n\\[\n\\mathrm{clr}(x)=\\Bigl[\\,\\ln\\frac{x_{1}}{g(x)},\\,\\ln\\frac{x_{2}}{g(x)},\\,\\ln\\frac{x_{3}}{g(x)},\\,\\ln\\frac{x_{4}}{g(x)}\\,\\Bigr],\n\\]\nwhere \\(g(x)\\) is a geometric mean of the entries of a vector \\(\\mathbf{x}\\) . Let’s represent the GHL matrix with the removed last column as follows:\n\\[\nL_{-1} = \\begin{bmatrix}a_{1} & b_{1} & c_{1} \\\\a_{2} & b_{2} & c_{2} \\\\a_{3} & b_{3} & c_{3} \\\\a_{4} & b_{4} & c_{4}\\end{bmatrix}\n\\]\n\\[\n\\begin{aligned}\\mathrm{ilr}(x)&=\\mathrm{clr}(x)\\,\\mathrm{L}_{-1} \\\\\n&=\\Bigl[\\,a_{1}\\ln\\frac{x_{1}}{g(x)}+a_{2}\\ln\\frac{x_{2}}{g(x)}+a_{3}\\ln\\frac{x_{3}}{g(x)}+a_{4}\\ln\\frac{x_{4}}{g(x)},\\;\\\\ & \\,b_{1}\\ln\\frac{x_{1}}{g(x)}+b_{2}\\ln\\frac{x_{2}}{g(x)}+b_{3}\\ln\\frac{x_{3}}{g(x)}+b_{4}\\ln\\frac{x_{4}}{g(x)}, \\;\\\\\n& \\,c_{1}\\ln\\frac{x_{1}}{g(x)}+c_{2}\\ln\\frac{x_{2}}{g(x)}+c_{3}\\ln\\frac{x_{3}}{g(x)}+c_{4}\\ln\\frac{x_{4}}{g(x)},\n\\Bigr] \\\\\n&=\\Biggl[\\,\\ln\\frac{x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}}{\\bigl[g(x)\\bigr]^{a_{1}+a_{2}+a_{3}+a_{4}}},\\; \\ln\\frac{x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}}{\\bigl[g(x)\\bigr]^{b_{1}+b_{2}+b_{3}+b_{4}}},\\;\n\\ln\\frac{x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}}{\\bigl[g(x)\\bigr]^{c_{1}+c_{2}+c_{3}+c_{4}}}\n\\Biggr] \\\\\n&= \\Bigl[\\,\\ln\\!\\bigl(x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}\\bigr),\\;\n\\ln\\!\\bigl(x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}\\bigr),\\;\n\\ln\\!\\bigl(x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}\\bigr)\n\\Bigr]\n\\end{aligned}\n\\]\nThe last equality in the above representation of the random ilr transformation is the consequence of the following property of GHL matrix under consideration:\n\\[\n\\mathbf{1}_{n}^{\\mathsf T}L_{n,n-1}=\\mathbf{0}_{n-1}^{\\mathsf T}\n\\]\ntherefore: \\(a_{1}+a_{2}+a_{3}+a_{4}=0\\). Similarly for \\(b_{i}, c_{i}, i \\in \\{1,2,3,4\\}\\). Therefore, the contribution of a original feature \\(x_i\\) to the new coordinate after random ilr transformation (\\(y_i\\)) depends on the sign of coefficients from GHL matrix \\(a_i, b_i, c_i, i \\in \\{1, \\dots, 4\\}\\). For instance, in the considered example of \\(\\mathbf{x}, \\, \\mathbf{x} \\in S^4\\) let’s focus on the first coordinate resulting from the random ilr transformation. Let’s assume that \\(a_1, a_3 &gt; 0\\) and \\(a_2, a_4 &lt;0\\). Then, the new first ilr coordinate has the following form:\n\\[\ny_{1}=\\ln\\!\\left(\\frac{x_{1}^{a_{1}}\\,x_{3}^{a_{3}}}{x_{2}^{a_{2}}\\,x_{4}^{a_{4}}}\\right)\n\\]\nIn such a case original features \\(x_1, x_3\\) contribute to the new coordinate in the numerator, while covariates \\(x_2, x_4\\) contribute to the \\(y_1\\) in the denominator.\nThe strength of the contribution of a given original feature to the new random ilr coordinate depends on the absolute value of the coefficient from the GHL matrix. For example, the contribution of \\(x_1\\) to ilr coordinate \\(y_1\\) depends on the \\(|a_1|\\). In the below analysis term top k contributor will be used.\nTop k contributor: Feature \\(x_j\\) coming from compositional vector \\(\\mathbf{x}, \\, \\mathbf{x} \\in S^p\\) is considered as the top \\(k\\) contributor to the new ilr coordinate \\(y_i, \\, y_i = \\ln\\!\\bigl(x_{1}^{w_{1}}x_{2}^{w_{2}} \\dots x_{p}^{w_{p}}\\bigr) \\; \\text{where} \\; \\mathbf{y} = \\bigl(y_1, y_2, \\dots, y_{p-1} \\bigr)\\) when the absolute value of the coefficient from GHL matrix associated with \\(x_j\\) ranks within top \\(k\\) largest absolute coefficients \\(|w_1|, |w_2|, \\dots, |w_p|\\)."
-  },
-  {
-    "objectID": "content/density_impact.html#theoretical-overview",
-    "href": "content/density_impact.html#theoretical-overview",
-    "title": "Density Impact",
-    "section": "",
-    "text": "The purpose of this document is to show the influence of the density of a skew-symmetric matrix used for a generation of a GHL matrix used in the random ILR augmentation methods.\nReminder: Density \\(\\delta=0.1\\) means that \\(10\\%\\) of the off-diagonal entries in the skew-symmetric matrix \\(S\\) are non-zero; each such non-zero value is drawn from a standard normal distribution (\\(s_{ij}\\sim\\mathcal{N}(0,1)\\)) and \\(s_{ji}=-s_{ij}\\). The default density refers to the very sparse case in which exactly one off-diagonal element in the lower triangle and its mirror element in the upper triangle are non-zero; all other off-diagonal entries are zero.\nTo understand the impact of density of skew-symmetric matrix on the GHL matrix, and in consequence on the random ilr transformation, one needs to understand first in terms of the formulas how is the GHL matrix used in the random ilr transformation. In order to achieve it, let’s have a look on the below example with the use of the four dimensional compositional vector \\(\\mathbf{x},\\, \\mathbf{x} \\in S^4\\):\n\\[\n\\mathbf{x} \\in S^{4}, \\; \\mathbf{x}=\\bigl[\\,x_{1},\\,x_{2},\\,x_{3},\\,x_{4}\\,\\bigr]\n\\]\n\\[\n\\mathrm{ilr}(x)=\\mathrm{clr}(x)\\,\\mathrm{L}_{-1}=\\bigl[\\,y_{1},\\,y_{2},\\,y_{3}\\,\\bigr],\n\\]\nwhere \\(L_{-1}\\) is the GHL matrix without last column and \\(dim\\bigl(L_{-1}\\bigr) = 4 \\times 3\\). The centered log-ratio transformation is given by:\n\\[\n\\mathrm{clr}(x)=\\Bigl[\\,\\ln\\frac{x_{1}}{g(x)},\\,\\ln\\frac{x_{2}}{g(x)},\\,\\ln\\frac{x_{3}}{g(x)},\\,\\ln\\frac{x_{4}}{g(x)}\\,\\Bigr],\n\\]\nwhere \\(g(x)\\) is a geometric mean of the entries of a vector \\(\\mathbf{x}\\) . Let’s represent the GHL matrix with the removed last column as follows:\n\\[\nL_{-1} = \\begin{bmatrix}a_{1} & b_{1} & c_{1} \\\\a_{2} & b_{2} & c_{2} \\\\a_{3} & b_{3} & c_{3} \\\\a_{4} & b_{4} & c_{4}\\end{bmatrix}\n\\]\n\\[\n\\begin{aligned}\\mathrm{ilr}(x)&=\\mathrm{clr}(x)\\,\\mathrm{L}_{-1} \\\\\n&=\\Bigl[\\,a_{1}\\ln\\frac{x_{1}}{g(x)}+a_{2}\\ln\\frac{x_{2}}{g(x)}+a_{3}\\ln\\frac{x_{3}}{g(x)}+a_{4}\\ln\\frac{x_{4}}{g(x)},\\;\\\\ & \\,b_{1}\\ln\\frac{x_{1}}{g(x)}+b_{2}\\ln\\frac{x_{2}}{g(x)}+b_{3}\\ln\\frac{x_{3}}{g(x)}+b_{4}\\ln\\frac{x_{4}}{g(x)}, \\;\\\\\n& \\,c_{1}\\ln\\frac{x_{1}}{g(x)}+c_{2}\\ln\\frac{x_{2}}{g(x)}+c_{3}\\ln\\frac{x_{3}}{g(x)}+c_{4}\\ln\\frac{x_{4}}{g(x)},\n\\Bigr] \\\\\n&=\\Biggl[\\,\\ln\\frac{x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}}{\\bigl[g(x)\\bigr]^{a_{1}+a_{2}+a_{3}+a_{4}}},\\; \\ln\\frac{x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}}{\\bigl[g(x)\\bigr]^{b_{1}+b_{2}+b_{3}+b_{4}}},\\;\n\\ln\\frac{x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}}{\\bigl[g(x)\\bigr]^{c_{1}+c_{2}+c_{3}+c_{4}}}\n\\Biggr] \\\\\n&= \\Bigl[\\,\\ln\\!\\bigl(x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}\\bigr),\\;\n\\ln\\!\\bigl(x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}\\bigr),\\;\n\\ln\\!\\bigl(x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}\\bigr)\n\\Bigr]\n\\end{aligned}\n\\]\nThe last equality in the above representation of the random ilr transformation is the consequence of the following property of GHL matrix under consideration:\n\\[\n\\mathbf{1}_{n}^{\\mathsf T}L_{n,n-1}=\\mathbf{0}_{n-1}^{\\mathsf T}\n\\]\ntherefore: \\(a_{1}+a_{2}+a_{3}+a_{4}=0\\). Similarly for \\(b_{i}, c_{i}, i \\in \\{1,2,3,4\\}\\). Therefore, the contribution of a original feature \\(x_i\\) to the new coordinate after random ilr transformation (\\(y_i\\)) depends on the sign of coefficients from GHL matrix \\(a_i, b_i, c_i, i \\in \\{1, \\dots, 4\\}\\). For instance, in the considered example of \\(\\mathbf{x}, \\, \\mathbf{x} \\in S^4\\) let’s focus on the first coordinate resulting from the random ilr transformation. Let’s assume that \\(a_1, a_3 &gt; 0\\) and \\(a_2, a_4 &lt;0\\). Then, the new first ilr coordinate has the following form:\n\\[\ny_{1}=\\ln\\!\\left(\\frac{x_{1}^{a_{1}}\\,x_{3}^{a_{3}}}{x_{2}^{a_{2}}\\,x_{4}^{a_{4}}}\\right)\n\\]\nIn such a case original features \\(x_1, x_3\\) contribute to the new coordinate in the numerator, while covariates \\(x_2, x_4\\) contribute to the \\(y_1\\) in the denominator.\nThe strength of the contribution of a given original feature to the new random ilr coordinate depends on the absolute value of the coefficient from the GHL matrix. For example, the contribution of \\(x_1\\) to ilr coordinate \\(y_1\\) depends on the \\(|a_1|\\). In the below analysis term top k contributor will be used.\nTop k contributor: Feature \\(x_j\\) coming from compositional vector \\(\\mathbf{x}, \\, \\mathbf{x} \\in S^p\\) is considered as the top \\(k\\) contributor to the new ilr coordinate \\(y_i, \\, y_i = \\ln\\!\\bigl(x_{1}^{w_{1}}x_{2}^{w_{2}} \\dots x_{p}^{w_{p}}\\bigr) \\; \\text{where} \\; \\mathbf{y} = \\bigl(y_1, y_2, \\dots, y_{p-1} \\bigr)\\) when the absolute value of the coefficient from GHL matrix associated with \\(x_j\\) ranks within top \\(k\\) largest absolute coefficients \\(|w_1|, |w_2|, \\dots, |w_p|\\)."
-  },
-  {
-    "objectID": "content/density_impact.html#analysis",
-    "href": "content/density_impact.html#analysis",
-    "title": "Density Impact",
-    "section": "Analysis",
-    "text": "Analysis\nHelper functions used in this script:\n\n# Function that takes the GHL matrix and:\n# 1. determines if original feature x_i contributes to the ilr coordinate in numerator or denominator\n# 2. determines top k contributors for each of the\nunderstand_randilr &lt;- function(ghl, org_feature_names, top_k) {\n    abs_ghl &lt;- abs(ghl)\n    sign_ghl &lt;- sign(ghl)\n\n    ghl_summary &lt;- map(c(1:ncol(ghl)), function(j) {\n        # Pull the j-th column\n        abs_col &lt;- abs_ghl[, j]\n        sign_col &lt;- sign_ghl[, j]\n        column &lt;- ghl[, j]\n\n        # Get names of the original features that go into numerator (have positive 'coefficient' in the GHL mat.):\n        pos &lt;- org_feature_names[sign_col == 1]\n        # Get names of the original features that go into denominator\n        neg &lt;- org_feature_names[sign_col == -1]\n\n        # top-k absolute contributors and the values of their coeffs (not absolute, just as is)\n        idx &lt;- order(abs_col, decreasing = TRUE)[1:top_k]\n        top_k_tbl &lt;- tibble(\n            feature = org_feature_names[idx],\n            coef    = column[idx]\n        )\n\n        # number of distinct absolute values of coeff\n        unique_coefs &lt;- length(unique(abs_col))\n\n        list(\n            column = j,\n            unique_coefs = unique_coefs,\n            numerator = pos,\n            denominator = neg,\n            top_k_contribution = top_k_tbl\n        )\n    })\n\n    # Return tibble\n    tibble(\n        column = map_dbl(ghl_summary, ~ .x$column),\n        unique_coefs = map_dbl(ghl_summary, ~ .x$unique_coefs),\n        numerator = map(ghl_summary, ~ .x$numerator),\n        denominator = map(ghl_summary, ~ .x$denominator),\n        top_contribution = map(ghl_summary, ~ .x$top_k_contribution)\n    )\n}\n\n# Function:\n# 1. Construct square GHL matrix with n_org_features rows and column by using skew-symmetric matrix with `density`\n# 2. Gathers info about contribution to numerator/denominator of each feature and top k contributors\n# 3. repeats 1-2 n_iters times\ndensity_impact &lt;- function(seed_start = 2025, n_org_features, density, top_k, n_iters = 10) {\n    set.seed(seed_start)\n    org_feature_names &lt;- paste0(\"org_feature\", c(1:n_org_features))\n    results &lt;- tibble()\n\n    for (i in 1:n_iters) {\n        # Generate GHL matrix\n        ghl &lt;- create_ghl(n = n_org_features, density = density)\n        ghl_mat &lt;- ghl[, -n_org_features]\n\n        # Gather info about new features\n        out &lt;- understand_randilr(\n            ghl = ghl_mat,\n            org_feature_names = org_feature_names,\n            top_k = top_k\n        ) |&gt;\n            mutate(iter = i)\n\n        results &lt;- results |&gt;\n            bind_rows(out)\n    }\n    return(results)\n}\n\nIn the below analysis the following scenario is considered:\n\ninput data has \\(20\\) covariates,\nanalyzed density of skew-symmetric matrix : default density (very sparse skew-symmetric matrix) and \\(\\delta \\in (0.01, 0.02, \\dots, 0.1, 0.2, 0.3, \\dots, 0.9)\\),\nfor each density level of a skew-symmetric matrix, \\(100\\) independent GHL matrices are generated,\nfor a given GHL matrix, the proportion of times when a given original feature contributes to the numerator vs. denominator along with the top \\(5\\) contributors are analyzed.\n\n\nContribution to numerator vs denominator\nFor every original feature, count how often it appears in a numerator versus a denominator across all new ILR coordinates (this is, as shown above, determined by the GHL-matrix coefficients). The bars represent the average number of occurrences per original feature over the \\(100\\) simulations.\n\norg_features &lt;- 20\ntop_k &lt;- 5\nn_iters &lt;- 100\nseed_start &lt;- 567\n\nresults &lt;- tibble(\n    density = c(NA_real_, seq(0.01, 0.09, by = 0.01), seq(0.1, 0.9, by = 0.1))\n) |&gt;\n    mutate(\n        ghl_analysis = map(density, ~ density_impact(\n            seed_start = seed_start,\n            n_org_features = org_features,\n            density = .x,\n            top_k = top_k,\n            n_iters = n_iters\n        ))\n    ) |&gt;\n    unnest(ghl_analysis)\n\n# We repeat GHL simulation with a given density of skew-symmetric matrix n_iters times\n# For a given density, on average, how many times is the original feature_k selected into numerator vs denominator\n# Max number of occurrence in numerator/ denominator: (n_org_features - 1) * n_iters\n\ndata_plt1 &lt;- results |&gt;\n    select(density, iter, column, numerator) |&gt;\n    unnest(numerator) |&gt;\n    rename(feature = numerator) |&gt;\n    count(density, feature, name = \"numerator\") |&gt;\n    mutate(numerator = numerator / n_iters) |&gt;\n    left_join(\n        results |&gt;\n            select(density, iter, column, denominator) |&gt;\n            unnest(denominator) |&gt;\n            rename(feature = denominator) |&gt;\n            count(density, feature, name = \"denominator\") |&gt;\n            mutate(denominator = denominator / n_iters)\n    ) |&gt;\n    pivot_longer(cols = c(denominator, numerator), names_to = \"part\", values_to = \"value\") |&gt;\n    mutate(\n        feature = str_remove(feature, \"org_\"),\n        feature = fct_reorder(feature, parse_number(feature)),\n        density = if_else(is.na(density), \"Default\", as.character(density)),\n        density = factor(density,\n            levels = c(\"Default\", sort(as.numeric(setdiff(unique(density), \"Default\"))))\n        ),\n        part = str_to_title(part)\n    )\n\nJoining with `by = join_by(density, feature)`\n\ndata_plt1 |&gt;\n    filter(density %in% c(\"Default\", seq(0.01, 0.09, by = 0.01))) |&gt;\n    ggplot(aes(x = feature, y = value, fill = part)) +\n    geom_bar(position = \"dodge\", stat = \"identity\") +\n    facet_wrap(~density, ncol = 3) +\n    theme_bw() +\n    labs(\n        x = \"Original feature\",\n        y = paste(\"Average occurance across\", n_iters, \"GHL simulations\"),\n        title = \"Contributions of Original Features to Numerator and Denominator in Random ILR Coordinates\",\n        subtitle = paste(\"Aggregated over\", n_iters, \"GHL simulations, panels split by GHL density\")\n    ) +\n    theme(\n        legend.position = \"bottom\",\n        legend.title = element_blank(),\n        plot.title = element_text(size = 16),\n        plot.subtitle = element_text(size = 14),\n        axis.title.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.x = element_text(size = 12, angle = 90),\n        axis.text.y = element_text(size = 12),\n        legend.text = element_text(size = 12)\n    )\n\n\n\n\n\n\n\ndata_plt1 |&gt;\n    filter(density %in% c(\"Default\", seq(0.1, 0.9, by = 0.1))) |&gt;\n    ggplot(aes(x = feature, y = value, fill = part)) +\n    geom_bar(position = \"dodge\", stat = \"identity\") +\n    facet_wrap(~density, ncol = 3) +\n    theme_bw() +\n    # scale_y_continuous(breaks = scales::breaks_width(10), minor_breaks = NULL) +\n    labs(\n        x = \"Original feature\",\n        y = paste(\"Average occurance across\", n_iters, \"GHL simulations\"),\n        title = \"Contributions of Original Features to Numerator and Denominator in Random ILR Coordinates\",\n        subtitle = paste(\"Aggregated over\", n_iters, \"GHL simulations, panels split by GHL density\")\n    ) +\n    theme(\n        legend.position = \"bottom\",\n        legend.title = element_blank(),\n        plot.title = element_text(size = 16),\n        plot.subtitle = element_text(size = 14),\n        axis.title.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.x = element_text(size = 12, angle = 90),\n        axis.text.y = element_text(size = 12),\n        legend.text = element_text(size = 12)\n    )\n\n\n\n\n\n\n\n\n\n\nTop 5 contributors\nFor a selected density of the skew-symmetric matrix used to generate the GHL matrix, the plot below displays the expected number of random ILR coordinates in which a given original feature ranks among the five most influential features, i.e., where it has one of the five largest absolute coefficients in the corresponding column of the GHL matrix.\n\ndata_plt2 &lt;- results |&gt;\n    select(iter, column, density, top_contribution) |&gt;\n    unnest(top_contribution) |&gt;\n    count(density, feature, name = \"times_top_k\") |&gt;\n    mutate(\n        times_top_k = times_top_k / n_iters,\n        density = if_else(is.na(density), \"Default\", as.character(density)),\n        density = factor(density,\n            levels = c(\"Default\", sort(as.numeric(setdiff(unique(density), \"Default\"))))\n        ),\n        feature = str_remove(feature, \"org_\"),\n        feature = fct_reorder(feature, parse_number(feature))\n    )\n\ndata_plt2 |&gt;\n    filter(density %in% c(\"Default\", seq(0.01, 0.09, by = 0.01))) |&gt;\n    ggplot(aes(x = feature, y = times_top_k)) +\n    geom_point() +\n    facet_wrap(~density, ncol = 3) +\n    theme_bw() +\n    labs(\n        x = \"Original feature\",\n        y = paste(\"Average number across\", n_iters, \"GHL simulations\"),\n        title = paste(\"Mean Number of ILR Coordinates in Which a Feature Ranks Top\", top_k, \"Contributor\"),\n        subtitle = paste(\"Aggregated over\", n_iters, \"GHL simulations, panels split by GHL density\")\n    ) +\n    theme(\n        legend.position = \"bottom\",\n        legend.title = element_blank(),\n        plot.title = element_text(size = 16),\n        plot.subtitle = element_text(size = 14),\n        axis.title.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.x = element_text(size = 12, angle = 90),\n        axis.text.y = element_text(size = 12),\n        legend.text = element_text(size = 12)\n    )\n\n\n\n\n\n\n\ndata_plt2 |&gt;\n    filter(density %in% c(\"Default\", seq(0.1, 0.9, by = 0.1))) |&gt;\n    ggplot(aes(x = feature, y = times_top_k)) +\n    geom_point() +\n    facet_wrap(~density, ncol = 3) +\n    theme_bw() +\n    labs(\n        x = \"Original feature\",\n        y = paste(\"Average number across\", n_iters, \"GHL simulations\"),\n        title = paste(\"Mean Number of ILR Coordinates in Which a Feature Ranks Top\", top_k, \"Contributor\"),\n        subtitle = paste(\"Aggregated over\", n_iters, \"GHL simulations, panels split by GHL density\")\n    ) +\n    theme(\n        legend.position = \"bottom\",\n        legend.title = element_blank(),\n        plot.title = element_text(size = 16),\n        plot.subtitle = element_text(size = 14),\n        axis.title.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.x = element_text(size = 12, angle = 90),\n        axis.text.y = element_text(size = 12),\n        legend.text = element_text(size = 12)\n    )"
   },
   {
     "objectID": "content/summary_rodriguez_pc_half.html",
@@ -315,72 +231,205 @@
     "text": "Impact of the augmentation factor on the predictive perfromance\n\nROC AUC\n\n\n\nMissclasification Rate"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html",
-    "href": "content/summary_random_ilr_pc_half.html",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/density_impact.html",
+    "href": "content/density_impact.html",
+    "title": "Density Impact",
+    "section": "",
+    "text": "The purpose of this document is to show the influence of the density of a skew-symmetric matrix used for a generation of a GHL matrix used in the random ILR augmentation methods.\nReminder: Density \\(\\delta=0.1\\) means that \\(10\\%\\) of the off-diagonal entries in the skew-symmetric matrix \\(S\\) are non-zero; each such non-zero value is drawn from a standard normal distribution (\\(s_{ij}\\sim\\mathcal{N}(0,1)\\)) and \\(s_{ji}=-s_{ij}\\). The default density refers to the very sparse case in which exactly one off-diagonal element in the lower triangle and its mirror element in the upper triangle are non-zero; all other off-diagonal entries are zero.\nTo understand the impact of density of skew-symmetric matrix on the GHL matrix, and in consequence on the random ilr transformation, one needs to understand first in terms of the formulas how is the GHL matrix used in the random ilr transformation. In order to achieve it, let’s have a look on the below example with the use of the four dimensional compositional vector \\(\\mathbf{x},\\, \\mathbf{x} \\in S^4\\):\n\\[\n\\mathbf{x} \\in S^{4}, \\; \\mathbf{x}=\\bigl[\\,x_{1},\\,x_{2},\\,x_{3},\\,x_{4}\\,\\bigr]\n\\]\n\\[\n\\mathrm{ilr}(x)=\\mathrm{clr}(x)\\,\\mathrm{L}_{-1}=\\bigl[\\,y_{1},\\,y_{2},\\,y_{3}\\,\\bigr],\n\\]\nwhere \\(L_{-1}\\) is the GHL matrix without last column and \\(dim\\bigl(L_{-1}\\bigr) = 4 \\times 3\\). The centered log-ratio transformation is given by:\n\\[\n\\mathrm{clr}(x)=\\Bigl[\\,\\ln\\frac{x_{1}}{g(x)},\\,\\ln\\frac{x_{2}}{g(x)},\\,\\ln\\frac{x_{3}}{g(x)},\\,\\ln\\frac{x_{4}}{g(x)}\\,\\Bigr],\n\\]\nwhere \\(g(x)\\) is a geometric mean of the entries of a vector \\(\\mathbf{x}\\) . Let’s represent the GHL matrix with the removed last column as follows:\n\\[\nL_{-1} = \\begin{bmatrix}a_{1} & b_{1} & c_{1} \\\\a_{2} & b_{2} & c_{2} \\\\a_{3} & b_{3} & c_{3} \\\\a_{4} & b_{4} & c_{4}\\end{bmatrix}\n\\]\n\\[\n\\begin{aligned}\\mathrm{ilr}(x)&=\\mathrm{clr}(x)\\,\\mathrm{L}_{-1} \\\\\n&=\\Bigl[\\,a_{1}\\ln\\frac{x_{1}}{g(x)}+a_{2}\\ln\\frac{x_{2}}{g(x)}+a_{3}\\ln\\frac{x_{3}}{g(x)}+a_{4}\\ln\\frac{x_{4}}{g(x)},\\;\\\\ & \\,b_{1}\\ln\\frac{x_{1}}{g(x)}+b_{2}\\ln\\frac{x_{2}}{g(x)}+b_{3}\\ln\\frac{x_{3}}{g(x)}+b_{4}\\ln\\frac{x_{4}}{g(x)}, \\;\\\\\n& \\,c_{1}\\ln\\frac{x_{1}}{g(x)}+c_{2}\\ln\\frac{x_{2}}{g(x)}+c_{3}\\ln\\frac{x_{3}}{g(x)}+c_{4}\\ln\\frac{x_{4}}{g(x)},\n\\Bigr] \\\\\n&=\\Biggl[\\,\\ln\\frac{x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}}{\\bigl[g(x)\\bigr]^{a_{1}+a_{2}+a_{3}+a_{4}}},\\; \\ln\\frac{x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}}{\\bigl[g(x)\\bigr]^{b_{1}+b_{2}+b_{3}+b_{4}}},\\;\n\\ln\\frac{x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}}{\\bigl[g(x)\\bigr]^{c_{1}+c_{2}+c_{3}+c_{4}}}\n\\Biggr] \\\\\n&= \\Bigl[\\,\\ln\\!\\bigl(x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}\\bigr),\\;\n\\ln\\!\\bigl(x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}\\bigr),\\;\n\\ln\\!\\bigl(x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}\\bigr)\n\\Bigr]\n\\end{aligned}\n\\]\nThe last equality in the above representation of the random ilr transformation is the consequence of the following property of GHL matrix under consideration:\n\\[\n\\mathbf{1}_{n}^{\\mathsf T}L_{n,n-1}=\\mathbf{0}_{n-1}^{\\mathsf T}\n\\]\ntherefore: \\(a_{1}+a_{2}+a_{3}+a_{4}=0\\). Similarly for \\(b_{i}, c_{i}, i \\in \\{1,2,3,4\\}\\). Therefore, the contribution of a original feature \\(x_i\\) to the new coordinate after random ilr transformation (\\(y_i\\)) depends on the sign of coefficients from GHL matrix \\(a_i, b_i, c_i, i \\in \\{1, \\dots, 4\\}\\). For instance, in the considered example of \\(\\mathbf{x}, \\, \\mathbf{x} \\in S^4\\) let’s focus on the first coordinate resulting from the random ilr transformation. Let’s assume that \\(a_1, a_3 &gt; 0\\) and \\(a_2, a_4 &lt;0\\). Then, the new first ilr coordinate has the following form:\n\\[\ny_{1}=\\ln\\!\\left(\\frac{x_{1}^{a_{1}}\\,x_{3}^{a_{3}}}{x_{2}^{a_{2}}\\,x_{4}^{a_{4}}}\\right)\n\\]\nIn such a case original features \\(x_1, x_3\\) contribute to the new coordinate in the numerator, while covariates \\(x_2, x_4\\) contribute to the \\(y_1\\) in the denominator.\nThe strength of the contribution of a given original feature to the new random ilr coordinate depends on the absolute value of the coefficient from the GHL matrix. For example, the contribution of \\(x_1\\) to ilr coordinate \\(y_1\\) depends on the \\(|a_1|\\). In the below analysis term top k contributor will be used.\nTop k contributor: Feature \\(x_j\\) coming from compositional vector \\(\\mathbf{x}, \\, \\mathbf{x} \\in S^p\\) is considered as the top \\(k\\) contributor to the new ilr coordinate \\(y_i, \\, y_i = \\ln\\!\\bigl(x_{1}^{w_{1}}x_{2}^{w_{2}} \\dots x_{p}^{w_{p}}\\bigr) \\; \\text{where} \\; \\mathbf{y} = \\bigl(y_1, y_2, \\dots, y_{p-1} \\bigr)\\) when the absolute value of the coefficient from GHL matrix associated with \\(x_j\\) ranks within top \\(k\\) largest absolute coefficients \\(|w_1|, |w_2|, \\dots, |w_p|\\)."
+  },
+  {
+    "objectID": "content/density_impact.html#theoretical-overview",
+    "href": "content/density_impact.html#theoretical-overview",
+    "title": "Density Impact",
+    "section": "",
+    "text": "The purpose of this document is to show the influence of the density of a skew-symmetric matrix used for a generation of a GHL matrix used in the random ILR augmentation methods.\nReminder: Density \\(\\delta=0.1\\) means that \\(10\\%\\) of the off-diagonal entries in the skew-symmetric matrix \\(S\\) are non-zero; each such non-zero value is drawn from a standard normal distribution (\\(s_{ij}\\sim\\mathcal{N}(0,1)\\)) and \\(s_{ji}=-s_{ij}\\). The default density refers to the very sparse case in which exactly one off-diagonal element in the lower triangle and its mirror element in the upper triangle are non-zero; all other off-diagonal entries are zero.\nTo understand the impact of density of skew-symmetric matrix on the GHL matrix, and in consequence on the random ilr transformation, one needs to understand first in terms of the formulas how is the GHL matrix used in the random ilr transformation. In order to achieve it, let’s have a look on the below example with the use of the four dimensional compositional vector \\(\\mathbf{x},\\, \\mathbf{x} \\in S^4\\):\n\\[\n\\mathbf{x} \\in S^{4}, \\; \\mathbf{x}=\\bigl[\\,x_{1},\\,x_{2},\\,x_{3},\\,x_{4}\\,\\bigr]\n\\]\n\\[\n\\mathrm{ilr}(x)=\\mathrm{clr}(x)\\,\\mathrm{L}_{-1}=\\bigl[\\,y_{1},\\,y_{2},\\,y_{3}\\,\\bigr],\n\\]\nwhere \\(L_{-1}\\) is the GHL matrix without last column and \\(dim\\bigl(L_{-1}\\bigr) = 4 \\times 3\\). The centered log-ratio transformation is given by:\n\\[\n\\mathrm{clr}(x)=\\Bigl[\\,\\ln\\frac{x_{1}}{g(x)},\\,\\ln\\frac{x_{2}}{g(x)},\\,\\ln\\frac{x_{3}}{g(x)},\\,\\ln\\frac{x_{4}}{g(x)}\\,\\Bigr],\n\\]\nwhere \\(g(x)\\) is a geometric mean of the entries of a vector \\(\\mathbf{x}\\) . Let’s represent the GHL matrix with the removed last column as follows:\n\\[\nL_{-1} = \\begin{bmatrix}a_{1} & b_{1} & c_{1} \\\\a_{2} & b_{2} & c_{2} \\\\a_{3} & b_{3} & c_{3} \\\\a_{4} & b_{4} & c_{4}\\end{bmatrix}\n\\]\n\\[\n\\begin{aligned}\\mathrm{ilr}(x)&=\\mathrm{clr}(x)\\,\\mathrm{L}_{-1} \\\\\n&=\\Bigl[\\,a_{1}\\ln\\frac{x_{1}}{g(x)}+a_{2}\\ln\\frac{x_{2}}{g(x)}+a_{3}\\ln\\frac{x_{3}}{g(x)}+a_{4}\\ln\\frac{x_{4}}{g(x)},\\;\\\\ & \\,b_{1}\\ln\\frac{x_{1}}{g(x)}+b_{2}\\ln\\frac{x_{2}}{g(x)}+b_{3}\\ln\\frac{x_{3}}{g(x)}+b_{4}\\ln\\frac{x_{4}}{g(x)}, \\;\\\\\n& \\,c_{1}\\ln\\frac{x_{1}}{g(x)}+c_{2}\\ln\\frac{x_{2}}{g(x)}+c_{3}\\ln\\frac{x_{3}}{g(x)}+c_{4}\\ln\\frac{x_{4}}{g(x)},\n\\Bigr] \\\\\n&=\\Biggl[\\,\\ln\\frac{x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}}{\\bigl[g(x)\\bigr]^{a_{1}+a_{2}+a_{3}+a_{4}}},\\; \\ln\\frac{x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}}{\\bigl[g(x)\\bigr]^{b_{1}+b_{2}+b_{3}+b_{4}}},\\;\n\\ln\\frac{x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}}{\\bigl[g(x)\\bigr]^{c_{1}+c_{2}+c_{3}+c_{4}}}\n\\Biggr] \\\\\n&= \\Bigl[\\,\\ln\\!\\bigl(x_{1}^{a_{1}}x_{2}^{a_{2}}x_{3}^{a_{3}}x_{4}^{a_{4}}\\bigr),\\;\n\\ln\\!\\bigl(x_{1}^{b_{1}}x_{2}^{b_{2}}x_{3}^{b_{3}}x_{4}^{b_{4}}\\bigr),\\;\n\\ln\\!\\bigl(x_{1}^{c_{1}}x_{2}^{c_{2}}x_{3}^{c_{3}}x_{4}^{c_{4}}\\bigr)\n\\Bigr]\n\\end{aligned}\n\\]\nThe last equality in the above representation of the random ilr transformation is the consequence of the following property of GHL matrix under consideration:\n\\[\n\\mathbf{1}_{n}^{\\mathsf T}L_{n,n-1}=\\mathbf{0}_{n-1}^{\\mathsf T}\n\\]\ntherefore: \\(a_{1}+a_{2}+a_{3}+a_{4}=0\\). Similarly for \\(b_{i}, c_{i}, i \\in \\{1,2,3,4\\}\\). Therefore, the contribution of a original feature \\(x_i\\) to the new coordinate after random ilr transformation (\\(y_i\\)) depends on the sign of coefficients from GHL matrix \\(a_i, b_i, c_i, i \\in \\{1, \\dots, 4\\}\\). For instance, in the considered example of \\(\\mathbf{x}, \\, \\mathbf{x} \\in S^4\\) let’s focus on the first coordinate resulting from the random ilr transformation. Let’s assume that \\(a_1, a_3 &gt; 0\\) and \\(a_2, a_4 &lt;0\\). Then, the new first ilr coordinate has the following form:\n\\[\ny_{1}=\\ln\\!\\left(\\frac{x_{1}^{a_{1}}\\,x_{3}^{a_{3}}}{x_{2}^{a_{2}}\\,x_{4}^{a_{4}}}\\right)\n\\]\nIn such a case original features \\(x_1, x_3\\) contribute to the new coordinate in the numerator, while covariates \\(x_2, x_4\\) contribute to the \\(y_1\\) in the denominator.\nThe strength of the contribution of a given original feature to the new random ilr coordinate depends on the absolute value of the coefficient from the GHL matrix. For example, the contribution of \\(x_1\\) to ilr coordinate \\(y_1\\) depends on the \\(|a_1|\\). In the below analysis term top k contributor will be used.\nTop k contributor: Feature \\(x_j\\) coming from compositional vector \\(\\mathbf{x}, \\, \\mathbf{x} \\in S^p\\) is considered as the top \\(k\\) contributor to the new ilr coordinate \\(y_i, \\, y_i = \\ln\\!\\bigl(x_{1}^{w_{1}}x_{2}^{w_{2}} \\dots x_{p}^{w_{p}}\\bigr) \\; \\text{where} \\; \\mathbf{y} = \\bigl(y_1, y_2, \\dots, y_{p-1} \\bigr)\\) when the absolute value of the coefficient from GHL matrix associated with \\(x_j\\) ranks within top \\(k\\) largest absolute coefficients \\(|w_1|, |w_2|, \\dots, |w_p|\\)."
+  },
+  {
+    "objectID": "content/density_impact.html#analysis",
+    "href": "content/density_impact.html#analysis",
+    "title": "Density Impact",
+    "section": "Analysis",
+    "text": "Analysis\nHelper functions used in this script:\n\n# Function that takes the GHL matrix and:\n# 1. determines if original feature x_i contributes to the ilr coordinate in numerator or denominator\n# 2. determines top k contributors for each of the\nunderstand_randilr &lt;- function(ghl, org_feature_names, top_k) {\n    abs_ghl &lt;- abs(ghl)\n    sign_ghl &lt;- sign(ghl)\n\n    ghl_summary &lt;- map(c(1:ncol(ghl)), function(j) {\n        # Pull the j-th column\n        abs_col &lt;- abs_ghl[, j]\n        sign_col &lt;- sign_ghl[, j]\n        column &lt;- ghl[, j]\n\n        # Get names of the original features that go into numerator (have positive 'coefficient' in the GHL mat.):\n        pos &lt;- org_feature_names[sign_col == 1]\n        # Get names of the original features that go into denominator\n        neg &lt;- org_feature_names[sign_col == -1]\n\n        # top-k absolute contributors and the values of their coeffs (not absolute, just as is)\n        idx &lt;- order(abs_col, decreasing = TRUE)[1:top_k]\n        top_k_tbl &lt;- tibble(\n            feature = org_feature_names[idx],\n            coef    = column[idx]\n        )\n\n        # number of distinct absolute values of coeff\n        unique_coefs &lt;- length(unique(abs_col))\n\n        list(\n            column = j,\n            unique_coefs = unique_coefs,\n            numerator = pos,\n            denominator = neg,\n            top_k_contribution = top_k_tbl\n        )\n    })\n\n    # Return tibble\n    tibble(\n        column = map_dbl(ghl_summary, ~ .x$column),\n        unique_coefs = map_dbl(ghl_summary, ~ .x$unique_coefs),\n        numerator = map(ghl_summary, ~ .x$numerator),\n        denominator = map(ghl_summary, ~ .x$denominator),\n        top_contribution = map(ghl_summary, ~ .x$top_k_contribution)\n    )\n}\n\n# Function:\n# 1. Construct square GHL matrix with n_org_features rows and column by using skew-symmetric matrix with `density`\n# 2. Gathers info about contribution to numerator/denominator of each feature and top k contributors\n# 3. repeats 1-2 n_iters times\ndensity_impact &lt;- function(seed_start = 2025, n_org_features, density, top_k, n_iters = 10) {\n    set.seed(seed_start)\n    org_feature_names &lt;- paste0(\"org_feature\", c(1:n_org_features))\n    results &lt;- tibble()\n\n    for (i in 1:n_iters) {\n        # Generate GHL matrix\n        ghl &lt;- create_ghl(n = n_org_features, density = density)\n        ghl_mat &lt;- ghl[, -n_org_features]\n\n        # Gather info about new features\n        out &lt;- understand_randilr(\n            ghl = ghl_mat,\n            org_feature_names = org_feature_names,\n            top_k = top_k\n        ) |&gt;\n            mutate(iter = i)\n\n        results &lt;- results |&gt;\n            bind_rows(out)\n    }\n    return(results)\n}\n\nIn the below analysis the following scenario is considered:\n\ninput data has \\(20\\) covariates,\nanalyzed density of skew-symmetric matrix : default density (very sparse skew-symmetric matrix) and \\(\\delta \\in (0.01, 0.02, \\dots, 0.1, 0.2, 0.3, \\dots, 0.9)\\),\nfor each density level of a skew-symmetric matrix, \\(100\\) independent GHL matrices are generated,\nfor a given GHL matrix, the proportion of times when a given original feature contributes to the numerator vs. denominator along with the top \\(5\\) contributors are analyzed.\n\n\nContribution to numerator vs denominator\nFor every original feature, count how often it appears in a numerator versus a denominator across all new ILR coordinates (this is, as shown above, determined by the GHL-matrix coefficients). The bars represent the average number of occurrences per original feature over the \\(100\\) simulations.\n\norg_features &lt;- 20\ntop_k &lt;- 5\nn_iters &lt;- 100\nseed_start &lt;- 567\n\nresults &lt;- tibble(\n    density = c(NA_real_, seq(0.01, 0.09, by = 0.01), seq(0.1, 0.9, by = 0.1))\n) |&gt;\n    mutate(\n        ghl_analysis = map(density, ~ density_impact(\n            seed_start = seed_start,\n            n_org_features = org_features,\n            density = .x,\n            top_k = top_k,\n            n_iters = n_iters\n        ))\n    ) |&gt;\n    unnest(ghl_analysis)\n\n# We repeat GHL simulation with a given density of skew-symmetric matrix n_iters times\n# For a given density, on average, how many times is the original feature_k selected into numerator vs denominator\n# Max number of occurrence in numerator/ denominator: (n_org_features - 1) * n_iters\n\ndata_plt1 &lt;- results |&gt;\n    select(density, iter, column, numerator) |&gt;\n    unnest(numerator) |&gt;\n    rename(feature = numerator) |&gt;\n    count(density, feature, name = \"numerator\") |&gt;\n    mutate(numerator = numerator / n_iters) |&gt;\n    left_join(\n        results |&gt;\n            select(density, iter, column, denominator) |&gt;\n            unnest(denominator) |&gt;\n            rename(feature = denominator) |&gt;\n            count(density, feature, name = \"denominator\") |&gt;\n            mutate(denominator = denominator / n_iters)\n    ) |&gt;\n    pivot_longer(cols = c(denominator, numerator), names_to = \"part\", values_to = \"value\") |&gt;\n    mutate(\n        feature = str_remove(feature, \"org_\"),\n        feature = fct_reorder(feature, parse_number(feature)),\n        density = if_else(is.na(density), \"Default\", as.character(density)),\n        density = factor(density,\n            levels = c(\"Default\", sort(as.numeric(setdiff(unique(density), \"Default\"))))\n        ),\n        part = str_to_title(part)\n    )\n\nJoining with `by = join_by(density, feature)`\n\ndata_plt1 |&gt;\n    filter(density %in% c(\"Default\", seq(0.01, 0.09, by = 0.01))) |&gt;\n    ggplot(aes(x = feature, y = value, fill = part)) +\n    geom_bar(position = \"dodge\", stat = \"identity\") +\n    facet_wrap(~density, ncol = 3) +\n    theme_bw() +\n    labs(\n        x = \"Original feature\",\n        y = paste(\"Average occurance across\", n_iters, \"GHL simulations\"),\n        title = \"Contributions of Original Features to Numerator and Denominator in Random ILR Coordinates\",\n        subtitle = paste(\"Aggregated over\", n_iters, \"GHL simulations, panels split by GHL density\")\n    ) +\n    theme(\n        legend.position = \"bottom\",\n        legend.title = element_blank(),\n        plot.title = element_text(size = 16),\n        plot.subtitle = element_text(size = 14),\n        axis.title.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.x = element_text(size = 12, angle = 90),\n        axis.text.y = element_text(size = 12),\n        legend.text = element_text(size = 12)\n    )\n\n\n\n\n\n\n\ndata_plt1 |&gt;\n    filter(density %in% c(\"Default\", seq(0.1, 0.9, by = 0.1))) |&gt;\n    ggplot(aes(x = feature, y = value, fill = part)) +\n    geom_bar(position = \"dodge\", stat = \"identity\") +\n    facet_wrap(~density, ncol = 3) +\n    theme_bw() +\n    # scale_y_continuous(breaks = scales::breaks_width(10), minor_breaks = NULL) +\n    labs(\n        x = \"Original feature\",\n        y = paste(\"Average occurance across\", n_iters, \"GHL simulations\"),\n        title = \"Contributions of Original Features to Numerator and Denominator in Random ILR Coordinates\",\n        subtitle = paste(\"Aggregated over\", n_iters, \"GHL simulations, panels split by GHL density\")\n    ) +\n    theme(\n        legend.position = \"bottom\",\n        legend.title = element_blank(),\n        plot.title = element_text(size = 16),\n        plot.subtitle = element_text(size = 14),\n        axis.title.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.x = element_text(size = 12, angle = 90),\n        axis.text.y = element_text(size = 12),\n        legend.text = element_text(size = 12)\n    )\n\n\n\n\n\n\n\n\n\n\nTop 5 contributors\nFor a selected density of the skew-symmetric matrix used to generate the GHL matrix, the plot below displays the expected number of random ILR coordinates in which a given original feature ranks among the five most influential features, i.e., where it has one of the five largest absolute coefficients in the corresponding column of the GHL matrix.\n\ndata_plt2 &lt;- results |&gt;\n    select(iter, column, density, top_contribution) |&gt;\n    unnest(top_contribution) |&gt;\n    count(density, feature, name = \"times_top_k\") |&gt;\n    mutate(\n        times_top_k = times_top_k / n_iters,\n        density = if_else(is.na(density), \"Default\", as.character(density)),\n        density = factor(density,\n            levels = c(\"Default\", sort(as.numeric(setdiff(unique(density), \"Default\"))))\n        ),\n        feature = str_remove(feature, \"org_\"),\n        feature = fct_reorder(feature, parse_number(feature))\n    )\n\ndata_plt2 |&gt;\n    filter(density %in% c(\"Default\", seq(0.01, 0.09, by = 0.01))) |&gt;\n    ggplot(aes(x = feature, y = times_top_k)) +\n    geom_point() +\n    facet_wrap(~density, ncol = 3) +\n    theme_bw() +\n    labs(\n        x = \"Original feature\",\n        y = paste(\"Average number across\", n_iters, \"GHL simulations\"),\n        title = paste(\"Mean Number of ILR Coordinates in Which a Feature Ranks Top\", top_k, \"Contributor\"),\n        subtitle = paste(\"Aggregated over\", n_iters, \"GHL simulations, panels split by GHL density\")\n    ) +\n    theme(\n        legend.position = \"bottom\",\n        legend.title = element_blank(),\n        plot.title = element_text(size = 16),\n        plot.subtitle = element_text(size = 14),\n        axis.title.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.x = element_text(size = 12, angle = 90),\n        axis.text.y = element_text(size = 12),\n        legend.text = element_text(size = 12)\n    )\n\n\n\n\n\n\n\ndata_plt2 |&gt;\n    filter(density %in% c(\"Default\", seq(0.1, 0.9, by = 0.1))) |&gt;\n    ggplot(aes(x = feature, y = times_top_k)) +\n    geom_point() +\n    facet_wrap(~density, ncol = 3) +\n    theme_bw() +\n    labs(\n        x = \"Original feature\",\n        y = paste(\"Average number across\", n_iters, \"GHL simulations\"),\n        title = paste(\"Mean Number of ILR Coordinates in Which a Feature Ranks Top\", top_k, \"Contributor\"),\n        subtitle = paste(\"Aggregated over\", n_iters, \"GHL simulations, panels split by GHL density\")\n    ) +\n    theme(\n        legend.position = \"bottom\",\n        legend.title = element_blank(),\n        plot.title = element_text(size = 16),\n        plot.subtitle = element_text(size = 14),\n        axis.title.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.x = element_text(size = 12, angle = 90),\n        axis.text.y = element_text(size = 12),\n        legend.text = element_text(size = 12)\n    )"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "",
+    "text": "Use the controls to explore how the three augmentation strategies analysed in this document (introduced in @gordon2022data) compare with their benchmarks in terms of the mean performance metric. You can choose among two performance metrics and four augmentation factors. Results for the augmentation strategies are shown for experiments using data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\) and expressed as proportions.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "",
+    "text": "Use the controls to explore how the three augmentation strategies analysed in this document (introduced in @gordon2022data) compare with their benchmarks in terms of the mean performance metric. You can choose among two performance metrics and four augmentation factors. Results for the augmentation strategies are shown for experiments using data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\) and expressed as proportions.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "",
+    "text": "k = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "",
+    "text": "k = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-1",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-1",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Interactive Summary Table",
+    "text": "Interactive Summary Table\nThe table below shows the mean performance for the selected metric (\\(2\\) options available) and augmentation factor (\\(4\\) values available) for the logistic regression with \\(\\text{L}_1\\) penalty trained on data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\), transformed using the standard ILR transformation.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-1",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-1",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Boxplots of performance metrics",
+    "text": "Boxplots of performance metrics\n\nROC AUC\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMisclassification Rate\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-1",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-1",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "ROC Curves",
+    "text": "ROC Curves\n\nk = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Impact of the augmentation factor on the predictive perfromance",
+    "text": "Impact of the augmentation factor on the predictive perfromance\n\nROC AUC\n\n\n\nMissclasification Rate"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-2",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-2",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Interactive Summary Table",
+    "text": "Interactive Summary Table\nThe table below shows the mean performance for the selected metric (\\(2\\) options available) and augmentation factor (\\(4\\) values available) for the Random Forest trained on data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\), transformed into proportions.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-2",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-2",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Boxplots of performance metrics",
+    "text": "Boxplots of performance metrics\n\nROC AUC\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMisclassification Rate\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-2",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-2",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "ROC Curves",
+    "text": "ROC Curves\n\nk = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Impact of the augmentation factor on the predictive perfromance",
+    "text": "Impact of the augmentation factor on the predictive perfromance\n\nROC AUC\n\n\n\nMissclasification Rate"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-3",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#interactive-summary-table-3",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Interactive Summary Table",
+    "text": "Interactive Summary Table\nThe table below shows the mean performance for the selected metric (\\(2\\) options available) and augmentation factor (\\(4\\) values available) for the XGBoost trained on data with a pseudo-count of \\(\\mathbf{1/\\text{max library size}}\\), transformed into proportions.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-3",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#boxplots-of-performance-metrics-3",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Boxplots of performance metrics",
+    "text": "Boxplots of performance metrics\n\nROC AUC\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMisclassification Rate\n\nk = 2k = 3k = 4k = 5"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-3",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#roc-curves-3",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "ROC Curves",
+    "text": "ROC Curves\n\nk = 1k = 2k = 3k = 4k = 5k = 6k = 7k = 8k = 9k = 10k = 11k = 12"
+  },
+  {
+    "objectID": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-3",
+    "href": "content/summary_rodriguez_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-3",
+    "title": "Results Summary: Rodriguez Augmentation Methods - Pseudo-count 1/max lib size",
+    "section": "Impact of the augmentation factor on the predictive perfromance",
+    "text": "Impact of the augmentation factor on the predictive perfromance\n\nROC AUC\n\n\n\nMissclasification Rate"
+  },
+  {
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "",
     "text": "The table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor\n\n\n\n\n\n\n\n\n\n\n\n\n\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDefault0.10.5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table",
-    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "",
     "text": "The table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics",
-    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "",
     "text": "One tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nk = 2k = 3k = 4k = 5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
-    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "",
     "text": "The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDefault0.10.5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table-1",
-    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table-1",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table-1",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "2.1 Interactive Summary Table",
     "text": "2.1 Interactive Summary Table\nThe table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-1",
-    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-1",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics-1",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "2.2 Boxplots of performance metrics",
     "text": "2.2 Boxplots of performance metrics\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n2.2.1 ROC AUC\n\n2.2.1.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.1.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.1.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2 Misclassification Rate\n\n2.2.2.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
-    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-1",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "2.3 Impact of the augmentation factor on the predictive perfromance",
     "text": "2.3 Impact of the augmentation factor on the predictive perfromance\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n2.3.1 ROC AUC\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.3.2 Misclassification Rate\n\nDefault0.10.5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#interactive-summary-table-2",
-    "href": "content/summary_random_ilr_pc_half.html#interactive-summary-table-2",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table-2",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#interactive-summary-table-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "3.1 Interactive Summary Table",
     "text": "3.1 Interactive Summary Table\nThe table below shows the mean of the selected performance metric for the chosen augmentation factor.\n\n\n\n\nPerformance metric\n\n\n\n\n\n\n\n\nAugmentation factor"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-2",
-    "href": "content/summary_random_ilr_pc_half.html#boxplots-of-performance-metrics-2",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics-2",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#boxplots-of-performance-metrics-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "3.2 Boxplots of performance metrics",
     "text": "3.2 Boxplots of performance metrics\nOne tabset with a box plot corresponds to a single augmentation factor in the section below.\n\n3.2.1 ROC AUC\n\n3.2.1.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.1.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.1.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2 Misclassification Rate\n\n3.2.2.1 Density default\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2.2 Density = 0.1\n\nk = 2k = 3k = 4k = 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2.3 Density = 0.5\n\nk = 2k = 3k = 4k = 5"
   },
   {
-    "objectID": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
-    "href": "content/summary_random_ilr_pc_half.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
-    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count \\(0.5\\)",
+    "objectID": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
+    "href": "content/summary_random_ilr_pc_max_lib_size.html#impact-of-the-augmentation-factor-on-the-predictive-perfromance-2",
+    "title": "Results Summary: random ILR Augmentation Methods - Pseudo-count 1/max lib size",
     "section": "3.3 Impact of the augmentation factor on the predictive perfromance",
     "text": "3.3 Impact of the augmentation factor on the predictive perfromance\nThe plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.\n\n3.3.1 ROC AUC\n\nDefault0.10.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.3.2 Misclassification Rate\n\nDefault0.10.5"
   }

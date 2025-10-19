@@ -1,0 +1,286 @@
+---
+title: "Impact of pseudo-count"
+author: "Oktawia Miluch"
+date: today
+bibliography: ../references.bib
+link-citations: true
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+    fig-format: png
+    code-fold: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+knitr:
+  opts_chunk:
+    fig.path: _figures/pseudo_count_impact/
+    fig.width: 18
+    fig.height: 13.5
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(here)
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(viridis)
+library(crosstalk)
+library(DT)
+library(htmltools)
+library(kableExtra)
+
+# Create/clean graphics directory, set fig.path
+graphics_abs <- here::here("content", "_figures", "pseudo_count_impact")
+dir.create(graphics_abs, recursive = TRUE, showWarnings = FALSE)
+
+# clean contents but keep folder
+to_remove <- list.files(
+  graphics_abs,
+  all.files = TRUE,
+  full.names = TRUE,
+  no.. = TRUE
+)
+unlink(to_remove, recursive = TRUE, force = TRUE)
+
+# ensure knitr writes to the selected path
+knitr::opts_chunk$set(
+  fig.path   = "_figures/pseudo_count_impact/",
+  fig.width  = 18,
+  fig.height = 13.5
+)
+
+# Source helper functions
+source(file.path(here::here(), "R", "pseudo_count_impact_helpers.R"))
+
+# Read in aggregated results from Rodriguez augmentation methods
+data_dir <- here::here("results", "results_aggregated")
+## pc = 1/max_lib_size
+rod_files <- list.files(
+  data_dir,
+  pattern = "^rodriguez.*pc_max_lib_size$",
+  full.names = TRUE
+)
+
+rod_names <- rod_files |>
+  basename()
+
+rod_data <- map(rod_files, readRDS)
+
+walk2(rod_data, rod_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(rod_data)
+
+## pc = 1/2
+rod_files_half <- list.files(
+  data_dir,
+  pattern = "^rodriguez.*pc_half$",
+  full.names = TRUE
+)
+
+rod_names_half <- rod_files_half |>
+  basename()
+
+rod_data_half <- map(rod_files_half, readRDS)
+
+walk2(rod_data_half, rod_names_half, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(rod_data_half)
+
+# Read in aggregated results from random ILR augmentation methods
+## PC = 1/ max lib size
+ilr_files <- list.files(
+  data_dir,
+  pattern = "^random_ilr.*pc_max_lib_size$",
+  full.names = TRUE
+)
+
+ilr_names <- ilr_files |>
+  basename()
+
+ilr_data <- map(ilr_files, readRDS)
+
+walk2(ilr_data, ilr_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(ilr_data)
+
+## PC = 1/2
+ilr_files_half <- list.files(
+  data_dir,
+  pattern = "^random_ilr.*pc_half$",
+  full.names = TRUE
+)
+
+ilr_names_half <- ilr_files_half |>
+  basename()
+
+ilr_data_half <- map(ilr_files_half, readRDS)
+
+walk2(ilr_data_half, ilr_names_half, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(ilr_data_half)
+
+# Benchmark
+## PC = 1/ max lib size
+bench_files <- list.files(
+  data_dir,
+  pattern = "^benchmark.*pc_max_lib_size$",
+  full.names = TRUE
+)
+
+bench_names <- bench_files |>
+  basename()
+
+bench_data <- map(bench_files, readRDS)
+
+walk2(bench_data, bench_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(bench_data)
+
+## PC = 1/2
+bench_files_half <- list.files(
+  data_dir,
+  pattern = "^benchmark.*pc_half$",
+  full.names = TRUE
+)
+
+bench_names_half <- bench_files_half |>
+  basename()
+
+bench_data_half <- map(bench_files_half, readRDS)
+
+walk2(bench_data_half, bench_names_half, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(bench_data_half)
+```
+
+The purpose of this document is to analyse how the pseudo-count affects model performance depending on the augmentation strategy and the augmentation factor. In all plots below, the phrase “mean difference of the selected performance metric” for a given augmentation strategy, augmentation factor and dataset refers to:
+
+$$
+\begin{aligned}
+  \text{Mean difference}
+    &= \frac{1}{20} \sum_{i=1}^{20} \Bigl(
+         \text{performance metric}_{\text{pseudo-count}=0.5}(i) \\
+    &\quad - \text{performance metric}_{\text{pseudo-count}=1/\max\{\text{library size}\}}(i)
+       \Bigr)
+\end{aligned}
+$$
+
+The mean of the performance metric is computed over $20$ train–test data splits. Below, each plot corresponds to one model (logistic regression with $\text{L}_1$ penalty, random forest, or XGBoost) and one performance metric (ROC AUC or misclassification rate). Each tabset corresponds to a selected augmentation factor.
+
+# Logistic regression with $\text{L}_1$ penalty 
+## ROC AUC
+
+::: panel-tabset
+```{r}
+#| label: lasso_roc_auc
+#| echo: false
+#| results: asis
+render_mean_diff_heatmap_tabs(
+  rand_ilr_half = random_ilr_lasso_pc_half,
+  rand_ilr_max = random_ilr_lasso_pc_max_lib_size,
+  rod_half = rodriguez_lasso_pc_half,
+  rod_max = rodriguez_lasso_pc_max_lib_size,
+  bench_half = benchmark_lasso_pc_half,
+  bench_max = benchmark_lasso_pc_max_lib_size,
+  plot_metric = "roc_auc"
+)
+```
+:::
+
+## Misclassification Rate
+
+::: panel-tabset
+```{r}
+#| label: lasso_misclas_rate
+#| echo: false
+#| results: asis
+render_mean_diff_heatmap_tabs(
+  rand_ilr_half = random_ilr_lasso_pc_half,
+  rand_ilr_max = random_ilr_lasso_pc_max_lib_size,
+  rod_half = rodriguez_lasso_pc_half,
+  rod_max = rodriguez_lasso_pc_max_lib_size,
+  bench_half = benchmark_lasso_pc_half,
+  bench_max = benchmark_lasso_pc_max_lib_size,
+  plot_metric = "misclassification_rate"
+)
+```
+:::
+
+# Random Forest
+## ROC AUC
+
+::: panel-tabset
+```{r}
+#| label: rf_roc_auc
+#| echo: false
+#| results: asis
+render_mean_diff_heatmap_tabs(
+  rand_ilr_half = random_ilr_random_forest_pc_half,
+  rand_ilr_max = random_ilr_random_forest_pc_max_lib_size,
+  rod_half = rodriguez_random_forest_pc_half,
+  rod_max = rodriguez_random_forest_pc_max_lib_size,
+  bench_half = benchmark_random_forest_pc_half,
+  bench_max = benchmark_random_forest_pc_max_lib_size,
+  plot_metric = "roc_auc"
+)
+```
+:::
+
+## Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: rf_misclas
+#| echo: false
+#| results: asis
+render_mean_diff_heatmap_tabs(
+  rand_ilr_half = random_ilr_random_forest_pc_half,
+  rand_ilr_max = random_ilr_random_forest_pc_max_lib_size,
+  rod_half = rodriguez_random_forest_pc_half,
+  rod_max = rodriguez_random_forest_pc_max_lib_size,
+  bench_half = benchmark_random_forest_pc_half,
+  bench_max = benchmark_random_forest_pc_max_lib_size,
+  plot_metric = "misclassification_rate"
+)
+```
+:::
+
+# XGBoost
+## ROC AUC
+
+::: panel-tabset
+```{r}
+#| label: xgboost_roc_auc
+#| echo: false
+#| results: asis
+render_mean_diff_heatmap_tabs(
+  rand_ilr_half = random_ilr_xgboost_pc_half,
+  rand_ilr_max = random_ilr_xgboost_pc_max_lib_size,
+  rod_half = rodriguez_xgboost_pc_half,
+  rod_max = rodriguez_xgboost_pc_max_lib_size,
+  bench_half = benchmark_xgboost_pc_half,
+  bench_max = benchmark_xgboost_pc_max_lib_size,
+  plot_metric = "roc_auc"
+)
+```
+:::
+
+## Misclassification Rate
+::: panel-tabset
+```{r}
+#| label: xgboost_misclas
+#| echo: false
+#| results: asis
+render_mean_diff_heatmap_tabs(
+  rand_ilr_half = random_ilr_xgboost_pc_half,
+  rand_ilr_max = random_ilr_xgboost_pc_max_lib_size,
+  rod_half = rodriguez_xgboost_pc_half,
+  rod_max = rodriguez_xgboost_pc_max_lib_size,
+  bench_half = benchmark_xgboost_pc_half,
+  bench_max = benchmark_xgboost_pc_max_lib_size,
+  plot_metric = "misclassification_rate"
+)
+```
+:::
