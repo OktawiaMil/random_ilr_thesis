@@ -160,7 +160,7 @@ To re-run the analysis, place original datasets downloaded from [@vangay2019micr
 
 ## Reproducibility
 
-The environment used for the local analysis can be recreated by running `renv::restore()`. Code on the computational server was executed inside a container built from a custom image. This image is based on Rocker Tidyverse 4.4.3 and includes several additional R packages. The image used in the analysis can be accessed at: LINK
+The environment used for the local analysis can be recreated by running `renv::restore()`. Code on the computational server was executed inside a container built from a custom image. This image is based on Rocker Tidyverse 4.4.3 and includes several additional R packages. The image used in the analysis can be accessed at [project’s Zenodo site](https://doi.org/10.5281/zenodo.17392972).
 
 ## License
 
