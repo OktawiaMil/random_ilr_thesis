@@ -2,7 +2,7 @@
 title: "Results Summary: Rodriguez Augmentation Methods - Pseudo-count $0.5$"
 author: "Oktawia Miluch"
 date: today
-bibliography: ../references.bib
+bibliography: ../readme_files/references.bib
 link-citations: true
 format:
   html:
