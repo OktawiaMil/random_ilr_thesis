@@ -104,7 +104,6 @@ boxplot_perf_metric <- function(
       x = "Dataset",
       y = plot_metric_name
     ) +
-    theme_bw() +
     theme(
       legend.position = "bottom",
       legend.title = element_blank(),
