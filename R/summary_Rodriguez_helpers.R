@@ -558,6 +558,14 @@ render_metric_panels <- function(
     aug_factors <- sort(unique(aug_results$augmentation_factor))
   }
 
+  # For RF and XGBoost use only the benchmark with
+  # the data transformed into proportions
+  model <- unique(benchmark_results$model)
+  if (model %in% c("random_forest", "xgboost")) {
+    benchmark_results <- benchmark_results |>
+      filter(transform == "proportion")
+  }
+
   for (k in aug_factors) {
     cat("### ", heading_prefix, k, "\n\n", sep = "")
     print(
