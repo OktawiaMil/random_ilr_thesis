@@ -1,0 +1,380 @@
+---
+title: "Augmentation Methods: Performance Comparison"
+author: "Oktawia Miluch"
+date: today
+bibliography: ../readme_files/references.bib
+link-citations: true
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+    fig-format: png
+    code-fold: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+knitr:
+  opts_chunk:
+    fig.path: _figures/methods_comparison/
+    fig.width: 18
+    fig.height: 13.5
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(here)
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(stringr)
+library(ggplot2)
+library(viridis)
+library(crosstalk)
+library(DT)
+library(htmltools)
+library(kableExtra)
+
+# Create/clean graphics directory, set fig.path
+graphics_abs <- here::here("content", "_figures", "methods_comparison")
+dir.create(graphics_abs, recursive = TRUE, showWarnings = FALSE)
+
+# clean contents but keep folder
+to_remove <- list.files(
+  graphics_abs,
+  all.files = TRUE,
+  full.names = TRUE,
+  no.. = TRUE
+)
+unlink(to_remove, recursive = TRUE, force = TRUE)
+
+# ensure knitr writes to the selected path
+knitr::opts_chunk$set(
+  fig.path   = "_figures/methods_comparison/",
+  fig.width  = 18,
+  fig.height = 13.5
+)
+
+# Source helper functions
+source(file.path(here::here(), "R", "methods_comparison_helpers.R"))
+source(file.path(here::here(), "R", "summary_rodriguez_helpers.R"))
+source(file.path(here::here(), "R", "summary_quarto_docs_helpers.R"))
+
+# Read in aggregated results from Rodriguez augmentation methods
+data_dir <- here::here("results", "results_aggregated")
+## pc = 1/max_lib_size
+rod_files <- list.files(
+  data_dir,
+  pattern = "^rodriguez.*pc_max_lib_size$",
+  full.names = TRUE
+)
+
+rod_names <- rod_files |>
+  basename()
+
+rod_data <- map(rod_files, readRDS)
+
+walk2(rod_data, rod_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(rod_data)
+
+## pc = 1/2
+rod_files_half <- list.files(
+  data_dir,
+  pattern = "^rodriguez.*pc_half$",
+  full.names = TRUE
+)
+
+rod_names_half <- rod_files_half |>
+  basename()
+
+rod_data_half <- map(rod_files_half, readRDS)
+
+walk2(rod_data_half, rod_names_half, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(rod_data_half)
+
+# Read in aggregated results from random ILR augmentation methods
+## PC = 1/ max lib size
+ilr_files <- list.files(
+  data_dir,
+  pattern = "^random_ilr.*pc_max_lib_size$",
+  full.names = TRUE
+)
+
+ilr_names <- ilr_files |>
+  basename()
+
+ilr_data <- map(ilr_files, readRDS)
+
+walk2(ilr_data, ilr_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(ilr_data)
+
+## PC = 1/2
+ilr_files_half <- list.files(
+  data_dir,
+  pattern = "^random_ilr.*pc_half$",
+  full.names = TRUE
+)
+
+ilr_names_half <- ilr_files_half |>
+  basename()
+
+ilr_data_half <- map(ilr_files_half, readRDS)
+
+walk2(ilr_data_half, ilr_names_half, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(ilr_data_half)
+
+# Benchmark
+## PC = 1/ max lib size
+bench_files <- list.files(
+  data_dir,
+  pattern = "^benchmark.*pc_max_lib_size$",
+  full.names = TRUE
+)
+
+bench_names <- bench_files |>
+  basename()
+
+bench_data <- map(bench_files, readRDS)
+
+walk2(bench_data, bench_names, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(bench_data)
+
+## PC = 1/2
+bench_files_half <- list.files(
+  data_dir,
+  pattern = "^benchmark.*pc_half$",
+  full.names = TRUE
+)
+
+bench_names_half <- bench_files_half |>
+  basename()
+
+bench_data_half <- map(bench_files_half, readRDS)
+
+walk2(bench_data_half, bench_names_half, ~ assign(.y, .x, envir = .GlobalEnv))
+rm(bench_data_half)
+```
+
+# The purpose of this document
+
+We compare the performance achieved by each model across the considered augmentation techniques and their benchmarks.
+
+Plan for this document:
+1. create tables summarizing the mean performance across augmentation techniques
+2. create boxplots showing the distribution of performance metrics
+3. plot the relation between n/p ratio and performance
+4. build a heatmap to check whether the model outperforms (i) its benchmark and (ii) the standard ILR benchmark
+
+# Logistic Regression with L1 Penalty
+
+## ROC AUC
+### Summary Table - Mean Performance Metric
+```{r}
+#| label: roc_auc_mean_lasso
+#| echo: false
+#| results: asis
+render_mean_metric_sections(
+    rand_ilr_half = random_ilr_lasso_pc_half,
+    rand_ilr_max = random_ilr_lasso_pc_max_lib_size,
+    benchmark_max = benchmark_lasso_pc_max_lib_size,
+    benchmark_half = benchmark_lasso_pc_half,
+    rod_half = rodriguez_lasso_pc_half,
+    rod_max = rodriguez_lasso_pc_max_lib_size,
+    plot_metric = "roc_auc"
+)
+```
+
+### Boxplots
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_boxplot_lasso
+render_metric_facets_tabset(
+  rand_ilr_half = random_ilr_lasso_pc_half,
+  rand_ilr_max = random_ilr_lasso_pc_max_lib_size,
+  benchmark_max = benchmark_lasso_pc_max_lib_size,
+  benchmark_half = benchmark_lasso_pc_half,
+  rod_half = rodriguez_lasso_pc_half,
+  rod_max = rodriguez_lasso_pc_max_lib_size,
+  plot_metric = "roc_auc"
+)
+```
+:::
+
+## Misclassification Rate
+### Summary Table - Mean Performance Metric
+```{r}
+#| label: misclas_mean_lasso
+#| echo: false
+#| results: asis
+render_mean_metric_sections(
+    rand_ilr_half = random_ilr_lasso_pc_half,
+    rand_ilr_max = random_ilr_lasso_pc_max_lib_size,
+    benchmark_max = benchmark_lasso_pc_max_lib_size,
+    benchmark_half = benchmark_lasso_pc_half,
+    rod_half = rodriguez_lasso_pc_half,
+    rod_max = rodriguez_lasso_pc_max_lib_size,
+    plot_metric = "misclassification_rate"
+)
+```
+
+### Boxplots
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_boxplot_lasso
+render_metric_facets_tabset(
+  rand_ilr_half = random_ilr_lasso_pc_half,
+  rand_ilr_max = random_ilr_lasso_pc_max_lib_size,
+  benchmark_max = benchmark_lasso_pc_max_lib_size,
+  benchmark_half = benchmark_lasso_pc_half,
+  rod_half = rodriguez_lasso_pc_half,
+  rod_max = rodriguez_lasso_pc_max_lib_size,
+  plot_metric = "misclassification_rate"
+)
+```
+:::
+
+# Random Forest 
+
+## ROC AUC
+### Summary Table - Mean Performance Metric
+```{r}
+#| label: roc_auc_mean_rf
+#| echo: false
+#| results: asis
+render_mean_metric_sections(
+    rand_ilr_half = random_ilr_random_forest_pc_half,
+    rand_ilr_max = random_ilr_random_forest_pc_max_lib_size,
+    benchmark_max = benchmark_random_forest_pc_max_lib_size,
+    benchmark_half = benchmark_random_forest_pc_half,
+    rod_half = rodriguez_random_forest_pc_half,
+    rod_max = rodriguez_random_forest_pc_max_lib_size,
+    plot_metric = "roc_auc"
+)
+```
+
+### Boxplots
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_boxplot_rf
+render_metric_facets_tabset(
+  rand_ilr_half = random_ilr_random_forest_pc_half,
+  rand_ilr_max = random_ilr_random_forest_pc_max_lib_size,
+  benchmark_max = benchmark_random_forest_pc_max_lib_size,
+  benchmark_half = benchmark_random_forest_pc_half,
+  rod_half = rodriguez_random_forest_pc_half,
+  rod_max = rodriguez_random_forest_pc_max_lib_size,
+  plot_metric = "roc_auc"
+)
+```
+:::
+
+## Misclassification Rate
+### Summary Table - Mean Performance Metric
+```{r}
+#| label: misclas_mean_rf
+#| echo: false
+#| results: asis
+render_mean_metric_sections(
+    rand_ilr_half = random_ilr_random_forest_pc_half,
+    rand_ilr_max = random_ilr_random_forest_pc_max_lib_size,
+    benchmark_max = benchmark_random_forest_pc_max_lib_size,
+    benchmark_half = benchmark_random_forest_pc_half,
+    rod_half = rodriguez_random_forest_pc_half,
+    rod_max = rodriguez_random_forest_pc_max_lib_size,
+    plot_metric = "misclassification_rate"
+)
+```
+
+### Boxplots
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_boxplot_rf
+render_metric_facets_tabset(
+  rand_ilr_half = random_ilr_random_forest_pc_half,
+  rand_ilr_max = random_ilr_random_forest_pc_max_lib_size,
+  benchmark_max = benchmark_random_forest_pc_max_lib_size,
+  benchmark_half = benchmark_random_forest_pc_half,
+  rod_half = rodriguez_random_forest_pc_half,
+  rod_max = rodriguez_random_forest_pc_max_lib_size,
+  plot_metric = "misclassification_rate"
+)
+```
+:::
+
+# XGBoost
+
+## ROC AUC
+### Summary Table - Mean Performance Metric
+```{r}
+#| label: roc_auc_mean_xgb
+#| echo: false
+#| results: asis
+render_mean_metric_sections(
+    rand_ilr_half = random_ilr_xgboost_pc_half,
+    rand_ilr_max = random_ilr_xgboost_pc_max_lib_size,
+    benchmark_max = benchmark_xgboost_pc_max_lib_size,
+    benchmark_half = benchmark_xgboost_pc_half,
+    rod_half = rodriguez_xgboost_pc_half,
+    rod_max = rodriguez_xgboost_pc_max_lib_size,
+    plot_metric = "roc_auc"
+)
+```
+
+### Boxplots
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_boxplot_xgb
+render_metric_facets_tabset(
+  rand_ilr_half = random_ilr_xgboost_pc_half,
+  rand_ilr_max = random_ilr_xgboost_pc_max_lib_size,
+  benchmark_max = benchmark_xgboost_pc_max_lib_size,
+  benchmark_half = benchmark_xgboost_pc_half,
+  rod_half = rodriguez_xgboost_pc_half,
+  rod_max = rodriguez_xgboost_pc_max_lib_size,
+  plot_metric = "roc_auc"
+)
+```
+:::
+
+## Misclassification Rate
+### Summary Table - Mean Performance Metric
+```{r}
+#| label: misclas_mean_xgb
+#| echo: false
+#| results: asis
+render_mean_metric_sections(
+    rand_ilr_half = random_ilr_xgboost_pc_half,
+    rand_ilr_max = random_ilr_xgboost_pc_max_lib_size,
+    benchmark_max = benchmark_xgboost_pc_max_lib_size,
+    benchmark_half = benchmark_xgboost_pc_half,
+    rod_half = rodriguez_xgboost_pc_half,
+    rod_max = rodriguez_xgboost_pc_max_lib_size,
+    plot_metric = "misclassification_rate"
+)
+```
+
+### Boxplots
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_boxplot_xgb
+render_metric_facets_tabset(
+  rand_ilr_half = random_ilr_xgboost_pc_half,
+  rand_ilr_max = random_ilr_xgboost_pc_max_lib_size,
+  benchmark_max = benchmark_xgboost_pc_max_lib_size,
+  benchmark_half = benchmark_xgboost_pc_half,
+  rod_half = rodriguez_xgboost_pc_half,
+  rod_max = rodriguez_xgboost_pc_max_lib_size,
+  plot_metric = "misclassification_rate"
+)
+```
+:::
