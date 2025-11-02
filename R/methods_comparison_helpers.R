@@ -635,3 +635,223 @@ render_mean_metric_sections <- function(
 
     invisible(NULL)
 }
+
+# Function that for 2 df with the results of random ILR and Rodriguez augmentation techniques
+# for 1 model computes mean and st.dev. of gain as compared to benchmark in the selected
+# perfromance metric and  aug_factor
+summarise_model_metrics <- function(
+    rand_ilr_res,
+    rod_res,
+    benchmark,
+    sel_aug_factor,
+    plot_metric
+) {
+    summarise_one <- function(
+        df,
+        grouping_cols,
+        benchmark_transform
+    ) {
+        metric_name <- if (
+            plot_metric %in%
+                c(
+                    "misclassification_rate",
+                    "missclassification_rate"
+                )
+        ) {
+            "accuracy"
+        } else {
+            plot_metric
+        }
+
+        metric_tbl <- df |>
+            filter(augmentation_factor == sel_aug_factor) |>
+            tidyr::unnest(perf_metrics) |>
+            filter(.metric == metric_name) |>
+            mutate(
+                metric_value = if (
+                    plot_metric %in%
+                        c(
+                            "misclassification_rate",
+                            "missclassification_rate"
+                        )
+                ) {
+                    1 - .estimate
+                } else {
+                    .estimate
+                }
+            )
+
+        # Prepare benchmark values to compare against
+        benchmark_tbl <- benchmark |>
+            filter(
+                transform == benchmark_transform,
+                model %in% unique(metric_tbl$model)
+            ) |>
+            tidyr::unnest(perf_metrics) |>
+            filter(.metric == metric_name) |>
+            mutate(
+                benchmark_value = if (
+                    plot_metric %in%
+                        c(
+                            "misclassification_rate",
+                            "missclassification_rate"
+                        )
+                ) {
+                    1 - .estimate
+                } else {
+                    .estimate
+                }
+            )
+
+        join_cols <- intersect(
+            c("data_id", "split"),
+            names(metric_tbl)
+        )
+        benchmark_tbl <- benchmark_tbl |>
+            select(all_of(join_cols), benchmark_value)
+
+        comparison_tbl <- metric_tbl |>
+            left_join(benchmark_tbl, by = join_cols) |>
+            mutate(gain = metric_value - benchmark_value)
+
+        comparison_tbl |>
+            group_by(across(all_of(grouping_cols))) |>
+            summarise(
+                mean_metric = mean(gain, na.rm = TRUE),
+                sd_metric = sd(gain, na.rm = TRUE),
+                .groups = "drop"
+            )
+    }
+
+    bind_rows(
+        summarise_one(
+            rand_ilr_res,
+            grouping_cols = c("data_id", "augmentation", "density"),
+            benchmark_transform = "standard_ilr"
+        ),
+        summarise_one(
+            rod_res,
+            grouping_cols = c("data_id", "augmentation"),
+            benchmark_transform = "proportion"
+        )
+    )
+}
+
+# Create scatter plot showing mean gain in a selected perfromance metric and augmentation factor
+# Dots are colored based on the augmentation technique group:
+#    Rodriguez, aug in n, aug in p (no distinction for density or exact Rodriguez method)
+plot_augmentation_gain <- function(
+    rand_ilr_res,
+    rod_res,
+    benchmark,
+    data_dim,
+    sel_aug_factor = 2,
+    plot_metric = "accuarcy"
+) {
+    data_dim_tbl <- data_dim
+    if (
+        "Task" %in% names(data_dim_tbl) && !"data_id" %in% names(data_dim_tbl)
+    ) {
+        data_dim_tbl <- rename(data_dim_tbl, data_id = Task)
+    }
+    data_dim_tbl <- data_dim_tbl |>
+        mutate(n_p_ratio = n / p)
+
+    # Mean difference in selected metric
+    data_prep <- summarise_model_metrics(
+        rand_ilr_res = rand_ilr_res,
+        rod_res = rod_res,
+        benchmark = benchmark,
+        sel_aug_factor = sel_aug_factor,
+        plot_metric = plot_metric
+    )
+    # Add n/p ratio, Prepare color labels
+    plot_data <- data_prep |>
+        mutate(data_id = as.integer(data_id)) |>
+        left_join(data_dim_tbl, by = "data_id") |>
+        mutate(
+            color_label = case_when(
+                augmentation %in%
+                    c(
+                        "aitchison_mixup",
+                        "comp_cutmix",
+                        "comp_feature"
+                    ) ~ "Rodriguez Methods",
+                augmentation == "aug_in_n" ~ "randomILR Augmentation in n",
+                augmentation == "aug_in_p" ~ "randomILR Augmentation in p",
+                .default = as.character(augmentation)
+            )
+        )
+
+    model_value <- unique(rand_ilr_res$model)
+    model_label <- case_when(
+        model_value == "xgboost" ~ "XGBoost",
+        model_value == "lasso" ~ "Logistic Regression with L1 Penalty",
+        model_value == "random_forest" ~ "Random Forest",
+        TRUE ~ str_to_title(ifelse(is.na(model_value), "Model", model_value))
+    )
+
+    plot_metric_name <- case_when(
+        plot_metric == "misclassification_rate" ~ "Misclassification Rate",
+        plot_metric == "roc_auc" ~ "ROC AUC",
+        .default = str_to_title(plot_metric)
+    )
+
+    ggplot(
+        plot_data,
+        aes(x = n_p_ratio, y = mean_metric, color = color_label)
+    ) +
+        geom_point(size = 7, alpha = 0.7) +
+        geom_hline(yintercept = 0, color = "grey60", linetype = "dashed") +
+        scale_color_viridis_d() +
+        theme_bw() +
+        labs(
+            title = paste(
+                "Mean",
+                plot_metric_name,
+                "gain from augmentation for",
+                model_label
+            ),
+            subtitle = paste("Augmentation Factor:", sel_aug_factor),
+            x = "n/p Ratio",
+            y = plot_metric_name,
+            color = NULL
+        ) +
+        theme(
+            legend.position = "bottom",
+            plot.title = element_text(size = 16),
+            plot.subtitle = element_text(size = 14),
+            axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12),
+            axis.text.x = element_text(size = 12),
+            axis.text.y = element_text(size = 12),
+            strip.text = element_text(size = 12)
+        ) +
+        ylim(-0.15, 0.15)
+}
+
+# Display scatter plot of mean gain for each aug_factor in separate tab
+render_aug_factor_tabset <- function(
+    rand_ilr_res,
+    rod_res,
+    benchmark,
+    data_dim,
+    plot_metric = "accuarcy",
+    aug_factors = c(2:5),
+    heading_prefix = "k ="
+) {
+    for (k in aug_factors) {
+        cat("### ", heading_prefix, k, "\n\n", sep = "")
+        print(
+            plot_augmentation_gain(
+                rand_ilr_res = rand_ilr_res,
+                rod_res = rod_res,
+                benchmark = benchmark,
+                data_dim = data_dim,
+                sel_aug_factor = k,
+                plot_metric = plot_metric
+            )
+        )
+        cat("\n\n")
+    }
+}

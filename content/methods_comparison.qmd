@@ -32,6 +32,7 @@ library(dplyr)
 library(tidyr)
 library(tibble)
 library(stringr)
+library(readr)
 library(ggplot2)
 library(viridis)
 library(crosstalk)
@@ -205,6 +206,68 @@ render_metric_facets_tabset(
 ```
 :::
 
+
+```{r}
+#| label: n_p_of_datasets
+#| echo: false
+# Capture dimensionality (p) and sample size (n) for each preprocessed dataset
+# The resulst of this code snippet are re-used in multiple 
+directory_preproc <- here::here("data", "data_preproc")
+preproc_files <- list.files(
+  directory_preproc,
+  pattern = "^task\\d+_preproc_x_pc_half\\.csv$",
+  full.names = TRUE
+)
+
+data_dim <- preproc_files |>
+  map(\(path) {
+    dataset <- readr::read_csv(path, show_col_types = FALSE)
+    feature_cols <- setdiff(names(dataset), "sample_id")
+
+    tibble(
+      data_id = as.integer(readr::parse_number(basename(path))),
+      p = length(feature_cols),
+      n = nrow(dataset)
+    )
+  })  |> 
+  bind_rows() |>
+  arrange(data_id)
+```
+
+### n/p Ratio
+
+The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation** (ratio between number of samples and number of features). Each tab corresponds to a single pseudo-count.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_half_lasso_roc
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_lasso_pc_half,
+  rod_res = rodriguez_lasso_pc_half,
+  benchmark = benchmark_lasso_pc_half,
+  plot_metric = "roc_auc",
+  data_dim = data_dim
+)
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_max_lib_lasso_roc
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_lasso_pc_max_lib_size,
+  rod_res = rodriguez_lasso_pc_max_lib_size,
+  benchmark = benchmark_lasso_pc_max_lib_size,
+  plot_metric = "roc_auc",
+  data_dim = data_dim
+)
+```
+:::
+
 ## Misclassification Rate
 ### Summary Table - Mean Performance Metric
 ```{r}
@@ -235,6 +298,40 @@ render_metric_facets_tabset(
   rod_half = rodriguez_lasso_pc_half,
   rod_max = rodriguez_lasso_pc_max_lib_size,
   plot_metric = "misclassification_rate"
+)
+```
+:::
+
+### n/p Ratio
+
+The plots below show the gain in misclassification rate from augmentation (computed as the difference to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_half_lasso_misclas
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_lasso_pc_half,
+  rod_res = rodriguez_lasso_pc_half,
+  benchmark = benchmark_lasso_pc_half,
+  plot_metric = "misclassification_rate",
+  data_dim = data_dim
+)
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_max_lib_lasso_misclas
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_lasso_pc_max_lib_size,
+  rod_res = rodriguez_lasso_pc_max_lib_size,
+  benchmark = benchmark_lasso_pc_max_lib_size,
+  plot_metric = "misclassification_rate",
+  data_dim = data_dim
 )
 ```
 :::
@@ -275,6 +372,40 @@ render_metric_facets_tabset(
 ```
 :::
 
+### n/p Ratio
+
+The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_half_rf_roc
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_random_forest_pc_half,
+  rod_res = rodriguez_random_forest_pc_half,
+  benchmark = benchmark_random_forest_pc_half,
+  plot_metric = "roc_auc",
+  data_dim = data_dim
+)
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_max_lib_rf_roc
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_random_forest_pc_max_lib_size,
+  rod_res = rodriguez_random_forest_pc_max_lib_size,
+  benchmark = benchmark_random_forest_pc_max_lib_size,
+  plot_metric = "roc_auc",
+  data_dim = data_dim
+)
+```
+:::
+
 ## Misclassification Rate
 ### Summary Table - Mean Performance Metric
 ```{r}
@@ -305,6 +436,40 @@ render_metric_facets_tabset(
   rod_half = rodriguez_random_forest_pc_half,
   rod_max = rodriguez_random_forest_pc_max_lib_size,
   plot_metric = "misclassification_rate"
+)
+```
+:::
+
+### n/p Ratio
+
+The plots below show the gain in misclassification rate from augmentation (difference relative to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_half_rf_misclas
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_random_forest_pc_half,
+  rod_res = rodriguez_random_forest_pc_half,
+  benchmark = benchmark_random_forest_pc_half,
+  plot_metric = "misclassification_rate",
+  data_dim = data_dim
+)
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_max_lib_rf_misclas
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_random_forest_pc_max_lib_size,
+  rod_res = rodriguez_random_forest_pc_max_lib_size,
+  benchmark = benchmark_random_forest_pc_max_lib_size,
+  plot_metric = "misclassification_rate",
+  data_dim = data_dim
 )
 ```
 :::
@@ -345,6 +510,40 @@ render_metric_facets_tabset(
 ```
 :::
 
+### n/p Ratio
+
+The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_half_xgb_roc
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_xgboost_pc_half,
+  rod_res = rodriguez_xgboost_pc_half,
+  benchmark = benchmark_xgboost_pc_half,
+  plot_metric = "roc_auc",
+  data_dim = data_dim
+)
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_max_lib_xgb_roc
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_xgboost_pc_max_lib_size,
+  rod_res = rodriguez_xgboost_pc_max_lib_size,
+  benchmark = benchmark_xgboost_pc_max_lib_size,
+  plot_metric = "roc_auc",
+  data_dim = data_dim
+)
+```
+:::
+
 ## Misclassification Rate
 ### Summary Table - Mean Performance Metric
 ```{r}
@@ -375,6 +574,40 @@ render_metric_facets_tabset(
   rod_half = rodriguez_xgboost_pc_half,
   rod_max = rodriguez_xgboost_pc_max_lib_size,
   plot_metric = "misclassification_rate"
+)
+```
+:::
+
+### n/p Ratio
+
+The plots below show the gain in misclassification rate from augmentation (difference relative to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_half_xgb_misclas
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_xgboost_pc_half,
+  rod_res = rodriguez_xgboost_pc_half,
+  benchmark = benchmark_xgboost_pc_half,
+  plot_metric = "misclassification_rate",
+  data_dim = data_dim
+)
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: n_p_plot_max_lib_xgb_misclas
+render_aug_factor_tabset(
+  rand_ilr_res = random_ilr_xgboost_pc_max_lib_size,
+  rod_res = rodriguez_xgboost_pc_max_lib_size,
+  benchmark = benchmark_xgboost_pc_max_lib_size,
+  plot_metric = "misclassification_rate",
+  data_dim = data_dim
 )
 ```
 :::
