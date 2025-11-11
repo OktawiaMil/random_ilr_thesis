@@ -160,15 +160,8 @@ walk2(bench_data_half, bench_names_half, ~ assign(.y, .x, envir = .GlobalEnv))
 rm(bench_data_half)
 ```
 
-# The purpose of this document
 
-We compare the performance achieved by each model across the considered augmentation techniques and their benchmarks.
-
-Plan for this document:
-1. create tables summarizing the mean performance across augmentation techniques
-2. create boxplots showing the distribution of performance metrics
-3. plot the relation between n/p ratio and performance
-4. build a heatmap to check whether the model outperforms (i) its benchmark and (ii) the standard ILR benchmark
+In this document, I compare the performance of each model trained on data with a given pseudo-count across the considered augmentation techniques and their benchmarks. A descriptive summary of the conclusions drawn from the figures and tables below is available on the main page.
 
 # Logistic Regression with L1 Penalty
 
@@ -188,6 +181,36 @@ render_mean_metric_sections(
     plot_metric = "roc_auc"
 )
 ```
+
+### Heatmap of Mean Differences
+
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_heatmap_lasso_pc_half
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_lasso_pc_half,
+    rod_res = rodriguez_lasso_pc_half,
+    plot_metric = "roc_auc"
+    )
+```
+:::
+
+#### Pseudo-count 1/ max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_heatmap_lasso_pc_max
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_lasso_pc_max_lib_size,
+    rod_res = rodriguez_lasso_pc_max_lib_size,
+    plot_metric = "roc_auc"
+    )
+```
+:::
 
 ### Boxplots
 ::: panel-tabset
@@ -236,7 +259,13 @@ data_dim <- preproc_files |>
 
 ### n/p Ratio
 
-The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation** (ratio between number of samples and number of features). Each tab corresponds to a single pseudo-count.
+The plots below show the gain in ROC AUC from augmentation as a function of the original dataset’s **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain is defined as follows:
+
+$$
+\mathrm{ROC\; AUC\; Gain} = \frac{1}{20}\sum_{i=1}^{20} \left(\mathrm{AUC}^{\text{test}}_{\text{aug},\,i} - \mathrm{AUC}^{\text{test}}_{\text{bench},\,i}\right)
+$$
+
+Gain in the AUC is the test-set ROC AUC of the model trained on augmented data minus test-set ROC AUC of its corresponding benchmark, averaged over 20 train–test splits.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -268,6 +297,34 @@ render_aug_factor_tabset(
 ```
 :::
 
+### Impact of density
+In the plots below, I analyse only the impact of the skew-symmetric matrix density (used in the random ILR augmentation techniques) on the performance metrics of models trained on datasets **augmented in p**. The goal is to determine the recommended density of the skew-symmetric matrix for augmentation in p.
+
+#### Pseudo-count = 1/2
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_half_lasso_roc
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_lasso_pc_half,
+  plot_metric = "roc_auc",
+  model_name = "Logistic Regression with L1 Penalty", 
+  pseudo_count = "Pseudo-count = 0.5"
+
+)
+```
+
+#### Pseudo-count = 1/max library size
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_max_lasso_roc
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_lasso_pc_max_lib_size,
+  plot_metric = "roc_auc",
+    model_name = "Logistic Regression with L1 Penalty", 
+  pseudo_count = "Pseudo-count = 1/ max library size"
+)
+```
+
 ## Misclassification Rate
 ### Summary Table - Mean Performance Metric
 ```{r}
@@ -284,6 +341,36 @@ render_mean_metric_sections(
     plot_metric = "misclassification_rate"
 )
 ```
+
+### Heatmap of Mean Differences
+
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_heatmap_lasso_pc_half
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_lasso_pc_half,
+    rod_res = rodriguez_lasso_pc_half,
+    plot_metric = "misclassification_rate"
+    )
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_heatmap_lasso_pc_max
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_lasso_pc_max_lib_size,
+    rod_res = rodriguez_lasso_pc_max_lib_size,
+    plot_metric = "misclassification_rate"
+    )
+```
+:::
 
 ### Boxplots
 ::: panel-tabset
@@ -304,7 +391,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in misclassification rate from augmentation (computed as the difference to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+The plots below show the gain in misclassification rate from augmentation as a function of the original dataset’s **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain in the misclassification rate is the test-set misclassification rate of the model trained on augmented data minus test-set misclassification rate of its corresponding benchmark, averaged over 20 train–test splits.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -336,6 +423,33 @@ render_aug_factor_tabset(
 ```
 :::
 
+### Impact of density
+In the plots below, I analyse only the impact of the skew-symmetric matrix density (used in the random ILR augmentation techniques) on the performance metrics of models trained on datasets **augmented in p**. The goal is to determine the recommended density of the skew-symmetric matrix for augmentation in p.
+
+#### Pseudo-count = 1/2
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_half_lasso_misclas
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_lasso_pc_half,
+  plot_metric = "misclassification_rate",
+  model_name = "Logistic Regression with L1 Penalty", 
+  pseudo_count = "Pseudo-count = 0.5"
+)
+```
+
+#### Pseudo-count = 1/max library size
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_max_lasso_misclas
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_lasso_pc_max_lib_size,
+  plot_metric = "misclassification_rate",
+  model_name = "Logistic Regression with L1 Penalty", 
+  pseudo_count = "Pseudo-count = 1/max library size"
+)
+```
+
 # Random Forest 
 
 ## ROC AUC
@@ -354,6 +468,35 @@ render_mean_metric_sections(
     plot_metric = "roc_auc"
 )
 ```
+
+### Heatmap of Mean Differences
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_heatmap_rf_pc_half
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_random_forest_pc_half,
+    rod_res = rodriguez_random_forest_pc_half,
+    plot_metric = "roc_auc"
+    )
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_heatmap_rf_pc_max
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_random_forest_pc_max_lib_size,
+    rod_res = rodriguez_random_forest_pc_max_lib_size,
+    plot_metric = "roc_auc"
+    )
+```
+:::
 
 ### Boxplots
 ::: panel-tabset
@@ -374,7 +517,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single augmentation factor.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -406,6 +549,33 @@ render_aug_factor_tabset(
 ```
 :::
 
+### Impact of density
+In the plots below, I analyse only the impact of the skew-symmetric matrix density (used in the random ILR augmentation techniques) on the performance metrics of models trained on datasets **augmented in p**. The goal is to determine the recommended density of the skew-symmetric matrix for augmentation in p.
+
+#### Pseudo-count = 1/2
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_half_rf_roc
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_random_forest_pc_half,
+  plot_metric = "roc_auc",
+  model_name = "Random Forest", 
+  pseudo_count = "Pseudo-count = 0.5"
+)
+```
+
+#### Pseudo-count = 1/max library size
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_max_rf_roc
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_random_forest_pc_max_lib_size,
+  plot_metric = "roc_auc",
+    model_name = "Random Forest", 
+  pseudo_count = "Pseudo-count = 1/max library size"
+)
+```
+
 ## Misclassification Rate
 ### Summary Table - Mean Performance Metric
 ```{r}
@@ -422,6 +592,35 @@ render_mean_metric_sections(
     plot_metric = "misclassification_rate"
 )
 ```
+
+### Heatmap of Mean Differences
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_heatmap_rf_pc_half
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_random_forest_pc_half,
+    rod_res = rodriguez_random_forest_pc_half,
+    plot_metric = "misclassification_rate"
+    )
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_heatmap_rf_pc_max
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_random_forest_pc_max_lib_size,
+    rod_res = rodriguez_random_forest_pc_max_lib_size,
+    plot_metric = "misclassification_rate"
+    )
+```
+:::
 
 ### Boxplots
 ::: panel-tabset
@@ -442,7 +641,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in misclassification rate from augmentation (difference relative to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+The plots below show the gain in misclassification rate from augmentation (difference relative to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single augmentation factor.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -474,6 +673,33 @@ render_aug_factor_tabset(
 ```
 :::
 
+### Impact of density
+In the plots below, I analyse only the impact of the skew-symmetric matrix density (used in the random ILR augmentation techniques) on the performance metrics of models trained on datasets **augmented in p**. The goal is to determine the recommended density of the skew-symmetric matrix for augmentation in p.
+
+#### Pseudo-count = 1/2
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_half_rf_misclas
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_random_forest_pc_half,
+  plot_metric = "misclassification_rate",
+  model_name = "Random Forest", 
+  pseudo_count = "Pseudo-count = 0.5"
+)
+```
+
+#### Pseudo-count = 1/max library size
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_max_rf_misclas
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_random_forest_pc_max_lib_size,
+  plot_metric = "misclassification_rate",
+  model_name = "Random Forest", 
+  pseudo_count = "Pseudo-count = 1/max library size"
+)
+```
+
 # XGBoost
 
 ## ROC AUC
@@ -492,6 +718,36 @@ render_mean_metric_sections(
     plot_metric = "roc_auc"
 )
 ```
+
+### Heatmap of Mean Differences
+
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_heatmap_xgb_pc_half
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_xgboost_pc_half,
+    rod_res = rodriguez_xgboost_pc_half,
+    plot_metric = "roc_auc"
+    )
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: auc_heatmap_xgb_pc_max
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_xgboost_pc_max_lib_size,
+    rod_res = rodriguez_xgboost_pc_max_lib_size,
+    plot_metric = "roc_auc"
+    )
+```
+:::
 
 ### Boxplots
 ::: panel-tabset
@@ -512,7 +768,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single augmentation factor.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -544,6 +800,31 @@ render_aug_factor_tabset(
 ```
 :::
 
+### Impact of density
+In the plots below, I analyse only the impact of the skew-symmetric matrix density (used in the random ILR augmentation techniques) on the performance metrics of models trained on datasets **augmented in p**. The goal is to determine the recommended density of the skew-symmetric matrix for augmentation in p.
+
+#### Pseudo-count = 1/2
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_half_xgb_roc
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_xgboost_pc_half, 
+  plot_metric = "roc_auc", 
+  model_name = "XGBoost", 
+  pseudo_count = "Pseudo-count = 0.5")
+```
+
+#### Pseudo-count = 1/max library size
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_max_xgb_roc
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_xgboost_pc_max_lib_size, 
+  plot_metric = "roc_auc", 
+  model_name = "XGBoost", 
+  pseudo_count = "Pseudo-count = 1/ max library size")
+```
+
 ## Misclassification Rate
 ### Summary Table - Mean Performance Metric
 ```{r}
@@ -560,6 +841,36 @@ render_mean_metric_sections(
     plot_metric = "misclassification_rate"
 )
 ```
+
+### Heatmap of Mean Differences
+
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+
+#### Pseudo-count 1/2
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_heatmap_xgb_pc_half
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_xgboost_pc_half,
+    rod_res = rodriguez_xgboost_pc_half,
+    plot_metric = "misclassification_rate"
+    )
+```
+:::
+
+#### Pseudo-count 1 / max library size
+::: panel-tabset
+```{r}
+#| results: asis
+#| label: misclas_heatmap_xgb_pc_max
+render_metric_diff_heatmap_tabset(
+    rand_ilr_res = random_ilr_xgboost_pc_max_lib_size,
+    rod_res = rodriguez_xgboost_pc_max_lib_size,
+    plot_metric = "misclassification_rate"
+    )
+```
+:::
 
 ### Boxplots
 ::: panel-tabset
@@ -580,7 +891,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in misclassification rate from augmentation (difference relative to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single pseudo-count.
+The plots below show the gain in misclassification rate from augmentation (difference relative to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single augmentation factor.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -611,3 +922,29 @@ render_aug_factor_tabset(
 )
 ```
 :::
+
+
+### Impact of density
+In the plots below, I analyse only the impact of the skew-symmetric matrix density (used in the random ILR augmentation techniques) on the performance metrics of models trained on datasets **augmented in p**. The goal is to determine the recommended density of the skew-symmetric matrix for augmentation in p.
+
+#### Pseudo-count = 1/2
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_half_xgb_misclas
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_xgboost_pc_half, 
+  plot_metric = "misclassification_rate", 
+  model_name = "XGBoost", 
+  pseudo_count = "Pseudo-count = 0.5")
+```
+
+#### Pseudo-count = 1/max library size
+```{r}
+#| results: asis
+#| label: density_aug_in_p_pc_max_xgb_misclas
+plot_aug_in_p_density_boxplot(
+  rand_ilr_res = random_ilr_xgboost_pc_max_lib_size, 
+  plot_metric = "misclassification_rate", 
+  model_name = "XGBoost", 
+  pseudo_count = "Pseudo-count = 1/ max library size")
+```

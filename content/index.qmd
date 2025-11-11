@@ -1,5 +1,0 @@
----
-title: "Random ILR Thesis"
----
-
-The purpose of this page is to introduce the reader to the project. 

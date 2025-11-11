@@ -81,7 +81,7 @@ name_from_file <- function(f) {
   paste0("task", m[, 2], ifelse(m[, 3] == "x_pc_half", "_x", "_y"))
 }
 
-# List and read all matching txt files
+# List and read all matching files
 files <- list.files(
   directory_preproc,
   pattern = "^task[0-9]+_preproc_(x_pc_half|y)\\.csv$",
@@ -95,7 +95,7 @@ purrr::walk(files, function(f) {
 })
 
 # Get info about number of features & samples in each dataset
-res <- tibble(Task = 1:12) %>%
+res <- tibble(Task = 1:12) |>
   mutate(
     # n = number of samples
     n = map_int(Task, \(id) {
@@ -158,9 +158,16 @@ kable(res, format = "pipe", align = rep("c", 7))
 
 To re-run the analysis, place original datasets downloaded from [@vangay2019microbiome] in `data/raw/`.
 
+## Data preprocessing
+Code used for data preprocessing can be found in `R/00_raw_data_prep.R`. 
+
 ## Reproducibility
 
-The environment used for the local analysis can be recreated by running `renv::restore()`. Code on the computational server was executed inside a container built from a custom image. This image is based on Rocker Tidyverse 4.4.3 and includes several additional R packages. The image used in the analysis can be accessed at [project’s Zenodo site](https://doi.org/10.5281/zenodo.17392972).
+The environment used for the local analysis can be recreated by running `renv::restore()`. Code on the computational server was executed inside a container built from a custom image. This image is based on Rocker Tidyverse 4.4.3 and includes several additional R packages (tidymodels, glmnet, ranger, xgboost, augmenter, compositions, rlang). The image used in the analysis can be accessed at [project’s Zenodo site](https://doi.org/10.5281/zenodo.17392972).
+
+## Results
+
+The results for each model, augmentation class (random ILR or Rodriguez techniques) / benchmark, and pseudo-count are available at [project’s Zenodo site](https://doi.org/10.5281/zenodo.17392972) as RDS files. The file-naming convention is: `augmentation_class_model_pseudo_count`.
 
 ## License
 

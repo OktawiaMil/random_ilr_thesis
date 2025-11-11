@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -116,6 +145,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../content/pseudo_count_impact.html">
  <span class="dropdown-text">Pseudo-Count Summary</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../content/methods_comparison.html">
+ <span class="dropdown-text">Methods Comparison</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -126,10 +159,6 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="../content/density_impact.html">
  <span class="dropdown-text">Density Impact</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../content/methods_comparison.html">
- <span class="dropdown-text">Methods Comparison</span></a>
   </li>  
     </ul>
   </li>
@@ -144,8 +173,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#definitions" id="toc-definitions" class="nav-link active" data-scroll-target="#definitions">Definitions</a></li>
+  <li><a href="#results-overview-random-ilr-and-rodriguez-augmentation-methods" id="toc-results-overview-random-ilr-and-rodriguez-augmentation-methods" class="nav-link" data-scroll-target="#results-overview-random-ilr-and-rodriguez-augmentation-methods">Results Overview: Random ILR and Rodriguez Augmentation Methods</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -169,9 +205,66 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The purpose of this page is to introduce the reader to the project.</p>
+<p>The purpose of this page is to summarise the results of the experiments and provide recommendations for the use of augmentation techniques.Before that, explanations of frequently used terms are provided.</p>
+<section id="definitions" class="level1">
+<h1>Definitions</h1>
+<ol type="1">
+<li><strong>Pseudo-count (PC):</strong> a small numeric value added to all numeric entries in the dataset (in our case, “species” counts). In this project two pseudo-counts are considered: 0.5 and 1/max library size (the maximum row sum in a given dataset). After adding the pseudo-count, data are converted to proportions. The motivation to use a pseudo-count is that non-zero entries are required by definition by all random ILR augmentation methods and by the Aitchison augmentation strategy (due to its implementation).</li>
+<li><strong>Random ILR augmentation methods — unit vs relative density:</strong> to apply any random ILR augmentation technique, a Generalised Helmert–Ledermann (GHL) orthogonal matrix is first constructed, which requires a skew-symmetric matrix. Density refers to the fraction of off-diagonal entries (e.g., in the lower triangle) that are set to non-zero when constructing the skew-symmetric matrix. The naming convention, referring to the skew-symmetric matrix used in the Cayley transform (which in turn is used to generate the GHL matrix), is as follows:
+<ul>
+<li><strong>Unit density:</strong> exactly one off-diagonal pair of entries <span class="math inline">\((i,j)\)</span> and <span class="math inline">\((j,i)\)</span> in the <span class="math inline">\(S_{n−1}\)</span> skew-symmetric matrix is non-zero, independent of the matrix size <span class="math inline">\(n\)</span>.</li>
+<li><strong>Relative density:</strong> the number of non-zero off-diagonal elements is a fixed proportion of all off-diagonal elements (equivalently, of the elements in one triangle). For example, for a <span class="math inline">\(5 \times 5\)</span> skew-symmetric matrix there are <span class="math inline">\(10\)</span> entries in each triangle. If the density is <span class="math inline">\(0.2\)</span>, then <span class="math inline">\(20\%\)</span> of off-diagonal entries are set to non-zero (so in our example it would be <span class="math inline">\(2\)</span> out of <span class="math inline">\(10\)</span> entries). The term “relative density” indicates that the exact count of non-zero off-diagonal entries scales with the matrix size.</li>
+</ul></li>
+<li>Definitions of performance metrics analysed throughout the experiments:
+<ul>
+<li><strong>ROC AUC:</strong> the area under the receiver operating characteristic (ROC) curve.</li>
+<li><strong>Misclassification Rate</strong> = 1 − accuracy, where accuracy is the proportion of observations predicted correctly. Thus, misclassification rate is the proportion of observations predicted incorrectly by the classification model.</li>
+</ul></li>
+</ol>
+</section>
+<section id="results-overview-random-ilr-and-rodriguez-augmentation-methods" class="level1">
+<h1>Results Overview: Random ILR and Rodriguez Augmentation Methods</h1>
+<p>The conclusions drawn below are heavily based on the results obtained in the “Methods comparison” dashboard.</p>
+<ol type="1">
+<li>Logistic regression with L1 penalty:
+<ul>
+<li>Across both pseudo-counts and all augmentation factors, a one of random ILR method most often achieves the best test ROC AUC and misclassification rate.</li>
+<li>In the n/p ratio vs.&nbsp;performance plots, small values of n/p ratios show larger variability (both gains and losses) in the performance. As n/p increases, the impact of any augmentation method tends toward zero.</li>
+<li>For small values of n/p ratio and when using misclassification rate as the perfromance metric, methods from the random ILR group show a clear performance gain over their benchmarks.</li>
+</ul></li>
+<li>Random Forest:
+<ul>
+<li>Pseudo-count 1/2: ROC AUC is slightly more often higher with one of the Rodriguez methods, whereas a lower misclassification rate is more often achieved by one of the random ILR methods.</li>
+<li>Pseudo-count 1/max library size: For both metrics, Rodriguez methods more often lead to better perfromance.</li>
+<li>Task 1: For both metrics and both pseudo-counts, augmentation in p (any relative density) consistently outperforms the Rodriguez methods.</li>
+<li>Tasks 10 and 12 (ROC AUC): Almost all random ILR methods consistently outperform the Rodriguez techniques.</li>
+<li>Relation between n/p ratio and the performance gain- in general bigger variability in gain for small values of n/p ratio, with growing value of n/p ratio the gain tends towards zero. Independently of the analysed perfromance metric there is the biggest possible gain is for the datasets with small n/p ratio when using Rodriguez or random ILR augmentation in p.</li>
+<li>Relationship between the n/p ratio and performance gain: in general, variability in gain is larger for small n/p values, and as n/p increases the gain tends toward zero. Regardless of the performance metric, the biggest possible perfromance gain occurs for datasets with small n/p when using Rodriguez methods or random ILR augmentation in p.</li>
+</ul></li>
+<li>XGBoost:
+<ul>
+<li>A Rodriguez method most often yields the best performance across both pseudo-counts and both metrics.</li>
+<li>Visual inspection of the heatmaps suggests that performance varies slightly less across augmentation techniques than for Random Forest or logistic regression with L1 penalty.</li>
+<li>As for two otehr models, for small values of n/p ratio the variability of perfromance gains is the biggest and tends towards zero as the value of n/p increases. Compared to RF and logistic regression, the variability for small values of n/p ratio seems to be small.</li>
+<li>As with the other models, performance gains are most variable at small n/p ratio and tend toward zero as n/p increases. However, the variability in the perfromance gain for small n/p values appears smaller for XGBoost than for Random Forest or L1-logistic regression.</li>
+</ul></li>
+</ol>
+<p><strong>General conclusions:</strong></p>
+<ul>
+<li>If one wants to use <strong>random ILR augmentation</strong>, then independent of the objective (the performance measure to optimize) I would recommend <strong>augmentation in p</strong> as it outperforms augmentation in n in my experiments.</li>
+<li><strong>Impact of augmentation factor:</strong> Across the pseudo-counts, augmentation techniques, and performance metrics considered, model performance was fairly stable across all analyzed augmentation factors.</li>
+<li><strong>Sensitivity to pseudo-count:</strong> Across augmentation factors and techniques, for <strong>L1-penalized logistic regression</strong> a <strong>pseudo-count of 0.5</strong> more often led to better performance, whereas for <strong>XGBoost and Random Forest</strong> a <strong>pseudo-count of 1/max library size</strong> more often yielded better-performing models. However, the performance differences between pseudo-counts are subtle in the majority of cases.</li>
+<li><strong>Impact of density in the random ILR augmentation in p:</strong> For both performance metrics and pseudo-count = 0.5, across all considered models, relative densities (0.1 or 0.5) more often led to better performance than numeric densities. For pseudo-count = 1/max library size, Random Forest still favored relative densities for both ROC AUC and misclassification rate, whereas for logistic regression with L1 penalty and XGBoost, unit density seemed to be the better choice. In general, the performance differences between densities are not large, so the density should be treated as a tunable parameter. I recommend focusing on relative densities rather than unit density, as in my experience they usually yield better results.</li>
+</ul>
+<p><strong>To which tasks augmentation is most beneficial:</strong></p>
+<ul>
+<li>L1-penalized logistic regression: for both performance metrics with pseudo-count = 1/max library size, starting from augmentation factor 3, tasks 7, 8, and 9 benefit more from random ILR augmentation than from the Rodriguez strategies. With pseudo-count = 1/2, tasks 8 and 9 generally benefit from random ILR augmentation, whereas for task 2 a gain in ROC AUC is observed only for augmentation in p.</li>
+<li>Random Forest: across all performance metrics and pseudo-counts, augmentation in n generally worsens performance. For both metrics with pseudo-count = 1/2, tasks 1, 8, 10, and 12 show benefits from random ILR augmentation in p with relative density as compared to Rodriguez methods, but the effect tends to diminish as the augmentation factor increases.</li>
+<li>XGBoost: across augmentation factors and performance metrics, Rodriguez techniques generally outperform random ILR methods. Only for task 4 augmentation in n with unit density consistently leads to higher perfromance than any Rodriguez augmentation methd. However, compared with the other two models, the difference between the two augmentation groups appears smallest for XGBoost.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

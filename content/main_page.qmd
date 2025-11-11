@@ -1,0 +1,48 @@
+---
+title: "Random ILR Thesis"
+---
+The purpose of this page is to summarise the results of the experiments and provide recommendations for the use of augmentation techniques.Before that, explanations of frequently used terms are provided.
+
+# Definitions
+
+1. **Pseudo-count (PC):** a small numeric value added to all numeric entries in the dataset (in our case, "species" counts). In this project two pseudo-counts are considered: 0.5 and 1/max library size (the maximum row sum in a given dataset). After adding the pseudo-count, data are converted to proportions. The motivation to use a pseudo-count is that non-zero entries are required by definition by all random ILR augmentation methods and by the Aitchison augmentation strategy (due to its implementation).
+2. **Random ILR augmentation methods — unit vs relative density:** to apply any random ILR augmentation technique, a Generalised Helmert–Ledermann (GHL) orthogonal matrix is first constructed, which requires a skew-symmetric matrix. Density refers to the fraction of off-diagonal entries (e.g., in the lower triangle) that are set to non-zero when constructing the skew-symmetric matrix. The naming convention, referring to the skew-symmetric matrix used in the Cayley transform (which in turn is used to generate the GHL matrix), is as follows:
+   * **Unit density:** exactly one off-diagonal pair of entries $(i,j)$ and $(j,i)$ in the $S_{n−1}$ skew-symmetric matrix is non-zero, independent of the matrix size $n$.
+   * **Relative density:** the number of non-zero off-diagonal elements is a fixed proportion of all off-diagonal elements (equivalently, of the elements in one triangle). For example, for a $5 \times 5$ skew-symmetric matrix there are $10$ entries in each triangle. If the density is $0.2$, then $20\%$ of off-diagonal entries are set to non-zero (so in our example it would be $2$ out of $10$ entries). The term “relative density” indicates that the exact count of non-zero off-diagonal entries scales with the matrix size. 
+3. Definitions of performance metrics analysed throughout the experiments:
+   * **ROC AUC:** the area under the receiver operating characteristic (ROC) curve.
+   * **Misclassification Rate** = 1 − accuracy, where accuracy is the proportion of observations predicted correctly. Thus, misclassification rate is the proportion of observations predicted incorrectly by the classification model.
+
+# Results Overview: Random ILR and Rodriguez Augmentation Methods
+The conclusions drawn below are heavily based on the results obtained in the “Methods comparison” dashboard.
+
+1. Logistic regression with L1 penalty: 
+    * Across both pseudo-counts and all augmentation factors, a one of random ILR method most often achieves the best test ROC AUC and misclassification rate.
+    * In the n/p ratio vs. performance plots, small values of n/p ratios show larger variability (both gains and losses) in the performance. As n/p increases, the impact of any augmentation method tends toward zero.
+    * For small values of n/p ratio and when using misclassification rate as the perfromance metric, methods from the random ILR group show a clear performance gain over their benchmarks.
+2. Random Forest:
+    * Pseudo-count 1/2: ROC AUC is slightly more often higher with one of the Rodriguez methods, whereas a lower misclassification rate is more often achieved by one of the random ILR methods.
+    * Pseudo-count 1/max library size: For both metrics,  Rodriguez methods more often lead to better perfromance.
+    * Task 1: For both metrics and both pseudo-counts, augmentation in p (any relative density) consistently outperforms the Rodriguez methods.
+    * Tasks 10 and 12 (ROC AUC): Almost all random ILR methods consistently outperform the Rodriguez techniques.
+    * Relation between n/p ratio and the performance gain- in general bigger variability in gain for small values of n/p ratio, with growing value of n/p ratio the gain tends towards zero. Independently of the analysed perfromance metric there is the biggest possible gain is for the datasets with small n/p ratio when using Rodriguez or random ILR augmentation in p.
+    * Relationship between the n/p ratio and performance gain: in general, variability in gain is larger for small n/p values, and as n/p increases the gain tends toward zero. Regardless of the performance metric, the biggest possible perfromance gain occurs for datasets with small n/p when using Rodriguez methods or random ILR augmentation in p.
+3. XGBoost:
+    * A Rodriguez method most often yields the best performance across both pseudo-counts and both metrics.
+    * Visual inspection of the heatmaps suggests that performance varies slightly less across augmentation techniques than for Random Forest or logistic regression with L1 penalty.
+    * As for two otehr models, for small values of n/p ratio the variability of perfromance gains is the biggest and tends towards zero as the value of n/p increases. Compared to RF and logistic regression, the variability for small values of n/p ratio seems to be small. 
+    * As with the other models, performance gains are most variable at small n/p ratio and tend toward zero as n/p increases. However, the variability in the perfromance gain for small n/p values appears smaller for XGBoost than for Random Forest or L1-logistic regression.
+
+
+**General conclusions:**
+
+* If one wants to use **random ILR augmentation**, then independent of the objective (the performance measure to optimize) I would recommend **augmentation in p** as it outperforms augmentation in n in my experiments.
+* **Impact of augmentation factor:** Across the pseudo-counts, augmentation techniques, and performance metrics considered, model performance was fairly stable across all analyzed augmentation factors.
+* **Sensitivity to pseudo-count:** Across augmentation factors and techniques, for **L1-penalized logistic regression** a **pseudo-count of 0.5** more often led to better performance, whereas for **XGBoost and Random Forest** a **pseudo-count of 1/max library size** more often yielded better-performing models. However, the performance differences between pseudo-counts are subtle in the majority of cases.
+* **Impact of density in the random ILR augmentation in p:** For both performance metrics and pseudo-count = 0.5, across all considered models, relative densities (0.1 or 0.5) more often led to better performance than numeric densities. For pseudo-count = 1/max library size, Random Forest still favored relative densities for both ROC AUC and misclassification rate, whereas for logistic regression with L1 penalty and XGBoost, unit density seemed to be the better choice. In general, the performance differences between densities are not large, so the density should be treated as a tunable parameter. I recommend focusing on relative densities rather than unit density, as in my experience they usually yield better results.
+
+**To which tasks augmentation is most beneficial:**
+
+* L1-penalized logistic regression: for both performance metrics with pseudo-count = 1/max library size, starting from augmentation factor 3, tasks 7, 8, and 9 benefit more from random ILR augmentation than from the Rodriguez strategies. With pseudo-count = 1/2, tasks 8 and 9 generally benefit from random ILR augmentation, whereas for task 2 a gain in ROC AUC is observed only for augmentation in p.
+* Random Forest: across all performance metrics and pseudo-counts, augmentation in n generally worsens performance. For both metrics with pseudo-count = 1/2, tasks 1, 8, 10, and 12 show benefits from random ILR augmentation in p with relative density as compared to Rodriguez methods, but the effect tends to diminish as the augmentation factor increases.
+* XGBoost: across augmentation factors and performance metrics, Rodriguez techniques generally outperform random ILR methods. Only for task 4 augmentation in n with unit density consistently leads to higher perfromance than any Rodriguez augmentation methd. However, compared with the other two models, the difference between the two augmentation groups appears smallest for XGBoost.

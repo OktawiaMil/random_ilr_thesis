@@ -636,9 +636,10 @@ render_mean_metric_sections <- function(
     invisible(NULL)
 }
 
-# Function that for 2 df with the results of random ILR and Rodriguez augmentation techniques
-# for 1 model computes mean and st.dev. of gain as compared to benchmark in the selected
-# perfromance metric and  aug_factor
+# Function that for 2 df with the results of random ILR and Rodriguez
+#  augmentation techniques for 1 model computes mean and st.dev. of
+# gain as compared to benchmark in the selected perfromance metric and
+# aug_factor
 summarise_model_metrics <- function(
     rand_ilr_res,
     rod_res,
@@ -809,7 +810,7 @@ plot_augmentation_gain <- function(
             title = paste(
                 "Mean",
                 plot_metric_name,
-                "gain from augmentation for",
+                "Gain from Augmentation for",
                 model_label
             ),
             subtitle = paste("Augmentation Factor:", sel_aug_factor),
@@ -854,4 +855,445 @@ render_aug_factor_tabset <- function(
         )
         cat("\n\n")
     }
+}
+
+# Function to compute pairwise differencess between performance metrics
+# obtained by random ilr and Rodriguez augmentation strategies
+# For a given aug factor, data id, data split and perfromance metric: Random ILR - Rodriguez
+compute_pairwise_metric_diff <- function(
+    rand_ilr_res,
+    rod_res,
+    plot_metric,
+    sel_aug_factor
+) {
+    if (missing(plot_metric) || length(plot_metric) != 1L) {
+        stop("`plot_metric` must be a single character value.", call. = FALSE)
+    }
+    if (missing(sel_aug_factor) || length(sel_aug_factor) != 1L) {
+        stop("`sel_aug_factor` must be a single numeric value.", call. = FALSE)
+    }
+
+    metric_name <- if (
+        plot_metric %in%
+            c(
+                "misclassification_rate",
+                "missclassification_rate"
+            )
+    ) {
+        "accuracy"
+    } else {
+        plot_metric
+    }
+    convert_metric <- plot_metric %in%
+        c(
+            "misclassification_rate",
+            "missclassification_rate"
+        )
+
+    rand_tbl <- rand_ilr_res |>
+        dplyr::filter(augmentation_factor == sel_aug_factor) |>
+        tidyr::unnest(perf_metrics) |>
+        dplyr::filter(.metric == metric_name) |>
+        dplyr::mutate(
+            metric_value = if (convert_metric) {
+                1 - .estimate
+            } else {
+                .estimate
+            }
+        )
+
+    if (!"augmentation" %in% names(rand_tbl)) {
+        stop(
+            "`rand_ilr_res` must contain an `augmentation` column.",
+            call. = FALSE
+        )
+    }
+
+    rand_tbl <- rand_tbl |>
+        dplyr::mutate(augmentation = as.character(augmentation))
+
+    rand_tbl <- rand_tbl |>
+        dplyr::mutate(
+            density = as.character(density),
+            rand_method = dplyr::if_else(
+                is.na(density) | density == "",
+                paste0(augmentation, "_unit_density"),
+                paste(augmentation, density, sep = "_density_")
+            )
+        )
+
+    rod_tbl <- rod_res |>
+        dplyr::filter(augmentation_factor == sel_aug_factor) |>
+        tidyr::unnest(perf_metrics) |>
+        dplyr::filter(.metric == metric_name) |>
+        dplyr::mutate(
+            metric_value = if (convert_metric) {
+                1 - .estimate
+            } else {
+                .estimate
+            }
+        )
+
+    if (!"augmentation" %in% names(rod_tbl)) {
+        stop("`rod_res` must contain an `augmentation` column.", call. = FALSE)
+    }
+
+    rod_tbl <- rod_tbl |>
+        dplyr::mutate(
+            augmentation = as.character(augmentation),
+            rod_method = augmentation
+        )
+
+    candidate_keys <- c(
+        "data_id",
+        "split",
+        "model"
+    )
+    join_cols <- intersect(candidate_keys, names(rand_tbl))
+    join_cols <- intersect(join_cols, names(rod_tbl))
+
+    if (!"data_id" %in% join_cols) {
+        stop("Input data must share a `data_id` column.", call. = FALSE)
+    }
+
+    dplyr::inner_join(
+        rod_tbl |>
+            dplyr::select(
+                dplyr::all_of(join_cols),
+                rod_method,
+                rod_estimate = metric_value
+            ),
+        rand_tbl |>
+            dplyr::select(
+                dplyr::all_of(join_cols),
+                rand_method,
+                rand_estimate = metric_value
+            ),
+        by = join_cols,
+        relationship = "many-to-many"
+    ) |>
+        dplyr::mutate(
+            augmentation_factor = sel_aug_factor,
+            estimate_diff = rand_estimate - rod_estimate
+        ) |>
+        dplyr::select(
+            dplyr::all_of(join_cols),
+            augmentation_factor,
+            rod_method,
+            rand_method,
+            rod_estimate,
+            rand_estimate,
+            estimate_diff
+        ) |>
+        dplyr::arrange(
+            !!!rlang::syms(join_cols),
+            rod_method,
+            rand_method
+        )
+}
+
+# Heatmap showing the mean difference bewteen random ILR and Rodriguez augmentation methods
+# The scale color of heatmap is designed such that "positive" change (positive for the first
+# of models, so in this case one of random ilr methods) of a given metric is always in BLUE
+# whereas the negative change of this metric is in RED
+plot_pairwise_metric_heatmap <- function(
+    rand_ilr_res,
+    rod_res,
+    plot_metric,
+    sel_aug_factor
+) {
+    pairwise_diff <- compute_pairwise_metric_diff(
+        rand_ilr_res = rand_ilr_res,
+        rod_res = rod_res,
+        plot_metric = plot_metric,
+        sel_aug_factor = sel_aug_factor
+    )
+
+    format_rod_method <- function(x) {
+        prettified <- dplyr::case_match(
+            x,
+            "aitchison_mixup" ~ "Aitchison Mixup",
+            "comp_cutmix" ~ "Comp. CutMix",
+            "comp_feature" ~ "Comp. Feature Dropout",
+            .default = stringr::str_to_title(stringr::str_replace_all(
+                x,
+                "_",
+                " "
+            ))
+        )
+        prettified
+    }
+
+    format_rand_method <- function(x) {
+        purrr::map_chr(
+            x,
+            \(val) {
+                if (is.na(val) || val == "") {
+                    return(NA_character_)
+                }
+
+                if (stringr::str_detect(val, "^aug_in_n")) {
+                    base <- "Aug. in n"
+                } else if (stringr::str_detect(val, "^aug_in_p")) {
+                    base <- "Aug. in p"
+                } else {
+                    return(stringr::str_to_title(stringr::str_replace_all(
+                        val,
+                        "_",
+                        " "
+                    )))
+                }
+
+                density_match <- stringr::str_match(val, "density_(.*)$")[, 2]
+                if (!is.na(density_match) && density_match != "") {
+                    return(paste(
+                        base,
+                        paste("density", density_match),
+                        sep = ", "
+                    ))
+                }
+
+                if (stringr::str_detect(val, "unit_density$")) {
+                    return(paste(base, "unit density", sep = ", "))
+                }
+
+                base
+            }
+        )
+    }
+    model_value <- unique(rand_ilr_res$model)
+    model_label <- case_when(
+        model_value == "xgboost" ~ "XGBoost",
+        model_value == "lasso" ~ "Logistic Regression with L1 Penalty",
+        model_value == "random_forest" ~ "Random Forest",
+        TRUE ~ str_to_title(ifelse(is.na(model_value), "Model", model_value))
+    )
+
+    heatmap_data <- pairwise_diff |>
+        dplyr::group_by(data_id, rod_method, rand_method) |>
+        dplyr::summarise(
+            mean_diff = mean(estimate_diff, na.rm = TRUE),
+            .groups = "drop"
+        ) |>
+        dplyr::mutate(
+            rod_method = format_rod_method(rod_method),
+            rand_method = format_rand_method(rand_method)
+        ) |>
+        dplyr::mutate(
+            label = paste(rand_method, "-", rod_method)
+        )
+
+    metric_label <- if (identical(plot_metric, "roc_auc")) {
+        "ROC AUC"
+    } else {
+        plot_metric |> str_replace_all("_", " ") |> str_to_title()
+    }
+
+    label_levels <- heatmap_data |>
+        distinct(label) |>
+        dplyr::arrange(label) |>
+        dplyr::pull(label)
+
+    max_abs <- max(abs(heatmap_data$mean_diff), na.rm = TRUE)
+    if (!is.finite(max_abs) || max_abs == 0) {
+        max_abs <- 1
+    }
+
+    heatmap_data <- heatmap_data |>
+        dplyr::mutate(
+            data_id = factor(
+                as.numeric(data_id),
+                levels = sort(unique(as.numeric(data_id)))
+            ),
+            label = factor(label, levels = label_levels)
+        )
+    # Scale color depends on the metric(good means something different for 2 metrics)
+    # negative misclassification rate is good, whereas for roc auc positive change is good
+    if (
+        plot_metric %in% c("misclassification_rate", "missclassification_rate")
+    ) {
+        col_scale <- list(negative_chg = "#2b83ba", positive_chg = "#d7191c")
+    } else {
+        col_scale <- list(negative_chg = "#d7191c", positive_chg = "#2b83ba")
+    }
+
+    ggplot2::ggplot(
+        heatmap_data,
+        ggplot2::aes(x = data_id, y = label, fill = mean_diff)
+    ) +
+        ggplot2::geom_tile(color = "grey85") +
+        ggplot2::scale_fill_gradient2(
+            limits = c(-max_abs, max_abs),
+            low = col_scale$negative_chg,
+            mid = "white",
+            high = col_scale$positive_chg,
+            midpoint = 0,
+            oob = scales::squish
+        ) +
+        ggplot2::labs(
+            x = "Data ID",
+            y = NULL,
+            fill = "Mean diff.",
+            title = paste(
+                "Pairwise Mean Performance Difference of",
+                metric_label,
+                "for",
+                model_label
+            ),
+            subtitle = paste(
+                "Augmentation factor:",
+                sel_aug_factor
+            )
+        ) +
+        ggplot2::theme_bw() +
+        theme(
+            legend.position = "bottom",
+            plot.title = element_text(size = 16),
+            plot.subtitle = element_text(size = 14),
+            axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12),
+            axis.text.x = element_text(size = 12),
+            axis.text.y = element_text(size = 12),
+            strip.text = element_text(size = 12),
+            plot.title.position = "plot",
+            plot.margin = margin(t = 12, r = 12, b = 12, l = 12)
+        )
+}
+
+# Plot heatmaps for a given pseudo-count in seperate tabsets
+render_metric_diff_heatmap_tabset <- function(
+    rand_ilr_res,
+    rod_res,
+    plot_metric,
+    aug_factors = c(2, 3, 4, 5)
+) {
+    aug_factors <- sort(unique(aug_factors))
+
+    for (k in aug_factors) {
+        cat("### k = ", k, "\n\n", sep = "")
+        print(
+            plot_pairwise_metric_heatmap(
+                rand_ilr_res,
+                rod_res,
+                plot_metric,
+                sel_aug_factor = k
+            )
+        )
+        cat("\n\n")
+    }
+
+    invisible(NULL)
+}
+
+# Purpose of the plot - check the impact of the density of skew-symmetric matrix on the perfromance of
+# model trained on the data augmented in p across augemntation factors
+# Create the boxplot showing the plot_metric for the model trained on the data augmented in p
+# x axis - datasets, y - plot_metric, color - density
+# model_name and pseudo_count are only used to create meaningfull title and subtitle
+plot_aug_in_p_density_boxplot <- function(
+    rand_ilr_res,
+    plot_metric,
+    model_name,
+    pseudo_count
+) {
+    if (missing(plot_metric) || length(plot_metric) != 1L) {
+        stop("`plot_metric` must be a single character value.", call. = FALSE)
+    }
+
+    metric_name <- if (
+        plot_metric %in%
+            c(
+                "misclassification_rate",
+                "missclassification_rate"
+            )
+    ) {
+        "accuracy"
+    } else {
+        plot_metric
+    }
+    convert_metric <- plot_metric %in%
+        c(
+            "misclassification_rate",
+            "missclassification_rate"
+        )
+
+    plot_data <- rand_ilr_res |>
+        filter(augmentation == "aug_in_p") |>
+        tidyr::unnest(perf_metrics) |>
+        filter(.metric == metric_name) |>
+        mutate(
+            metric_value = if (convert_metric) {
+                1 - .estimate
+            } else {
+                .estimate
+            },
+            density = case_when(
+                is.na(density) ~ "Unit density",
+                TRUE ~ paste("Density", density)
+            ),
+            density = factor(
+                density,
+                levels = c("Unit density", "Density 0.1", "Density 0.5")
+            ),
+            augmentation_factor = factor(
+                augmentation_factor,
+                levels = sort(unique(augmentation_factor))
+            ),
+            data_id = factor(
+                as.numeric(data_id),
+                levels = sort(unique(as.numeric(data_id)))
+            )
+        )
+
+    metric_label <- case_when(
+        plot_metric == "roc_auc" ~ "ROC AUC",
+        plot_metric %in%
+            c(
+                "misclassification_rate",
+                "missclassification_rate"
+            ) ~ "Misclassification Rate",
+        TRUE ~ plot_metric |> str_replace_all("_", " ") |> str_to_title()
+    )
+
+    ggplot(
+        plot_data,
+        aes(
+            x = data_id,
+            y = metric_value,
+            fill = density
+        )
+    ) +
+        geom_boxplot(
+            outlier.alpha = 0.5,
+            width = 0.6
+        ) +
+        facet_wrap(
+            ~augmentation_factor,
+            ncol = 2
+        ) +
+        scale_fill_viridis(discrete = TRUE) +
+        labs(
+            x = "Data ID",
+            y = metric_label,
+            fill = "Density",
+            title = paste(
+                "Impact of Density on",
+                model_name,
+                metric_label,
+                "- Data Augmented in p"
+            ),
+            subtitle = paste("Split by Augmentation Factor;", pseudo_count)
+        ) +
+        theme_bw() +
+        theme(
+            legend.position = "bottom",
+            plot.title = element_text(size = 16),
+            plot.subtitle = element_text(size = 14),
+            axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12),
+            axis.text.x = element_text(size = 12, hjust = 1),
+            axis.text.y = element_text(size = 12),
+            strip.text = element_text(size = 12)
+        ) +
+        ylim(0, 1)
 }
