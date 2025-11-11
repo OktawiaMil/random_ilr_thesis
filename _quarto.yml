@@ -38,3 +38,4 @@ format:
   html:
     theme: cosmo
     toc: true
+    code-fold: true

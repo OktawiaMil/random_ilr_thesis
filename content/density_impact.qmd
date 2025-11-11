@@ -120,6 +120,7 @@ Helper functions used in this script:
 
 ```{r}
 #| label: helper_funs
+#| code-fold: true
 # Function that takes the GHL matrix and:
 # 1. determines if original feature x_i contributes to the ilr coordinate in numerator or denominator
 # 2. determines top k contributors for each of the
@@ -212,6 +213,8 @@ For every original feature, count how often it appears in a numerator versus a d
 
 ```{r}
 #| label: den_num_plot
+#| message: false
+#| warning: false
 org_features <- 20
 top_k <- 5
 n_iters <- 100
