@@ -9,6 +9,8 @@ project:
     - content/summary_random_ilr_pc_half.qmd
     - content/summary_random_ilr_pc_max_lib_size.qmd
     - content/pseudo_count_impact.qmd
+    - content/summary_agp.qmd
+    - content/summary_lupus.qmd
     - content/methods_comparison.qmd
 
 website:
@@ -33,6 +35,12 @@ website:
         menu:
           - text: "Density Impact"
             file: content/density_impact.qmd
+      - text: "Additional Datasets"
+        menu:
+          - text: "American Gut Project"
+            file: content/summary_agp.qmd
+          - text: "Lupus Dataset"
+            file: content/summary_lupus.qmd
 
 format:
   html:

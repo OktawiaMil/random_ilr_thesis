@@ -6,14 +6,18 @@
 .vscode/
 
 # Ignoring big files with results:
-results/rodriguez/*
-!results/rodriguez/
-results/random_ilr/*
-!results/random_ilr/
-results/benchmark/*
-!results/benchmark/
-results/results_aggregated/*
-!results/results_aggregated/
+results/rodriguez/**
+!results/rodriguez/.gitkeep
+results/random_ilr/**
+!results/random_ilr/.gitkeep
+results/benchmark/**
+!results/benchmark/.gitkeep
+results/results_aggregated/**
+!results/results_aggregated/.gitkeep
+results/agp_results/**
+!results/agp_results/.gitkeep
+results/lupus_results/**
+!results/lupus_results/.gitkeep
 
 # Ignoring ad-hoc files.rd
 temp/
@@ -21,6 +25,10 @@ temp/
 \# Ignoring input data
 data/data_raw/*.txt
 data/data_preproc/*.csv
+data/data_agp/data_preproc/
+data/data_agp/data_raw/
+data/data_lupus/data_preproc/
+data/data_lupus/data_raw/
 
 # Ignoring files with error/ output logs
 logs/*.err

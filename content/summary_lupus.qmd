@@ -1,0 +1,101 @@
+---
+title: "Results Summary: Lupus Dataset"
+author: "Oktawia Miluch"
+date: today
+bibliography: ../readme_files/references.bib
+link-citations: true
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+    fig-format: png
+    code-fold: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+knitr:
+  opts_chunk:
+    fig.path: _figures/summary_lupus/
+    fig.width: 18
+    fig.height: 13.5
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(here)
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(viridis)
+library(kableExtra)
+
+# Create/clean graphics directory, set fig.path
+graphics_abs <- here::here("content", "_figures", "summary_lupus")
+dir.create(graphics_abs, recursive = TRUE, showWarnings = FALSE)
+
+# clean contents but keep folder
+to_remove <- list.files(
+  graphics_abs,
+  all.files = TRUE,
+  full.names = TRUE,
+  no.. = TRUE
+)
+unlink(to_remove, recursive = TRUE, force = TRUE)
+
+# ensure knitr writes to the selected path
+knitr::opts_chunk$set(
+  fig.path   = "_figures/summary_lupus/",
+  fig.width  = 18,
+  fig.height = 13.5
+)
+```
+
+```{r}
+#| label: data_read
+#| include: false
+# Source helper functions
+source(file.path(here::here(), "R", "summary_agp_lupus.R"))
+
+# Read in results
+dir_results <- file.path(here::here(), "results", "lupus_results")
+res <- read_results(dir_results)
+```
+
+# Logistic regression with L1 penalty
+```{r}
+boxplot_metric(res$lasso, plot_metric = "roc_auc")
+boxplot_metric(res$lasso, plot_metric = "misclassification_rate")
+boxplot_metric(res$lasso, plot_metric = "brier_class")
+```
+
+```{r}
+roc_curve_plot(res$lasso)
+```
+
+# Random Forest
+```{r}
+boxplot_metric(res$RF, plot_metric = "roc_auc")
+boxplot_metric(res$RF, plot_metric = "misclassification_rate")
+boxplot_metric(res$RF, plot_metric = "brier_class")
+```
+
+```{r}
+roc_curve_plot(res$RF)
+```
+
+# XGBoost
+```{r}
+boxplot_metric(res$XGB, plot_metric = "roc_auc")
+boxplot_metric(res$XGB, plot_metric = "misclassification_rate")
+boxplot_metric(res$XGB, plot_metric = "brier_class")
+```
+
+```{r}
+roc_curve_plot(res$XGB)
+```
