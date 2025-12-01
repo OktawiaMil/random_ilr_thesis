@@ -44,7 +44,7 @@ prepare_summary_metrics_ilr <- function(data) {
 normalize_density_label <- function(density) {
   density_chr <- as.character(density)
   case_when(
-    is.na(density_chr) ~ "Def.",
+    is.na(density_chr) ~ "Unit",
     TRUE ~ density_chr
   )
 }
@@ -82,8 +82,8 @@ summarise_metric_table_ilr <- function(
     group_by(data_id) |>
     summarise(Benchmark = mean(.estimate, na.rm = TRUE), .groups = "drop")
 
-  density_order <- c("Def.", "0.1", "0.5")
-  density_keys <- c("Def", "0_1", "0_5")
+  density_order <- c("Unit", "0.1", "0.5")
+  density_keys <- c("Unit", "0_1", "0_5")
 
   aug_summary <- aug_tbl |>
     filter(
@@ -96,7 +96,7 @@ summarise_metric_table_ilr <- function(
         levels = density_order
       ),
       density_key = case_when(
-        density_label == "Def." ~ "Def",
+        density_label == "Unit" ~ "Unit",
         density_label == "0.1" ~ "0_1",
         density_label == "0.5" ~ "0_5",
         TRUE ~ str_replace_all(as.character(density_label), "\\.", "_")
@@ -137,10 +137,10 @@ summarise_metric_table_ilr <- function(
     select(
       Dataset = data_id,
       Benchmark,
-      Aug_n_Def = Aug_n_Def,
+      Aug_n_Unit = Aug_n_Unit,
       Aug_n_0_1 = Aug_n_0_1,
       Aug_n_0_5 = Aug_n_0_5,
-      Aug_p_Def = Aug_p_Def,
+      Aug_p_Unit = Aug_p_Unit,
       Aug_p_0_1 = Aug_p_0_1,
       Aug_p_0_5 = Aug_p_0_5,
       augmentation_factor,
@@ -189,10 +189,10 @@ format_summary_table_ilr <- function(
 
   value_cols <- c(
     "Benchmark",
-    "Aug_n_Def",
+    "Aug_n_Unit",
     "Aug_n_0_1",
     "Aug_n_0_5",
-    "Aug_p_Def",
+    "Aug_p_Unit",
     "Aug_p_0_1",
     "Aug_p_0_5"
   )
@@ -252,10 +252,10 @@ create_summary_dashboard_random_ilr <- function(
   display_cols <- c(
     "Dataset",
     "Benchmark",
-    "Aug_n_Def",
+    "Aug_n_Unit",
     "Aug_n_0_1",
     "Aug_n_0_5",
-    "Aug_p_Def",
+    "Aug_p_Unit",
     "Aug_p_0_1",
     "Aug_p_0_5"
   )
@@ -318,10 +318,10 @@ create_summary_dashboard_random_ilr <- function(
         )
       ),
       htmltools::tags$tr(
-        htmltools::tags$th("Def.", style = "text-align:center;"),
+        htmltools::tags$th("Unit", style = "text-align:center;"),
         htmltools::tags$th("0.1", style = "text-align:center;"),
         htmltools::tags$th("0.5", style = "text-align:center;"),
-        htmltools::tags$th("Def.", style = "text-align:center;"),
+        htmltools::tags$th("Unit", style = "text-align:center;"),
         htmltools::tags$th("0.1", style = "text-align:center;"),
         htmltools::tags$th("0.5", style = "text-align:center;")
       )
@@ -414,20 +414,20 @@ save_metric_table_latex_random_ilr <- function(
       select(
         Dataset,
         Benchmark,
-        Aug_n_Def,
+        Aug_n_Unit,
         Aug_n_0_1,
         Aug_n_0_5,
-        Aug_p_Def,
+        Aug_p_Unit,
         Aug_p_0_1,
         Aug_p_0_5
       ) |>
       rename(
         `Dataset` = Dataset,
         `Benchmark` = Benchmark,
-        `Aug_n_Def` = Aug_n_Def,
+        `Aug_n_Unit` = Aug_n_Unit,
         `Aug_n_0_1` = Aug_n_0_1,
         `Aug_n_0_5` = Aug_n_0_5,
-        `Aug_p_Def` = Aug_p_Def,
+        `Aug_p_Unit` = Aug_p_Unit,
         `Aug_p_0_1` = Aug_p_0_1,
         `Aug_p_0_5` = Aug_p_0_5
       )
@@ -435,10 +435,10 @@ save_metric_table_latex_random_ilr <- function(
     col_names <- c(
       "",
       "",
-      "Def.",
+      "Unit",
       "0.1",
       "0.5",
-      "Def.",
+      "Unit",
       "0.1",
       "0.5"
     )
@@ -501,7 +501,7 @@ render_aug_imp_tabs <- function(metric, aug_results) {
   ordered_densities <- c(NA, ordered_non_na)
 
   for (dens in ordered_densities) {
-    tab_label <- if (is.na(dens)) "Default" else as.character(dens)
+    tab_label <- if (is.na(dens)) "Unit" else as.character(dens)
     cat("#### ", tab_label, "\n\n", sep = "")
 
     data_slice <- if (is.na(dens)) {

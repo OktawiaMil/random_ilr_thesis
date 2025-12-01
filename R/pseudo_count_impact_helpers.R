@@ -211,10 +211,10 @@ mean_diff_heatmap <- function(
                 augmentation == "comp_feature" ~ "Comp. Feature Dropout",
                 augmentation == "aug_in_n_0.1" ~ "RandomILR in n, den. 0.1",
                 augmentation == "aug_in_n_0.5" ~ "RandomILR in n, den. 0.5",
-                augmentation == "aug_in_n_NA" ~ "RandomILR in n, den. default",
+                augmentation == "aug_in_n_NA" ~ "RandomILR in n, den. unit",
                 augmentation == "aug_in_p_0.1" ~ "RandomILR in p, den. 0.1",
                 augmentation == "aug_in_p_0.5" ~ "RandomILR in p, den. 0.5",
-                augmentation == "aug_in_p_NA" ~ "RandomILR in p, den. default",
+                augmentation == "aug_in_p_NA" ~ "RandomILR in p, den. unit",
                 TRUE ~ augmentation
             )
         )
@@ -225,10 +225,10 @@ mean_diff_heatmap <- function(
         "Aitchison Mixup",
         "Comp. Cutmix",
         "Comp. Feature Dropout",
-        "RandomILR in p, den. default",
+        "RandomILR in p, den. unit",
         "RandomILR in p, den. 0.1",
         "RandomILR in p, den. 0.5",
-        "RandomILR in n, den. default",
+        "RandomILR in n, den. unit",
         "RandomILR in n, den. 0.1",
         "RandomILR in n, den. 0.5"
     )
