@@ -4,7 +4,8 @@ read_results <- function(dir_res) {
     models <- c(
         lasso = "^lasso_split_.*\\.rds$",
         RF = "^RF_split_.*\\.rds$",
-        XGB = "^XGB_split_.*\\.rds$"
+        XGB = "^XGB_split_.*\\.rds$",
+        sparse_log_contrast = "^slc_split_.*\\.rds$"
     )
 
     map(models, function(pattern) {
@@ -47,6 +48,8 @@ boxplot_metric <- function(data, plot_metric) {
                 is.na(aug_strategy) ~ "Benchmark",
                 aug_strategy == "aug_in_p" ~ "randomILR - Aug. in p",
                 aug_strategy == "aitchison_mixup" ~ "Aitchison Mixup",
+                aug_strategy ==
+                    "aitchison_aug_in_p" ~ "Aitchison Mixup & Aug. in p",
                 TRUE ~ aug_strategy
             ),
             aug_strategy = factor(
@@ -54,7 +57,8 @@ boxplot_metric <- function(data, plot_metric) {
                 levels = c(
                     "Benchmark",
                     "Aitchison Mixup",
-                    "randomILR - Aug. in p"
+                    "randomILR - Aug. in p",
+                    "Aitchison Mixup & Aug. in p"
                 )
             ),
             model = case_when(
@@ -138,6 +142,8 @@ roc_curve_plot <- function(data) {
                 is.na(aug_strategy) ~ "Benchmark",
                 aug_strategy == "aug_in_p" ~ "randomILR - Aug. in p",
                 aug_strategy == "aitchison_mixup" ~ "Aitchison Mixup",
+                aug_strategy ==
+                    "aitchison_aug_in_p" ~ "Aitchison Mixup & Aug. in p",
                 TRUE ~ aug_strategy
             ),
             aug_strategy = factor(
@@ -145,7 +151,8 @@ roc_curve_plot <- function(data) {
                 levels = c(
                     "Benchmark",
                     "Aitchison Mixup",
-                    "randomILR - Aug. in p"
+                    "randomILR - Aug. in p",
+                    "Aitchison Mixup & Aug. in p"
                 )
             ),
             model = case_when(

@@ -28,7 +28,7 @@ data_preproc_lupus <- here::here("data", "data_lupus", "data_preproc")
 
 # Function that:
 # 1. reverts back the log-transformed counts with added pseudo-count == 1
-# to absolute abundance counts and substracts PC = 1
+# to absolute abundance counts (exp() and substracts PC = 1)
 # 2. adds pseudo-count == 1/max library size
 # 3. transforms into proportions
 # 4. transforms outcome to factor
@@ -41,6 +41,10 @@ preproc_data <- function(data) {
     # Convert into proportions:
     data_prop <- abs_abundance / rowSums(abs_abundance)
     data$prop_pc <- data_prop
+    # Needed for the sparse log-contrast model: log(observed abundance + PC)
+    # For the consistency, I add PC = 1/max lib size
+    data_log_pc_mls <- log(abs_abundance + pseudo_count)
+    data$log_pc_max_lib_size <- data_log_pc_mls
     data$y <- factor(data$y, levels = c(-1, 1))
     return(data)
 }

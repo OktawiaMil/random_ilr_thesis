@@ -7,11 +7,12 @@ suppressPackageStartupMessages({
     library(stringr)
     library(tidymodels)
     library(glmnet)
-    library(augmenter)
+    library(augmentR)
     library(compositions)
     library(here)
     library(future)
     library(future.apply)
+    library(trac)
 })
 
 # Source helper functions
@@ -30,6 +31,7 @@ output_dir <- here::here("results", "agp_results")
 agp_df <- data_agp$prop_pc |> bind_cols(outcome = data_agp$y)
 
 #%% Config
+# TODO: change values below once you fully test your workflow
 model_seed <- 2025
 aug_factor <- 3
 sel_density <- 0.1
@@ -77,7 +79,26 @@ run_one_split <- function(split_seed) {
         test_idx = test_idx
     )
 
-    # # Rodriguez augmentation method
+    # Fit and save sparse log contrast benchmark model
+    # Sparse log contrast benchmark is fitted on log(X + PC)
+    data_bench_slc <- data_agp$log_pc_max_lib_size |>
+        bind_cols(outcome = data_agp$y)
+
+    # Train/test split
+    train_bench_slc <- data_bench_slc[train_idx, ]
+    test_bench_slc <- data_bench_slc[test_idx, ]
+
+    # Fit and save sparse log contrast benchmark model
+    sparse_log_cont_custom(
+        train_data = train_bench_slc,
+        test_data = test_bench_slc,
+        split_seed = split_seed,
+        output_dir = output_dir,
+        train_idx = train_idx,
+        test_idx = test_idx
+    )
+
+    # Rodriguez augmentation method
     x_tr <- train_data |>
         select(-outcome)
     y_tr <- train_data |>
@@ -101,10 +122,38 @@ run_one_split <- function(split_seed) {
                 select(outcome)
         )
 
-    # # Fit models on Rodriguez augmented data
+    # Fit models on Rodriguez augmented data
     fit_and_save_one_split(
         train_df = data_aug_rod_ilr,
         test_df = test_df_ilr,
+        split_seed = split_seed,
+        output_dir = output_dir,
+        train_idx = train_idx,
+        test_idx = test_idx,
+        aug_strategy = "aitchison_mixup",
+        aug_factor = aug_factor
+    )
+
+    # Sparse log contrast on Aitchison augmented data + log transformed
+    data_aitch_log <- data_aug_rod |>
+        select(-outcome) |>
+        log() |>
+        as.data.frame() |>
+        bind_cols(
+            data_aug_rod |>
+                select(outcome)
+        )
+
+    test_aitch_log <- test_data |>
+        select(-outcome) |>
+        log() |>
+        as.data.frame() |>
+        bind_cols(test_data |> select(outcome))
+
+    # Fit and save sparse log contrast model trained on Rodriguez augmented data
+    sparse_log_cont_custom(
+        train_data = data_aug_rod_ilr,
+        test_data = test_df_ilr,
         split_seed = split_seed,
         output_dir = output_dir,
         train_idx = train_idx,
@@ -140,29 +189,66 @@ run_one_split <- function(split_seed) {
         aug_factor = aug_factor
     )
 
-    # Combine augmentation methods - first augment in p
-    # Split into train and test - reuse from above
-    # Augment train data with Aitchison Mixup -> fit and test model
-    # Rodriguez augmentation method
-    # aug_p_x <- aug_p_train |>
-    #     select(-outcome)
-    # aug_p_y <- aug_p_train |>
-    #     select(outcome)
-
-    # aug_comb_train <- aitchison_mixup(
-    #     x_data = aug_p_x,
-    #     y_data = aug_p_y,
-    #     multiplier = aug_factor
-    # )
-
-    # fit_and_save_one_split(
-    #     train_df = aug_comb_train,
-    #     test_df = aug_p_test,
+    # Fit and save sparse log-contrast model on aug_in_p augmented data
+    # sparse_log_cont_custom(
+    #     train_data = aug_p_train,
+    #     test_data = aug_p_test,
     #     split_seed = split_seed,
     #     output_dir = output_dir,
     #     train_idx = train_idx,
     #     test_idx = test_idx,
-    #     aug_strategy = "aug_in_p_Aitchison",
+    #     aug_strategy = "aug_in_p",
+    #     aug_factor = aug_factor
+    # )
+
+    # 2 stage augmentation
+    # 1. Aitchison on train set - we reuse already augmented data (data_aug_rod)
+    # 2. augment in p
+    # Combine back together augmented train and test but add column specyfying
+    # whether a sample is in test or train set
+    data_stage1 <- data_aug_rod |>
+        mutate(id = "train") |>
+        bind_rows(
+            test_data |>
+                mutate(id = "test")
+        )
+
+    data_st1_x <- data_stage1 |> select(-outcome)
+    data_st1_y <- data_stage1 |> select(outcome, id)
+
+    # Augment in p
+    data_aug_p <- aug_p_randilr(
+        x_data = data_st1_x,
+        y_data = data_st1_y,
+        id_col = "id",
+        density = sel_density,
+        multiplier = aug_factor,
+        id_action = "keep"
+    )
+
+    # Split into train and test again
+    train_stage2 <- data_aug_p |> filter(id == "train") |> select(-id)
+    test_stage2 <- data_aug_p |> filter(id == "test") |> select(-id)
+
+    fit_and_save_one_split(
+        train_df = train_stage2,
+        test_df = test_stage2,
+        split_seed = split_seed,
+        output_dir = output_dir,
+        train_idx = train_idx,
+        test_idx = test_idx,
+        aug_strategy = "aitchison_aug_in_p",
+        aug_factor = aug_factor
+    )
+
+    # sparse_log_cont_custom(
+    #     train_data = train_stage2,
+    #     test_data = test_stage2,
+    #     split_seed = split_seed,
+    #     output_dir = output_dir,
+    #     train_idx = train_idx,
+    #     test_idx = test_idx,
+    #     aug_strategy = "aitchison_aug_in_p",
     #     aug_factor = aug_factor
     # )
 }
@@ -175,3 +261,4 @@ future_lapply(
     run_one_split,
     future.seed = TRUE # reproducible per split
 )
+future::plan(sequential)
