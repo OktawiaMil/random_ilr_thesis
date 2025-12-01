@@ -1,13 +1,12 @@
 # File with the helper functions used in the "03_" scripts
 
-# Function that trains selected model on the
+# Function that trains selected model on the data expressed as proportion
 train_model <- function(
     train_data,
     test_data,
     model = c(
         "random_forest",
         "xgboost",
-        "sparse_log_contrast",
         "l1_logistic_reg"
     ),
     trees = 100,
@@ -100,9 +99,6 @@ train_model <- function(
         gc(FALSE)
 
         return(list(perf_metrics = metrics, roc_curve = roc_tbl))
-    } else if (model == "sparse_log_contrast") {
-        #TODO: implement custom function for the sparse log contrast that
-        # will be suitable for classification - trac is good only for regression
     } else if (model == "l1_logistic_reg") {
         # L1-penalized logistic regression
         set.seed(model_seed)
@@ -170,7 +166,7 @@ train_model <- function(
 }
 
 
-# Helper: fit  all 3 models (RF, XGB, sparse log-contrast) on a given dataset
+# Helper: fit  all 3 models (RF, XGB, logistic regression with L1 penalty) on a given dataset
 # Save results for each model as separate file in output_dir
 fit_and_save_one_split <- function(
     train_df,
@@ -182,12 +178,10 @@ fit_and_save_one_split <- function(
     aug_strategy = NULL,
     aug_factor = NULL
 ) {
-    #models <- c("random_forest", "xgboost", "sparse_log_contrast")
     models <- c("random_forest", "xgboost", "l1_logistic_reg")
     model_short <- c(
         random_forest = "RF",
         xgboost = "XGB",
-        sparse_log_contrast = "SLC",
         l1_logistic_reg = "lasso"
     )
 
@@ -243,4 +237,136 @@ fit_and_save_one_split <- function(
             )
         )
     }
+}
+
+# Function that fits and saves the results of sparse log contrast
+# classification model trained on the data expressed as log(x + PC),
+# x - observed OTUs (absolute abundance)
+sparse_log_cont_custom <- function(
+    train_data,
+    test_data,
+    model_seed = 2025,
+    cv_nfolds = 5,
+    split_seed,
+    output_dir,
+    train_idx = NULL,
+    test_idx = NULL,
+    aug_strategy = NULL,
+    aug_factor = NULL
+) {
+    set.seed(model_seed)
+    # Prepare data
+    z_tr <- train_data |> select(-outcome) |> as.matrix()
+    y_tr <- train_data |>
+        mutate(outcome = if_else(outcome == "1", 1, -1)) |>
+        pull(outcome)
+
+    z_test <- test_data |> select(-outcome) |> as.matrix()
+    y_test <- test_data |>
+        mutate(outcome = if_else(outcome == "1", 1, -1)) |>
+        pull(outcome)
+
+    # In the below code:
+    # min_frac - the smalles k, k \in [0, 1) that describes the relation
+    # lambda/lambda_max where lambda_max is the biggest value of lambda
+    # parameter for which \beta != 0 (in a vector sense, so at least 1 entry != 0)
+    # For a fixed value of nlam, if we set smaller value of min_frac then
+    # the frac_list covers wider range of fractions between lambda and lambda_max
+    # tested (for smaller min_frac the range of frac_list is (1, val_min) where
+    # val_min is smaller than it would be for bigger value of min_frac) --> we are
+    # allowing for the lambdas close to teh lambda_max --> sparser models are tested
+
+    fit_log_contrast <- sparse_log_contrast(
+        Z = z_tr,
+        y = y_tr,
+        min_frac = 1e-04, #default setting in trac v. 0.0.2
+        nlam = 20, #default setting in trac v. 0.0.2
+        method = "classif"
+    )
+
+    # Lambda selection: 5-folds CV which identifies the largest lambda whose
+    # CV error is within one standard error of the minimum CV error (1-se lambda)
+    # Below you pass fit_log_contrast because it allows to determine the range of
+    # lambda values that should be tested
+    cvfit_log_contrast <- cv_sparse_log_contrast(
+        fit_log_contrast,
+        Z = z_tr,
+        y = y_tr,
+        nfolds = cv_nfolds
+    )
+
+    # Index of the lambda parameter in the fraclist that leads
+    # to the predictive perfromance corresponding to lambda = 1se:
+    lambda_1se_idx <- cvfit_log_contrast$cv$i1se
+
+    # Predictions for all of fitted models (models fitted on all considered lambdas)
+    # Values in pred are numeric values, can be negative or larger than 1
+    # (meanwhile we have 1 and -1) - those are scores that are transformed
+    # into binary labels (output can be controlled via output = c("raw",
+    # "probability", "class"))
+    # Output - raw scores
+    pred_score <- predict_sparse_log_contrast(
+        fit_log_contrast,
+        new_Z = z_test
+    )
+
+    # Get into the predictions of the model with lambda-1se
+    pred_score_1se <- pred_score[, lambda_1se_idx]
+    # Turn predicted scores into class labels
+    pred_class_1se <- if_else(pred_score_1se >= 0, 1, -1)
+
+    pred_tbl <- tibble(
+        truth = factor(y_test, levels = c(-1, 1)),
+        .pred_class = factor(pred_class_1se, levels = c(-1, 1)),
+        .pred_score = pred_score_1se
+    )
+
+    # Calculate ROC curve and performance metrics
+    roc_tbl <- roc_curve(
+        pred_tbl,
+        truth = truth,
+        .pred_score,
+        event_level = "second"
+    )
+
+    metrics <- bind_rows(
+        roc_auc(pred_tbl, truth = truth, .pred_score, event_level = "second"),
+        accuracy(pred_tbl, truth = truth, estimate = .pred_class)
+    )
+
+    res <- list(perf_metrics = metrics, roc_curve = roc_tbl)
+
+    out <- list(
+        split_seed = split_seed,
+        aug_strategy = aug_strategy,
+        aug_factor = aug_factor,
+        model = "sparse_log_contrast",
+        trees = NULL,
+        train_idx = train_idx,
+        test_idx = test_idx,
+        perf_metrics = res$perf_metrics,
+        roc_curve = res$roc_curve
+    )
+
+    saveRDS(
+        out,
+        file.path(
+            output_dir,
+            paste0(
+                "slc_split_",
+                split_seed,
+                if (!is.null(aug_strategy)) {
+                    paste0("_", aug_strategy)
+                } else {
+                    "_benchmark"
+                },
+                if (!is.null(aug_factor)) {
+                    paste0("_augf_", aug_factor)
+                } else {
+                    ""
+                },
+                ".rds"
+            )
+        )
+    )
 }
