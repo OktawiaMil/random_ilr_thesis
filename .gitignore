@@ -18,6 +18,7 @@ results/agp_results/**
 !results/agp_results/.gitkeep
 results/lupus_results/**
 !results/lupus_results/.gitkeep
+results/test_results/**
 
 # Ignoring ad-hoc files.rd
 temp/

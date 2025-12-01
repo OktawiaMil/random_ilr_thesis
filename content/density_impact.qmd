@@ -43,7 +43,7 @@ knitr::opts_chunk$set(
   fig.height = 13.5
 )
 # Libraries
-library(augmenter)
+library(augmentR)
 library(dplyr)
 library(ggplot2)
 library(tidyr)

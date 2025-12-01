@@ -1,4 +1,21 @@
-results/benchmark/
-results/random_ilr/
-results/rodriguez/
-results/results_aggregated/
+# Ignore folder that are not relevant for the environment:
+results/
+# Folder where I keep work in progress files:
+temp/
+bash/
+data/
+logs/
+readme_files/
+.quarto/
+# rendered GitHub page:
+docs/ 
+content/_figures/
+content/_tables/
+*_cache/
+.ipynb_checkpoints/
+
+# Ignore files that are run only in the container
+scripts/01a_rodriguez_methods_pipeline.R
+scripts/01b_random_ilr_pipeline.R
+R/01a_rodriguez_helpers.R
+R/01b_random_ilr_helpers.R

@@ -129,7 +129,7 @@ save_metric_table_latex_random_ilr(
 One tabset with a box plot corresponds to a single augmentation factor in the section below.
 
 ### ROC AUC
-#### Density default
+#### Unit Density
 
 ::: panel-tabset
 ```{r}
@@ -185,7 +185,7 @@ render_boxplot_per_density(
 
 
 ### Misclassification Rate
-#### Density default
+#### Unit Density
 
 ::: panel-tabset
 ```{r}
@@ -295,7 +295,7 @@ save_metric_table_latex_random_ilr(
 One tabset with a box plot corresponds to a single augmentation factor in the section below.
 
 ### ROC AUC
-#### Density default
+#### Unit Density
 
 ::: panel-tabset
 ```{r}
@@ -351,7 +351,7 @@ render_boxplot_per_density(
 
 
 ### Misclassification Rate
-#### Density default
+#### Unit Density
 
 ::: panel-tabset
 ```{r}
@@ -462,7 +462,7 @@ save_metric_table_latex_random_ilr(
 One tabset with a box plot corresponds to a single augmentation factor in the section below.
 
 ### ROC AUC
-#### Density default
+#### Unit Density
 
 ::: panel-tabset
 ```{r}
@@ -518,7 +518,7 @@ render_boxplot_per_density(
 
 
 ### Misclassification Rate
-#### Density default
+#### Unit Density
 
 ::: panel-tabset
 ```{r}

@@ -67,35 +67,70 @@ dir_results <- file.path(here::here(), "results", "agp_results")
 res <- read_results(dir_results)
 ```
 
+In this script 4 models are considered: 3 already used in the previous scripts, namely: logistic regression with L1 penalty, Random Forest and XGBoost. The fourth used model is the sparse log-contrast classification model as implemented in the R package `trac` version 0.0.2 (see [viettr/trac](https://github.com/viettr/trac/tree/master) GitHub repository for the implementation details). 
+
+**Sparse log-contrast classification model with square hinge loss:**  The model can be described as follows:
+$$
+y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
+$$
+
+where $y$ is a binary outcome vector, $X$ is a predictor matrix, $C$ is a general constraint matrix,  $\beta$ is an unknown coefficient vector and  $\sigma$ is an unknown scale parameter. In this analysis the squared hinge loss is used with an $\ell_1$ penalty for the $\beta$ coefficients. Therefore, the optimization problem is defined as follows:
+
+$$
+\begin{aligned}
+\min_{\beta \in \mathbb{R}^{d}}
+\quad & \sum_{i=1}^{n} \, \ell\!\left(y_i\, x_i^{\top}\beta\right) \;+\; \lambda \lVert \beta \rVert_{1} \\
+\text{subject to}\quad & C\beta = 0 ,
+\end{aligned}
+$$
+
+where the $x_i$ are the rows of $X$, $\lVert \beta \rVert_{1}$ is the $\ell_1$ penalty and the loss function $\ell(\cdot)$ is defined as:
+
+$$
+\ell(r)=
+\begin{cases}
+(1-r)^2, & \text{if } r \le 1,\\[4pt]
+0, & \text{if } r \ge 1.
+\end{cases}
+$$
+
+Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast models.
+
 # Logistic regression with L1 penalty
+## Boxplots of performance metrics
 ```{r}
 boxplot_metric(res$lasso, plot_metric = "roc_auc")
 boxplot_metric(res$lasso, plot_metric = "misclassification_rate")
 boxplot_metric(res$lasso, plot_metric = "brier_class")
 ```
 
+## ROC Curves
 ```{r}
 roc_curve_plot(res$lasso)
 ```
 
 # Random Forest
+## Boxplots of performance metrics
 ```{r}
 boxplot_metric(res$RF, plot_metric = "roc_auc")
 boxplot_metric(res$RF, plot_metric = "misclassification_rate")
 boxplot_metric(res$RF, plot_metric = "brier_class")
 ```
 
+## ROC Curves
 ```{r}
 roc_curve_plot(res$RF)
 ```
 
 # XGBoost
+## Boxplots of performance metrics
 ```{r}
 boxplot_metric(res$XGB, plot_metric = "roc_auc")
 boxplot_metric(res$XGB, plot_metric = "misclassification_rate")
 boxplot_metric(res$XGB, plot_metric = "brier_class")
 ```
 
+## ROC Curves
 ```{r}
 roc_curve_plot(res$XGB)
 ```
