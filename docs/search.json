@@ -53,49 +53,49 @@
     "href": "content/summary_agp.html",
     "title": "Results Summary: AGP Dataset",
     "section": "",
-    "text": "In this script 4 models are considered: 3 already used in the previous scripts, namely: logistic regression with L1 penalty, Random Forest and XGBoost. The fourth used model is the sparse log-contrast classification model as implemented in the R package trac version 0.0.2 (see viettr/trac GitHub repository for the implementation details).\nSparse log-contrast classification model with square hinge loss: The model can be described as follows: \\[\ny = X \\beta + \\sigma \\epsilon \\quad \\text{subject to} \\quad C \\beta = 0\n\\]\nwhere \\(y\\) is a binary outcome vector, \\(X\\) is a predictor matrix, \\(C\\) is a general constraint matrix, \\(\\beta\\) is an unknown coefficient vector and \\(\\sigma\\) is an unknown scale parameter. In this analysis the squared hinge loss is used with an \\(\\ell_1\\) penalty for the \\(\\beta\\) coefficients. Therefore, the optimization problem is defined as follows:\n\\[\n\\begin{aligned}\n\\min_{\\beta \\in \\mathbb{R}^{d}}\n\\quad & \\sum_{i=1}^{n} \\, \\ell\\!\\left(y_i\\, x_i^{\\top}\\beta\\right) \\;+\\; \\lambda \\lVert \\beta \\rVert_{1} \\\\\n\\text{subject to}\\quad & C\\beta = 0 ,\n\\end{aligned}\n\\]\nwhere the \\(x_i\\) are the rows of \\(X\\), \\(\\lVert \\beta \\rVert_{1}\\) is the \\(\\ell_1\\) penalty and the loss function \\(\\ell(\\cdot)\\) is defined as:\n\\[\n\\ell(r)=\n\\begin{cases}\n(1-r)^2, & \\text{if } r \\le 1,\\\\[4pt]\n0, & \\text{if } r \\ge 1.\n\\end{cases}\n\\]\nGiven this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast models."
+    "text": "In this script 4 models are considered: 3 already used in the previous scripts, namely: logistic regression with L1 penalty, Random Forest and XGBoost. The fourth used model is the sparse log-contrast classification model as implemented in the R package trac version 0.0.2 (see viettr/trac GitHub repository for the implementation details).\nSparse log-contrast classification model with square hinge loss: The model can be described as follows: \\[\ny = X \\beta + \\sigma \\epsilon \\quad \\text{subject to} \\quad C \\beta = 0\n\\]\nwhere \\(y\\) is a binary outcome vector, \\(X\\) is a predictor matrix, \\(C\\) is a general constraint matrix, \\(\\beta\\) is an unknown coefficient vector and \\(\\sigma\\) is an unknown scale parameter. In this analysis the squared hinge loss is used with an \\(\\ell_1\\) penalty for the \\(\\beta\\) coefficients. Therefore, the optimization problem is defined as follows:\n\\[\n\\begin{aligned}\n\\min_{\\beta \\in \\mathbb{R}^{d}}\n\\quad & \\sum_{i=1}^{n} \\, \\ell\\!\\left(y_i\\, x_i^{\\top}\\beta\\right) \\;+\\; \\lambda \\lVert \\beta \\rVert_{1} \\\\\n\\text{subject to}\\quad & C\\beta = 0 ,\n\\end{aligned}\n\\]\nwhere the \\(x_i\\) are the rows of \\(X\\), \\(\\lVert \\beta \\rVert_{1}\\) is the \\(\\ell_1\\) penalty and the loss function \\(\\ell(\\cdot)\\) is defined as:\n\\[\n\\ell(r)=\n\\begin{cases}\n(1-r)^2, & \\text{if } r \\le 1,\\\\[4pt]\n0, & \\text{if } r \\ge 1.\n\\end{cases}\n\\]\nGiven this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast models. The sparse log contrast modle is fitted only on the original data (not augmented) and its purpose is to provide additional benchmark for the logistic regression model with L1 penalty."
   },
   {
     "objectID": "content/summary_agp.html#boxplots-of-performance-metrics",
     "href": "content/summary_agp.html#boxplots-of-performance-metrics",
     "title": "Results Summary: AGP Dataset",
     "section": "1.1 Boxplots of performance metrics",
-    "text": "1.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"brier_class\")"
+    "text": "1.1 Boxplots of performance metrics"
   },
   {
     "objectID": "content/summary_agp.html#roc-curves",
     "href": "content/summary_agp.html#roc-curves",
     "title": "Results Summary: AGP Dataset",
-    "section": "1.2 ROC Curves",
-    "text": "1.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$lasso)"
+    "section": "2.1 ROC Curves",
+    "text": "2.1 ROC Curves\n\n\nCode\nroc_curve_plot(res$lasso)"
   },
   {
     "objectID": "content/summary_agp.html#boxplots-of-performance-metrics-1",
     "href": "content/summary_agp.html#boxplots-of-performance-metrics-1",
     "title": "Results Summary: AGP Dataset",
-    "section": "2.1 Boxplots of performance metrics",
-    "text": "2.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"brier_class\")"
+    "section": "3.1 Boxplots of performance metrics",
+    "text": "3.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_agp.html#roc-curves-1",
     "href": "content/summary_agp.html#roc-curves-1",
     "title": "Results Summary: AGP Dataset",
-    "section": "2.2 ROC Curves",
-    "text": "2.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$RF)"
+    "section": "3.2 ROC Curves",
+    "text": "3.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$RF)"
   },
   {
     "objectID": "content/summary_agp.html#boxplots-of-performance-metrics-2",
     "href": "content/summary_agp.html#boxplots-of-performance-metrics-2",
     "title": "Results Summary: AGP Dataset",
-    "section": "3.1 Boxplots of performance metrics",
-    "text": "3.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"brier_class\")"
+    "section": "4.1 Boxplots of performance metrics",
+    "text": "4.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_agp.html#roc-curves-2",
     "href": "content/summary_agp.html#roc-curves-2",
     "title": "Results Summary: AGP Dataset",
-    "section": "3.2 ROC Curves",
-    "text": "3.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$XGB)"
+    "section": "4.2 ROC Curves",
+    "text": "4.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$XGB)"
   },
   {
     "objectID": "content/summary_random_ilr_pc_max_lib_size.html",
@@ -543,49 +543,49 @@
     "href": "content/summary_lupus.html",
     "title": "Results Summary: Lupus Dataset",
     "section": "",
-    "text": "In this script 4 models are considered: 3 already used in the previous scripts, namely: logistic regression with L1 penalty, Random Forest and XGBoost. The fourth used model is the sparse log-contrast classification model as implemented in the R package trac version 0.0.2 (see viettr/trac GitHub repository for the implementation details).\nSparse log-contrast classification model with square hinge loss: The model can be described as follows: \\[\ny = X \\beta + \\sigma \\epsilon \\quad \\text{subject to} \\quad C \\beta = 0\n\\]\nwhere \\(y\\) is a binary outcome vector, \\(X\\) is a predictor matrix, \\(C\\) is a general constraint matrix, \\(\\beta\\) is an unknown coefficient vector and \\(\\sigma\\) is an unknown scale parameter. In this analysis the squared hinge loss is used with an \\(\\ell_1\\) penalty for the \\(\\beta\\) coefficients. Therefore, the optimization problem is defined as follows:\n\\[\n\\begin{aligned}\n\\min_{\\beta \\in \\mathbb{R}^{d}}\n\\quad & \\sum_{i=1}^{n} \\, \\ell\\!\\left(y_i\\, x_i^{\\top}\\beta\\right) \\;+\\; \\lambda \\lVert \\beta \\rVert_{1} \\\\\n\\text{subject to}\\quad & C\\beta = 0 ,\n\\end{aligned}\n\\]\nwhere the \\(x_i\\) are the rows of \\(X\\), \\(\\lVert \\beta \\rVert_{1}\\) is the \\(\\ell_1\\) penalty and the loss function \\(\\ell(\\cdot)\\) is defined as:\n\\[\n\\ell(r)=\n\\begin{cases}\n(1-r)^2, & \\text{if } r \\le 1,\\\\[4pt]\n0, & \\text{if } r \\ge 1.\n\\end{cases}\n\\]\nGiven this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast models."
+    "text": "In this script 4 models are considered: 3 already used in the previous scripts, namely: logistic regression with L1 penalty, Random Forest and XGBoost. The fourth used model is the sparse log-contrast classification model as implemented in the R package trac version 0.0.2 (see viettr/trac GitHub repository for the implementation details).\nSparse log-contrast classification model with square hinge loss: The model can be described as follows: \\[\ny = X \\beta + \\sigma \\epsilon \\quad \\text{subject to} \\quad C \\beta = 0\n\\]\nwhere \\(y\\) is a binary outcome vector, \\(X\\) is a predictor matrix, \\(C\\) is a general constraint matrix, \\(\\beta\\) is an unknown coefficient vector and \\(\\sigma\\) is an unknown scale parameter. In this analysis the squared hinge loss is used with an \\(\\ell_1\\) penalty for the \\(\\beta\\) coefficients. Therefore, the optimization problem is defined as follows:\n\\[\n\\begin{aligned}\n\\min_{\\beta \\in \\mathbb{R}^{d}}\n\\quad & \\sum_{i=1}^{n} \\, \\ell\\!\\left(y_i\\, x_i^{\\top}\\beta\\right) \\;+\\; \\lambda \\lVert \\beta \\rVert_{1} \\\\\n\\text{subject to}\\quad & C\\beta = 0 ,\n\\end{aligned}\n\\]\nwhere the \\(x_i\\) are the rows of \\(X\\), \\(\\lVert \\beta \\rVert_{1}\\) is the \\(\\ell_1\\) penalty and the loss function \\(\\ell(\\cdot)\\) is defined as:\n\\[\n\\ell(r)=\n\\begin{cases}\n(1-r)^2, & \\text{if } r \\le 1,\\\\[4pt]\n0, & \\text{if } r \\ge 1.\n\\end{cases}\n\\]\nGiven this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast model. The sparse log contrast modle is fitted only on the original data (not augmented) and its purpose is to provide additional benchmark for the logistic regression model with L1 penalty."
   },
   {
     "objectID": "content/summary_lupus.html#boxplots-of-performance-metrics",
     "href": "content/summary_lupus.html#boxplots-of-performance-metrics",
     "title": "Results Summary: Lupus Dataset",
     "section": "1.1 Boxplots of performance metrics",
-    "text": "1.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"brier_class\")"
+    "text": "1.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$lasso, res$sparse_log_contrast, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, res$sparse_log_contrast, \nplot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_lupus.html#roc-curves",
     "href": "content/summary_lupus.html#roc-curves",
     "title": "Results Summary: Lupus Dataset",
     "section": "1.2 ROC Curves",
-    "text": "1.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$lasso)"
+    "text": "1.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$lasso, res$sparse_log_contrast)"
   },
   {
     "objectID": "content/summary_lupus.html#boxplots-of-performance-metrics-1",
     "href": "content/summary_lupus.html#boxplots-of-performance-metrics-1",
     "title": "Results Summary: Lupus Dataset",
     "section": "2.1 Boxplots of performance metrics",
-    "text": "2.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$sparse_log_contrast, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$sparse_log_contrast, plot_metric = \"misclassification_rate\")"
+    "text": "2.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_lupus.html#roc-curves-1",
     "href": "content/summary_lupus.html#roc-curves-1",
     "title": "Results Summary: Lupus Dataset",
     "section": "2.2 ROC Curves",
-    "text": "2.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$sparse_log_contrast)"
+    "text": "2.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$RF)"
   },
   {
     "objectID": "content/summary_lupus.html#boxplots-of-performance-metrics-2",
     "href": "content/summary_lupus.html#boxplots-of-performance-metrics-2",
     "title": "Results Summary: Lupus Dataset",
     "section": "3.1 Boxplots of performance metrics",
-    "text": "3.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"brier_class\")"
+    "text": "3.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_lupus.html#roc-curves-2",
     "href": "content/summary_lupus.html#roc-curves-2",
     "title": "Results Summary: Lupus Dataset",
     "section": "3.2 ROC Curves",
-    "text": "3.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$RF)"
+    "text": "3.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$XGB)"
   },
   {
     "objectID": "content/summary_lupus.html#boxplots-of-performance-metrics-3",

@@ -93,31 +93,20 @@ $$
 \end{cases}
 $$
 
-Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast models.
+Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast model. The sparse log contrast modle is fitted only on the original data (not augmented) and its purpose is to provide additional benchmark for the logistic regression model with L1 penalty.
 
 # Logistic regression with L1 penalty
 ## Boxplots of performance metrics
 ```{r}
-boxplot_metric(res$lasso, plot_metric = "roc_auc")
-boxplot_metric(res$lasso, plot_metric = "misclassification_rate")
+boxplot_metric(res$lasso, res$sparse_log_contrast, plot_metric = "roc_auc")
+boxplot_metric(res$lasso, res$sparse_log_contrast, 
+plot_metric = "misclassification_rate")
 boxplot_metric(res$lasso, plot_metric = "brier_class")
 ```
 
 ## ROC Curves
 ```{r}
-roc_curve_plot(res$lasso)
-```
-
-# Sparse log-contrast regression
-## Boxplots of performance metrics
-```{r}
-boxplot_metric(res$sparse_log_contrast, plot_metric = "roc_auc")
-boxplot_metric(res$sparse_log_contrast, plot_metric = "misclassification_rate")
-```
-
-## ROC Curves
-```{r}
-roc_curve_plot(res$sparse_log_contrast)
+roc_curve_plot(res$lasso, res$sparse_log_contrast)
 ```
 
 # Random Forest
