@@ -606,21 +606,21 @@
     "href": "content/summary_lupus.html#summary-table",
     "title": "Results Summary: Lupus Dataset",
     "section": "1.1 Summary Table",
-    "text": "1.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$lasso, res$sparse_log_contrast)\n\n\n# A tibble: 4 × 6\n  Metric                 Benchmark Benchmark - Sparse Log Co…¹ `Aitchison Mixup`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;                       &lt;chr&gt;            \n1 Misclassification Rate 0.08      0.29                        0.08             \n2 Accuracy               0.92      0.71                        0.92             \n3 Brier class            0.08      -                           0.06             \n4 ROC AUC                0.96      0.84                        0.97             \n# ℹ abbreviated name: ¹​`Benchmark - Sparse Log Contrast`\n# ℹ 2 more variables: `randomILR - Aug. in p` &lt;chr&gt;,\n#   `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+    "text": "1.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$lasso, res$sparse_log_contrast)\n\n\n\n\n\n\n\n\n\n\n\n\n\nMetric\nBenchmark\nBenchmark - Sparse Log Contrast\nAitchison Mixup\nrandomILR - Aug. in p\nAitchison Mixup & Aug. in p\n\n\n\n\nMisclassification Rate\n0.08\n0.29\n0.08\n0.1\n0.09\n\n\nAccuracy\n0.92\n0.71\n0.92\n0.9\n0.91\n\n\nBrier class\n0.08\n-\n0.06\n0.08\n0.07\n\n\nROC AUC\n0.96\n0.84\n0.97\n0.96\n0.96"
   },
   {
     "objectID": "content/summary_lupus.html#summary-table-1",
     "href": "content/summary_lupus.html#summary-table-1",
     "title": "Results Summary: Lupus Dataset",
     "section": "2.1 Summary Table",
-    "text": "2.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$RF)\n\n\n# A tibble: 4 × 5\n  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  \n1 Misclassification Rate 0.08      0.08              0.08                   \n2 Accuracy               0.92      0.92              0.92                   \n3 Brier class            0.08      0.08              0.09                   \n4 ROC AUC                0.96      0.96              0.96                   \n# ℹ 1 more variable: `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+    "text": "2.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$RF)\n\n\n\n\n\n\n\n\n\n\n\n\nMetric\nBenchmark\nAitchison Mixup\nrandomILR - Aug. in p\nAitchison Mixup & Aug. in p\n\n\n\n\nMisclassification Rate\n0.08\n0.08\n0.08\n0.08\n\n\nAccuracy\n0.92\n0.92\n0.92\n0.92\n\n\nBrier class\n0.08\n0.08\n0.09\n0.08\n\n\nROC AUC\n0.96\n0.96\n0.96\n0.96"
   },
   {
     "objectID": "content/summary_lupus.html#summary-table-2",
     "href": "content/summary_lupus.html#summary-table-2",
     "title": "Results Summary: Lupus Dataset",
     "section": "3.1 Summary Table",
-    "text": "3.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$XGB)\n\n\n# A tibble: 4 × 5\n  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  \n1 Misclassification Rate 0.09      0.09              0.09                   \n2 Accuracy               0.91      0.91              0.91                   \n3 Brier class            0.07      0.08              0.07                   \n4 ROC AUC                0.96      0.96              0.96                   \n# ℹ 1 more variable: `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+    "text": "3.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$XGB)\n\n\n\n\n\n\n\n\n\n\n\n\nMetric\nBenchmark\nAitchison Mixup\nrandomILR - Aug. in p\nAitchison Mixup & Aug. in p\n\n\n\n\nMisclassification Rate\n0.09\n0.09\n0.09\n0.09\n\n\nAccuracy\n0.91\n0.91\n0.91\n0.91\n\n\nBrier class\n0.07\n0.08\n0.07\n0.08\n\n\nROC AUC\n0.96\n0.96\n0.96\n0.96"
   },
   {
     "objectID": "content/summary_agp.html#summary-table",
@@ -642,5 +642,26 @@
     "title": "Results Summary: AGP Dataset",
     "section": "3.1 Summary Table",
     "text": "3.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$XGB)\n\n\n# A tibble: 4 × 5\n  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  \n1 Misclassification Rate 0.3       0.3               0.31                   \n2 Accuracy               0.7       0.7               0.69                   \n3 Brier class            0.22      0.23              0.23                   \n4 ROC AUC                0.71      0.71              0.71                   \n# ℹ 1 more variable: `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+  },
+  {
+    "objectID": "content/summary_lupus.html#density-impact",
+    "href": "content/summary_lupus.html#density-impact",
+    "title": "Results Summary: Lupus Dataset",
+    "section": "1.4 Density Impact",
+    "text": "1.4 Density Impact\n\n\nCode\ndir_results_density &lt;- here::here(\"results\", \"lupus_density_results\")\n# Read in results - impact of density \nres_density &lt;- read_results(dir_results_density)\nboxplot_density(res_density$lasso, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_density(res_density$lasso, plot_metric = \"misclassification_rate\")"
+  },
+  {
+    "objectID": "content/summary_lupus.html#density-impact-1",
+    "href": "content/summary_lupus.html#density-impact-1",
+    "title": "Results Summary: Lupus Dataset",
+    "section": "2.4 Density Impact",
+    "text": "2.4 Density Impact\n\n\nCode\nboxplot_density(res_density$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_density(res_density$RF, plot_metric = \"misclassification_rate\")"
+  },
+  {
+    "objectID": "content/summary_lupus.html#density-impact-2",
+    "href": "content/summary_lupus.html#density-impact-2",
+    "title": "Results Summary: Lupus Dataset",
+    "section": "3.4 Density Impact",
+    "text": "3.4 Density Impact\n\n\nCode\nboxplot_density(res_density$XGB, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_density(res_density$XGB, plot_metric = \"misclassification_rate\")"
   }
 ]

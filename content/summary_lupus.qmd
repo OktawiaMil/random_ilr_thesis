@@ -114,6 +114,15 @@ boxplot_metric(res$lasso, plot_metric = "brier_class")
 roc_curve_plot(res$lasso, res$sparse_log_contrast)
 ```
 
+## Density Impact
+```{r}
+dir_results_density <- here::here("results", "lupus_density_results")
+# Read in results - impact of density 
+res_density <- read_results(dir_results_density)
+boxplot_density(res_density$lasso, plot_metric = "roc_auc")
+boxplot_density(res_density$lasso, plot_metric = "misclassification_rate")
+```
+
 # Random Forest
 ## Summary Table
 ```{r}
@@ -132,6 +141,12 @@ boxplot_metric(res$RF, plot_metric = "brier_class")
 roc_curve_plot(res$RF)
 ```
 
+## Density Impact
+```{r}
+boxplot_density(res_density$RF, plot_metric = "roc_auc")
+boxplot_density(res_density$RF, plot_metric = "misclassification_rate")
+```
+
 # XGBoost
 ## Summary Table
 ```{r}
@@ -148,4 +163,10 @@ boxplot_metric(res$XGB, plot_metric = "brier_class")
 ## ROC Curves
 ```{r}
 roc_curve_plot(res$XGB)
+```
+
+## Density Impact
+```{r}
+boxplot_density(res_density$XGB, plot_metric = "roc_auc")
+boxplot_density(res_density$XGB, plot_metric = "misclassification_rate")
 ```
