@@ -59,43 +59,43 @@
     "objectID": "content/summary_agp.html#boxplots-of-performance-metrics",
     "href": "content/summary_agp.html#boxplots-of-performance-metrics",
     "title": "Results Summary: AGP Dataset",
-    "section": "1.1 Boxplots of performance metrics",
-    "text": "1.1 Boxplots of performance metrics"
+    "section": "1.2 Boxplots of performance metrics",
+    "text": "1.2 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_agp.html#roc-curves",
     "href": "content/summary_agp.html#roc-curves",
     "title": "Results Summary: AGP Dataset",
-    "section": "2.1 ROC Curves",
-    "text": "2.1 ROC Curves\n\n\nCode\nroc_curve_plot(res$lasso)"
+    "section": "1.3 ROC Curves",
+    "text": "1.3 ROC Curves\n\n\nCode\nroc_curve_plot(res$lasso)"
   },
   {
     "objectID": "content/summary_agp.html#boxplots-of-performance-metrics-1",
     "href": "content/summary_agp.html#boxplots-of-performance-metrics-1",
     "title": "Results Summary: AGP Dataset",
-    "section": "3.1 Boxplots of performance metrics",
-    "text": "3.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"brier_class\")"
+    "section": "2.2 Boxplots of performance metrics",
+    "text": "2.2 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_agp.html#roc-curves-1",
     "href": "content/summary_agp.html#roc-curves-1",
     "title": "Results Summary: AGP Dataset",
-    "section": "3.2 ROC Curves",
-    "text": "3.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$RF)"
+    "section": "2.3 ROC Curves",
+    "text": "2.3 ROC Curves\n\n\nCode\nroc_curve_plot(res$RF)"
   },
   {
     "objectID": "content/summary_agp.html#boxplots-of-performance-metrics-2",
     "href": "content/summary_agp.html#boxplots-of-performance-metrics-2",
     "title": "Results Summary: AGP Dataset",
-    "section": "4.1 Boxplots of performance metrics",
-    "text": "4.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"brier_class\")"
+    "section": "3.2 Boxplots of performance metrics",
+    "text": "3.2 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_agp.html#roc-curves-2",
     "href": "content/summary_agp.html#roc-curves-2",
     "title": "Results Summary: AGP Dataset",
-    "section": "4.2 ROC Curves",
-    "text": "4.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$XGB)"
+    "section": "3.3 ROC Curves",
+    "text": "3.3 ROC Curves\n\n\nCode\nroc_curve_plot(res$XGB)"
   },
   {
     "objectID": "content/summary_random_ilr_pc_max_lib_size.html",
@@ -549,43 +549,43 @@
     "objectID": "content/summary_lupus.html#boxplots-of-performance-metrics",
     "href": "content/summary_lupus.html#boxplots-of-performance-metrics",
     "title": "Results Summary: Lupus Dataset",
-    "section": "1.1 Boxplots of performance metrics",
-    "text": "1.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$lasso, res$sparse_log_contrast, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, res$sparse_log_contrast, \nplot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"brier_class\")"
+    "section": "1.2 Boxplots of performance metrics",
+    "text": "1.2 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$lasso, res$sparse_log_contrast, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, res$sparse_log_contrast, \nplot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$lasso, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_lupus.html#roc-curves",
     "href": "content/summary_lupus.html#roc-curves",
     "title": "Results Summary: Lupus Dataset",
-    "section": "1.2 ROC Curves",
-    "text": "1.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$lasso, res$sparse_log_contrast)"
+    "section": "1.3 ROC Curves",
+    "text": "1.3 ROC Curves\n\n\nCode\nroc_curve_plot(res$lasso, res$sparse_log_contrast)"
   },
   {
     "objectID": "content/summary_lupus.html#boxplots-of-performance-metrics-1",
     "href": "content/summary_lupus.html#boxplots-of-performance-metrics-1",
     "title": "Results Summary: Lupus Dataset",
-    "section": "2.1 Boxplots of performance metrics",
-    "text": "2.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"brier_class\")"
+    "section": "2.2 Boxplots of performance metrics",
+    "text": "2.2 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$RF, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_lupus.html#roc-curves-1",
     "href": "content/summary_lupus.html#roc-curves-1",
     "title": "Results Summary: Lupus Dataset",
-    "section": "2.2 ROC Curves",
-    "text": "2.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$RF)"
+    "section": "2.3 ROC Curves",
+    "text": "2.3 ROC Curves\n\n\nCode\nroc_curve_plot(res$RF)"
   },
   {
     "objectID": "content/summary_lupus.html#boxplots-of-performance-metrics-2",
     "href": "content/summary_lupus.html#boxplots-of-performance-metrics-2",
     "title": "Results Summary: Lupus Dataset",
-    "section": "3.1 Boxplots of performance metrics",
-    "text": "3.1 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"brier_class\")"
+    "section": "3.2 Boxplots of performance metrics",
+    "text": "3.2 Boxplots of performance metrics\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"roc_auc\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"misclassification_rate\")\n\n\n\n\n\n\n\n\n\nCode\nboxplot_metric(res$XGB, plot_metric = \"brier_class\")"
   },
   {
     "objectID": "content/summary_lupus.html#roc-curves-2",
     "href": "content/summary_lupus.html#roc-curves-2",
     "title": "Results Summary: Lupus Dataset",
-    "section": "3.2 ROC Curves",
-    "text": "3.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$XGB)"
+    "section": "3.3 ROC Curves",
+    "text": "3.3 ROC Curves\n\n\nCode\nroc_curve_plot(res$XGB)"
   },
   {
     "objectID": "content/summary_lupus.html#boxplots-of-performance-metrics-3",
@@ -600,5 +600,47 @@
     "title": "Results Summary: Lupus Dataset",
     "section": "4.2 ROC Curves",
     "text": "4.2 ROC Curves\n\n\nCode\nroc_curve_plot(res$XGB)"
+  },
+  {
+    "objectID": "content/summary_lupus.html#summary-table",
+    "href": "content/summary_lupus.html#summary-table",
+    "title": "Results Summary: Lupus Dataset",
+    "section": "1.1 Summary Table",
+    "text": "1.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$lasso, res$sparse_log_contrast)\n\n\n# A tibble: 4 × 6\n  Metric                 Benchmark Benchmark - Sparse Log Co…¹ `Aitchison Mixup`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;                       &lt;chr&gt;            \n1 Misclassification Rate 0.08      0.29                        0.08             \n2 Accuracy               0.92      0.71                        0.92             \n3 Brier class            0.08      -                           0.06             \n4 ROC AUC                0.96      0.84                        0.97             \n# ℹ abbreviated name: ¹​`Benchmark - Sparse Log Contrast`\n# ℹ 2 more variables: `randomILR - Aug. in p` &lt;chr&gt;,\n#   `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+  },
+  {
+    "objectID": "content/summary_lupus.html#summary-table-1",
+    "href": "content/summary_lupus.html#summary-table-1",
+    "title": "Results Summary: Lupus Dataset",
+    "section": "2.1 Summary Table",
+    "text": "2.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$RF)\n\n\n# A tibble: 4 × 5\n  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  \n1 Misclassification Rate 0.08      0.08              0.08                   \n2 Accuracy               0.92      0.92              0.92                   \n3 Brier class            0.08      0.08              0.09                   \n4 ROC AUC                0.96      0.96              0.96                   \n# ℹ 1 more variable: `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+  },
+  {
+    "objectID": "content/summary_lupus.html#summary-table-2",
+    "href": "content/summary_lupus.html#summary-table-2",
+    "title": "Results Summary: Lupus Dataset",
+    "section": "3.1 Summary Table",
+    "text": "3.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$XGB)\n\n\n# A tibble: 4 × 5\n  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  \n1 Misclassification Rate 0.09      0.09              0.09                   \n2 Accuracy               0.91      0.91              0.91                   \n3 Brier class            0.07      0.08              0.07                   \n4 ROC AUC                0.96      0.96              0.96                   \n# ℹ 1 more variable: `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+  },
+  {
+    "objectID": "content/summary_agp.html#summary-table",
+    "href": "content/summary_agp.html#summary-table",
+    "title": "Results Summary: AGP Dataset",
+    "section": "1.1 Summary Table",
+    "text": "1.1 Summary Table\n\n\n\nCode\nsummary_tbl_mean_perf(res$lasso)\n\n\n# A tibble: 4 × 5\n  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  \n1 Misclassification Rate 0.31      0.33              0.33                   \n2 Accuracy               0.69      0.67              0.67                   \n3 Brier class            0.2       0.26              0.2                    \n4 ROC AUC                0.72      0.68              0.71                   \n# ℹ 1 more variable: `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+  },
+  {
+    "objectID": "content/summary_agp.html#summary-table-1",
+    "href": "content/summary_agp.html#summary-table-1",
+    "title": "Results Summary: AGP Dataset",
+    "section": "2.1 Summary Table",
+    "text": "2.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$RF)\n\n\n# A tibble: 4 × 5\n  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  \n1 Misclassification Rate 0.33      0.31              0.33                   \n2 Accuracy               0.67      0.69              0.67                   \n3 Brier class            0.21      0.21              0.21                   \n4 ROC AUC                0.71      0.72              0.72                   \n# ℹ 1 more variable: `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
+  },
+  {
+    "objectID": "content/summary_agp.html#summary-table-2",
+    "href": "content/summary_agp.html#summary-table-2",
+    "title": "Results Summary: AGP Dataset",
+    "section": "3.1 Summary Table",
+    "text": "3.1 Summary Table\n\n\nCode\nsummary_tbl_mean_perf(res$XGB)\n\n\n# A tibble: 4 × 5\n  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`\n  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  \n1 Misclassification Rate 0.3       0.3               0.31                   \n2 Accuracy               0.7       0.7               0.69                   \n3 Brier class            0.22      0.23              0.23                   \n4 ROC AUC                0.71      0.71              0.71                   \n# ℹ 1 more variable: `Aitchison Mixup & Aug. in p` &lt;chr&gt;"
   }
 ]

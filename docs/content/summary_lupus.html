@@ -4100,18 +4100,21 @@ window.Quarto = {
   <ul>
   <li><a href="#logistic-regression-with-l1-penalty" id="toc-logistic-regression-with-l1-penalty" class="nav-link active" data-scroll-target="#logistic-regression-with-l1-penalty"><span class="header-section-number">1</span> Logistic regression with L1 penalty</a>
   <ul class="collapse">
-  <li><a href="#boxplots-of-performance-metrics" id="toc-boxplots-of-performance-metrics" class="nav-link" data-scroll-target="#boxplots-of-performance-metrics"><span class="header-section-number">1.1</span> Boxplots of performance metrics</a></li>
-  <li><a href="#roc-curves" id="toc-roc-curves" class="nav-link" data-scroll-target="#roc-curves"><span class="header-section-number">1.2</span> ROC Curves</a></li>
+  <li><a href="#summary-table" id="toc-summary-table" class="nav-link" data-scroll-target="#summary-table"><span class="header-section-number">1.1</span> Summary Table</a></li>
+  <li><a href="#boxplots-of-performance-metrics" id="toc-boxplots-of-performance-metrics" class="nav-link" data-scroll-target="#boxplots-of-performance-metrics"><span class="header-section-number">1.2</span> Boxplots of performance metrics</a></li>
+  <li><a href="#roc-curves" id="toc-roc-curves" class="nav-link" data-scroll-target="#roc-curves"><span class="header-section-number">1.3</span> ROC Curves</a></li>
   </ul></li>
   <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest"><span class="header-section-number">2</span> Random Forest</a>
   <ul class="collapse">
-  <li><a href="#boxplots-of-performance-metrics-1" id="toc-boxplots-of-performance-metrics-1" class="nav-link" data-scroll-target="#boxplots-of-performance-metrics-1"><span class="header-section-number">2.1</span> Boxplots of performance metrics</a></li>
-  <li><a href="#roc-curves-1" id="toc-roc-curves-1" class="nav-link" data-scroll-target="#roc-curves-1"><span class="header-section-number">2.2</span> ROC Curves</a></li>
+  <li><a href="#summary-table-1" id="toc-summary-table-1" class="nav-link" data-scroll-target="#summary-table-1"><span class="header-section-number">2.1</span> Summary Table</a></li>
+  <li><a href="#boxplots-of-performance-metrics-1" id="toc-boxplots-of-performance-metrics-1" class="nav-link" data-scroll-target="#boxplots-of-performance-metrics-1"><span class="header-section-number">2.2</span> Boxplots of performance metrics</a></li>
+  <li><a href="#roc-curves-1" id="toc-roc-curves-1" class="nav-link" data-scroll-target="#roc-curves-1"><span class="header-section-number">2.3</span> ROC Curves</a></li>
   </ul></li>
   <li><a href="#xgboost" id="toc-xgboost" class="nav-link" data-scroll-target="#xgboost"><span class="header-section-number">3</span> XGBoost</a>
   <ul class="collapse">
-  <li><a href="#boxplots-of-performance-metrics-2" id="toc-boxplots-of-performance-metrics-2" class="nav-link" data-scroll-target="#boxplots-of-performance-metrics-2"><span class="header-section-number">3.1</span> Boxplots of performance metrics</a></li>
-  <li><a href="#roc-curves-2" id="toc-roc-curves-2" class="nav-link" data-scroll-target="#roc-curves-2"><span class="header-section-number">3.2</span> ROC Curves</a></li>
+  <li><a href="#summary-table-2" id="toc-summary-table-2" class="nav-link" data-scroll-target="#summary-table-2"><span class="header-section-number">3.1</span> Summary Table</a></li>
+  <li><a href="#boxplots-of-performance-metrics-2" id="toc-boxplots-of-performance-metrics-2" class="nav-link" data-scroll-target="#boxplots-of-performance-metrics-2"><span class="header-section-number">3.2</span> Boxplots of performance metrics</a></li>
+  <li><a href="#roc-curves-2" id="toc-roc-curves-2" class="nav-link" data-scroll-target="#roc-curves-2"><span class="header-section-number">3.3</span> ROC Curves</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -4173,12 +4176,33 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <p>Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast model. The sparse log contrast modle is fitted only on the original data (not augmented) and its purpose is to provide additional benchmark for the logistic regression model with L1 penalty.</p>
 <section id="logistic-regression-with-l1-penalty" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Logistic regression with L1 penalty</h1>
-<section id="boxplots-of-performance-metrics" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="boxplots-of-performance-metrics"><span class="header-section-number">1.1</span> Boxplots of performance metrics</h2>
+<section id="summary-table" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="summary-table"><span class="header-section-number">1.1</span> Summary Table</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast, <span class="at">plot_metric =</span> <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  Metric                 Benchmark Benchmark - Sparse Log Co…¹ `Aitchison Mixup`
+  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;                       &lt;chr&gt;            
+1 Misclassification Rate 0.08      0.29                        0.08             
+2 Accuracy               0.92      0.71                        0.92             
+3 Brier class            0.08      -                           0.06             
+4 ROC AUC                0.96      0.84                        0.97             
+# ℹ abbreviated name: ¹​`Benchmark - Sparse Log Contrast`
+# ℹ 2 more variables: `randomILR - Aug. in p` &lt;chr&gt;,
+#   `Aitchison Mixup &amp; Aug. in p` &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="boxplots-of-performance-metrics" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="boxplots-of-performance-metrics"><span class="header-section-number">1.2</span> Boxplots of performance metrics</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast, <span class="at">plot_metric =</span> <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4189,8 +4213,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast, </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">plot_metric =</span> <span class="st">&quot;misclassification_rate&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">plot_metric =</span> <span class="st">&quot;misclassification_rate&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4201,7 +4225,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, <span class="at">plot_metric =</span> <span class="st">&quot;brier_class&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, <span class="at">plot_metric =</span> <span class="st">&quot;brier_class&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4212,12 +4236,12 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 </div>
 </section>
-<section id="roc-curves" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="roc-curves"><span class="header-section-number">1.2</span> ROC Curves</h2>
+<section id="roc-curves" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="roc-curves"><span class="header-section-number">1.3</span> ROC Curves</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4231,12 +4255,31 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </section>
 <section id="random-forest" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Random Forest</h1>
-<section id="boxplots-of-performance-metrics-1" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="boxplots-of-performance-metrics-1"><span class="header-section-number">2.1</span> Boxplots of performance metrics</h2>
+<section id="summary-table-1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="summary-table-1"><span class="header-section-number">2.1</span> Summary Table</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>RF)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`
+  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  
+1 Misclassification Rate 0.08      0.08              0.08                   
+2 Accuracy               0.92      0.92              0.92                   
+3 Brier class            0.08      0.08              0.09                   
+4 ROC AUC                0.96      0.96              0.96                   
+# ℹ 1 more variable: `Aitchison Mixup &amp; Aug. in p` &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="boxplots-of-performance-metrics-1" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="boxplots-of-performance-metrics-1"><span class="header-section-number">2.2</span> Boxplots of performance metrics</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4247,7 +4290,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">&quot;misclassification_rate&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">&quot;misclassification_rate&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4258,7 +4301,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">&quot;brier_class&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">&quot;brier_class&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4269,12 +4312,12 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 </div>
 </section>
-<section id="roc-curves-1" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="roc-curves-1"><span class="header-section-number">2.2</span> ROC Curves</h2>
+<section id="roc-curves-1" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="roc-curves-1"><span class="header-section-number">2.3</span> ROC Curves</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>RF)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>RF)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4288,12 +4331,31 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </section>
 <section id="xgboost" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> XGBoost</h1>
-<section id="boxplots-of-performance-metrics-2" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="boxplots-of-performance-metrics-2"><span class="header-section-number">3.1</span> Boxplots of performance metrics</h2>
+<section id="summary-table-2" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="summary-table-2"><span class="header-section-number">3.1</span> Summary Table</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>XGB)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  Metric                 Benchmark `Aitchison Mixup` `randomILR - Aug. in p`
+  &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;                  
+1 Misclassification Rate 0.09      0.09              0.09                   
+2 Accuracy               0.91      0.91              0.91                   
+3 Brier class            0.07      0.08              0.07                   
+4 ROC AUC                0.96      0.96              0.96                   
+# ℹ 1 more variable: `Aitchison Mixup &amp; Aug. in p` &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="boxplots-of-performance-metrics-2" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="boxplots-of-performance-metrics-2"><span class="header-section-number">3.2</span> Boxplots of performance metrics</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4304,7 +4366,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">&quot;misclassification_rate&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">&quot;misclassification_rate&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4315,7 +4377,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">&quot;brier_class&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">&quot;brier_class&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4326,12 +4388,12 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 </div>
 </section>
-<section id="roc-curves-2" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="roc-curves-2"><span class="header-section-number">3.2</span> ROC Curves</h2>
+<section id="roc-curves-2" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="roc-curves-2"><span class="header-section-number">3.3</span> ROC Curves</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>XGB)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>XGB)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>

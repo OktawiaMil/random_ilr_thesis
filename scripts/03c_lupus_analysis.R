@@ -1,6 +1,17 @@
-# Train standard log-contrast regression, XGB, RF models on original  vs.
-# data augmented in p (random ILR) vs. one of Rodriguez methds vs.
+# Train logistic regression with L1 penalty (for benchamrk sparse log contrast
+# as well) XGB, RF models on original  vs. data augmented in p (random ILR) vs.
+# one of Rodriguez methds vs.
 # augmented by both random ILR + Rodriguez
+#%%
+# RUN BELOW CODE ONCE to create environment - needed for trac
+# reticulate::install_miniconda() # one-time: installs a private Miniconda for R
+# reticulate::conda_create("trac", packages = "python=3.10") # one-time: creates env 'trac'
+# reticulate::conda_install(
+#     "trac",
+#     c("c-lasso", "numpy", "scipy", "pandas", "matplotlib"),
+#     pip = TRUE
+# )
+
 # %%
 # install.packages("devtools")
 # devtools::install_github("bio-datascience/augmentR")
@@ -14,6 +25,7 @@ suppressPackageStartupMessages({
     library(here)
     library(future)
     library(future.apply)
+    library(reticulate)
     library(trac)
 })
 
@@ -26,7 +38,9 @@ if (file.exists(helpers_file)) {
 # Read in data
 data_dir <- here::here("data", "data_lupus", "data_preproc")
 data_lupus <- readRDS(file.path(data_dir, "data_lupus_prep.RDS"))
-output_dir <- here::here("results", "lupus_results")
+# TODO: adjust as needed
+#output_dir <- here::here("results", "lupus_results")
+output_dir <- here::here("results", "test_results")
 #dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 # Create df with necessary data
@@ -91,7 +105,6 @@ run_one_split <- function(split_seed) {
     train_bench_slc <- data_bench_slc[train_idx, ]
     test_bench_slc <- data_bench_slc[test_idx, ]
 
-    # Fit and save sparse log contrast benchmark model
     sparse_log_cont_custom(
         train_data = train_bench_slc,
         test_data = test_bench_slc,
@@ -138,32 +151,32 @@ run_one_split <- function(split_seed) {
     )
 
     # Sparse log contrast on Aitchison augmented data + log transformed
-    data_aitch_log <- data_aug_rod |>
-        select(-outcome) |>
-        log() |>
-        as.data.frame() |>
-        bind_cols(
-            data_aug_rod |>
-                select(outcome)
-        )
+    # data_aitch_log <- data_aug_rod |>
+    #     select(-outcome) |>
+    #     log() |>
+    #     as.data.frame() |>
+    #     bind_cols(
+    #         data_aug_rod |>
+    #             select(outcome)
+    #     )
 
-    test_aitch_log <- test_data |>
-        select(-outcome) |>
-        log() |>
-        as.data.frame() |>
-        bind_cols(test_data |> select(outcome))
+    # test_aitch_log <- test_data |>
+    #     select(-outcome) |>
+    #     log() |>
+    #     as.data.frame() |>
+    #     bind_cols(test_data |> select(outcome))
 
-    # Fit and save sparse log contrast model trained on Rodriguez augmented data
-    sparse_log_cont_custom(
-        train_data = data_aitch_log,
-        test_data = test_aitch_log,
-        split_seed = split_seed,
-        output_dir = output_dir,
-        train_idx = train_idx,
-        test_idx = test_idx,
-        aug_strategy = "aitchison_mixup",
-        aug_factor = aug_factor
-    )
+    # # Fit and save sparse log contrast model trained on Rodriguez augmented data
+    # sparse_log_cont_custom(
+    #     train_data = data_aitch_log,
+    #     test_data = test_aitch_log,
+    #     split_seed = split_seed,
+    #     output_dir = output_dir,
+    #     train_idx = train_idx,
+    #     test_idx = test_idx,
+    #     aug_strategy = "aitchison_mixup",
+    #     aug_factor = aug_factor
+    # )
 
     # Random ILR
     # Prepare x and y data (whole dataset)
@@ -257,11 +270,43 @@ run_one_split <- function(split_seed) {
 }
 
 #%%
+py <- reticulate::conda_python("trac")
+Sys.setenv(RETICULATE_PYTHON = py)
+
+# Small initializer that runs inside every worker
+.worker_init <- function() {
+    library(reticulate)
+    reticulate::use_python(Sys.getenv("RETICULATE_PYTHON"), required = TRUE)
+    if (!reticulate::py_module_available("classo")) {
+        stop("Python module 'classo' not found in the 'trac' env")
+    }
+    # load R packages used inside run_one_split() (workers are fresh R sessions)
+    for (p in c(
+        "dplyr",
+        "stringr",
+        "tidymodels",
+        "glmnet",
+        "augmentR",
+        "compositions",
+        "here",
+        "future",
+        "future.apply",
+        "trac"
+    )) {
+        requireNamespace(p, quietly = TRUE)
+    }
+    invisible(TRUE)
+}
+
+#%%
 # Execute workflow for all seeds
-plan(multisession, workers = parallel::detectCores() - 2)
-future_lapply(
+plan(multisession, workers = 5)
+res <- future_lapply(
     split_seeds,
-    run_one_split,
-    future.seed = TRUE # reproducible per split
+    function(s) {
+        .worker_init()
+        run_one_split(s)
+    },
+    future.seed = TRUE
 )
 future::plan(sequential)

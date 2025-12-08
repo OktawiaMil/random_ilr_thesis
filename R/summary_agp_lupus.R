@@ -40,8 +40,14 @@ read_results <- function(dir_res) {
 }
 
 # Function that creates the boxplot of selected metric for a given model
-boxplot_metric <- function(data, plot_metric) {
+boxplot_metric <- function(data, add_data = NULL, plot_metric) {
+    if (!is.null(add_data)) {
+        add_data <- add_data |>
+            mutate(aug_strategy = "none_slc", model = "l1_logistic_reg")
+    }
+
     data_plot <- data |>
+        bind_rows(add_data) |>
         unnest(perf_metrics) |>
         mutate(
             aug_strategy = case_when(
@@ -50,12 +56,14 @@ boxplot_metric <- function(data, plot_metric) {
                 aug_strategy == "aitchison_mixup" ~ "Aitchison Mixup",
                 aug_strategy ==
                     "aitchison_aug_in_p" ~ "Aitchison Mixup & Aug. in p",
+                aug_strategy == "none_slc" ~ "Benchmark - Sparse Log Contrast",
                 TRUE ~ aug_strategy
             ),
             aug_strategy = factor(
                 aug_strategy,
                 levels = c(
                     "Benchmark",
+                    "Benchmark - Sparse Log Contrast",
                     "Aitchison Mixup",
                     "randomILR - Aug. in p",
                     "Aitchison Mixup & Aug. in p"
@@ -66,8 +74,6 @@ boxplot_metric <- function(data, plot_metric) {
                     "l1_logistic_reg" ~ "Logistic Regression with L1 Penalty",
                 model == "random_forest" ~ "Random Forest",
                 model == "xgboost" ~ "XGBoost",
-                model ==
-                    "sparse_log_contrast" ~ "Sparse Log Contrast Regression",
                 TRUE ~ model
             )
         )
@@ -132,16 +138,22 @@ boxplot_metric <- function(data, plot_metric) {
 }
 
 # Plot of ROC Curve, oneplot per augmentation strategy/ benchmark
-roc_curve_plot <- function(data) {
+roc_curve_plot <- function(data, add_data = NULL) {
+    if (!is.null(add_data)) {
+        add_data <- add_data |>
+            mutate(aug_strategy = "none_slc", model = "l1_logistic_reg")
+    }
     # Common FPR grid for averaging curves within each augmentation strategy
     fpr_grid <- seq(0, 1, length.out = 201)
 
     data_fmt <- data |>
+        bind_rows(add_data) |>
         mutate(
             aug_strategy = case_when(
                 is.na(aug_strategy) ~ "Benchmark",
                 aug_strategy == "aug_in_p" ~ "randomILR - Aug. in p",
                 aug_strategy == "aitchison_mixup" ~ "Aitchison Mixup",
+                aug_strategy == "none_slc" ~ "Benchmark - Sparse Log Contrast",
                 aug_strategy ==
                     "aitchison_aug_in_p" ~ "Aitchison Mixup & Aug. in p",
                 TRUE ~ aug_strategy
@@ -150,6 +162,7 @@ roc_curve_plot <- function(data) {
                 aug_strategy,
                 levels = c(
                     "Benchmark",
+                    "Benchmark - Sparse Log Contrast",
                     "Aitchison Mixup",
                     "randomILR - Aug. in p",
                     "Aitchison Mixup & Aug. in p"
@@ -264,7 +277,7 @@ roc_curve_plot <- function(data) {
             inherit.aes = FALSE,
             linewidth = 1
         ) +
-        facet_grid(~aug_strategy) +
+        facet_wrap(~aug_strategy, ncol = 3) +
         geom_abline(
             slope = 1,
             intercept = 0,
@@ -300,4 +313,87 @@ roc_curve_plot <- function(data) {
             axis.text.y = element_text(size = 12),
             strip.text = element_text(size = 12)
         )
+}
+
+# Function to create summary table
+summary_tbl_mean_perf <- function(data, add_data = NULL) {
+    if (!is.null(add_data)) {
+        add_data <- add_data |>
+            mutate(aug_strategy = "none_slc", model = "l1_logistic_reg")
+    }
+
+    data_tbl <- data |>
+        bind_rows(add_data) |>
+        mutate(
+            aug_strategy = case_when(
+                is.na(aug_strategy) ~ "Benchmark",
+                aug_strategy == "aug_in_p" ~ "randomILR - Aug. in p",
+                aug_strategy == "aitchison_mixup" ~ "Aitchison Mixup",
+                aug_strategy ==
+                    "aitchison_aug_in_p" ~ "Aitchison Mixup & Aug. in p",
+                aug_strategy == "none_slc" ~ "Benchmark - Sparse Log Contrast",
+                TRUE ~ aug_strategy
+            ),
+            aug_strategy = factor(
+                aug_strategy,
+                levels = c(
+                    "Benchmark",
+                    "Benchmark - Sparse Log Contrast",
+                    "Aitchison Mixup",
+                    "randomILR - Aug. in p",
+                    "Aitchison Mixup & Aug. in p"
+                )
+            ),
+            model = case_when(
+                model ==
+                    "l1_logistic_reg" ~ "Logistic Regression with L1 Penalty",
+                model == "random_forest" ~ "Random Forest",
+                model == "xgboost" ~ "XGBoost",
+                TRUE ~ model
+            )
+        )
+
+    data_misclass <- data_tbl |>
+        unnest(perf_metrics) |>
+        filter(.metric == "accuracy") |>
+        mutate(
+            misclas = 1 - .estimate,
+            .metric = "Misclassification Rate"
+        ) |>
+        select(-c(".estimate")) |>
+        rename(.estimate = misclas)
+
+    data_summary <- data_tbl |>
+        unnest(perf_metrics) |>
+        bind_rows(data_misclass) |>
+        group_by(aug_strategy, .metric) |>
+        summarise(mean_metric = mean(.estimate)) |>
+        mutate(
+            mean_metric = round(mean_metric, 2),
+            Metric = case_when(
+                .metric == "accuracy" ~ "Accuracy",
+                .metric == "roc_auc" ~ "ROC AUC",
+                .metric == "brier_class" ~ "Brier class",
+                TRUE ~ str_to_title(.metric)
+            ),
+            Metric = factor(
+                Metric,
+                levels = c(
+                    "Accuracy",
+                    "Misclassification Rate",
+                    "ROC AUC",
+                    "Brier class"
+                )
+            )
+        ) |>
+        pivot_wider(
+            names_from = aug_strategy,
+            values_from = mean_metric
+        ) |>
+        mutate(
+            across(-.metric, ~ replace_na(as.character(.x), "-"))
+        ) |>
+        select(-.metric)
+
+    return(data_summary)
 }

@@ -97,8 +97,13 @@ $$
 Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast models. The sparse log contrast modle is fitted only on the original data (not augmented) and its purpose is to provide additional benchmark for the logistic regression model with L1 penalty.
 
 # Logistic regression with L1 penalty
+## Summary Table
+<!-- # TODO: add SLC once the results are here -->
+```{r}
+summary_tbl_mean_perf(res$lasso)
+```
+
 ## Boxplots of performance metrics
-# TODO: add SLC once the results are here
 ```{r}
 boxplot_metric(res$lasso, plot_metric = "roc_auc")
 boxplot_metric(res$lasso, plot_metric = "misclassification_rate")
@@ -111,6 +116,11 @@ roc_curve_plot(res$lasso)
 ```
 
 # Random Forest
+## Summary Table
+```{r}
+summary_tbl_mean_perf(res$RF)
+```
+
 ## Boxplots of performance metrics
 ```{r}
 boxplot_metric(res$RF, plot_metric = "roc_auc")
@@ -124,6 +134,11 @@ roc_curve_plot(res$RF)
 ```
 
 # XGBoost
+## Summary Table
+```{r}
+summary_tbl_mean_perf(res$XGB)
+```
+
 ## Boxplots of performance metrics
 ```{r}
 boxplot_metric(res$XGB, plot_metric = "roc_auc")
