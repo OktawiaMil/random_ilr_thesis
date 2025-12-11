@@ -31,7 +31,10 @@ read_results <- function(dir_res) {
                     train_idx = list(obj$train_idx),
                     test_idx = list(obj$test_idx),
                     perf_metrics = list(obj$perf_metrics),
-                    roc_curve = list(obj$roc_curve)
+                    roc_curve = list(obj$roc_curve),
+                    # Specific for sparse log contrast and logistic regression:
+                    lambda_1se = as.numeric(obj$lambda_1se),
+                    beta_1se = list(obj$beta_1se)
                 )
             })
             bind_rows(rows)
@@ -395,5 +398,105 @@ summary_tbl_mean_perf <- function(data, add_data = NULL) {
         ) |>
         select(-.metric)
 
-    return(data_summary)
+    knitr::kable(
+        data_summary,
+        captation = "Mean perfromance metrics across augmentation strategies"
+    )
+}
+
+boxplot_density <- function(data, plot_metric) {
+    data_plot <- data |>
+        filter(
+            aug_strategy != "aitchison_mixup",
+            !is.na(aug_strategy)
+        ) |>
+        mutate(
+            density = str_extract(
+                aug_strategy,
+                "(?<=dens_)(?:-?(?:\\d*\\.\\d+|\\d+)|NA)"
+            )
+        ) |>
+        unnest(perf_metrics)
+
+    if (plot_metric != "misclassification_rate") {
+        data_plot <- data_plot |>
+            filter(.metric == plot_metric) |>
+            mutate(
+                .metric = if_else(
+                    .metric == "roc_auc",
+                    "ROC AUC",
+                    .metric |> str_replace("_", " ") |> str_to_title()
+                )
+            )
+    } else {
+        data_plot <- data_plot |>
+            filter(.metric == "accuracy") |>
+            mutate(
+                misclas = 1 - .estimate,
+                .metric = "Misclassification Rate"
+            ) |>
+            select(-c(".estimate")) |>
+            rename(.estimate = misclas)
+    }
+
+    data_plot <- data_plot |>
+        mutate(
+            aug_strategy = str_remove_all(
+                aug_strategy,
+                "_dens_(?:NA|\\d+\\.\\d{1,2})"
+            ),
+            aug_strategy = case_when(
+                aug_strategy == "aug_in_p" ~ "randomILR - Aug. in p",
+                aug_strategy ==
+                    "aitchison_aug_in_p" ~ "Aitchison Mixup & Aug. in p",
+                TRUE ~ aug_strategy
+            ),
+            model = case_when(
+                model ==
+                    "l1_logistic_reg" ~ "Logistic Regression with L1 Penalty",
+                model == "random_forest" ~ "Random Forest",
+                model == "xgboost" ~ "XGBoost",
+                TRUE ~ model
+            ),
+            density = factor(density, levels = c(NA, seq(0.05, 0.5, by = 0.05)))
+        )
+
+    plot_metric_name <- unique(data_plot$.metric)
+    model_name <- unique(data_plot$model)
+    aug_factor_label <- unique(data_plot$aug_factor)
+
+    data_plot |>
+        ggplot(aes(x = density, y = .estimate)) +
+        geom_violin(fill = "steelblue", alpha = 0.5, color = NA) +
+        geom_boxplot(
+            width = 0.15,
+            fill = "steelblue",
+            alpha = 0.7,
+            outlier.size = 0.8
+        ) +
+        theme_bw() +
+        facet_wrap(~aug_strategy) +
+        labs(
+            title = paste(
+                "Impact of density on",
+                plot_metric_name,
+                "for",
+                model_name
+            ),
+            subtitle = paste("Augmentation Factor:", aug_factor_label),
+            x = "",
+            y = plot_metric_name
+        ) +
+        theme(
+            legend.position = "bottom",
+            legend.title = element_blank(),
+            plot.title = element_text(size = 16),
+            plot.subtitle = element_text(size = 14),
+            axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12),
+            axis.text.x = element_text(size = 12),
+            axis.text.y = element_text(size = 12),
+            strip.text = element_text(size = 12)
+        ) +
+        ylim(0, 1)
 }

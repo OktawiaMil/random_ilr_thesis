@@ -114,6 +114,14 @@ train_model <- function(
             nfolds = cv_nfolds
         )
 
+        # Save estimated beta coefs. corresponding to lambda 1-se
+        beta_1se <- coef(fit, s = "lambda.1se")
+        beta_df <- data.frame(
+            term = rownames(beta_1se),
+            estimate = as.numeric(beta_1se),
+            row.names = NULL
+        )
+
         sel_lambda <- fit$lambda.1se
         pred_prob <- predict(
             fit,
@@ -161,7 +169,12 @@ train_model <- function(
         rm(fit)
         gc(FALSE)
 
-        return(list(perf_metrics = metrics, roc_curve = roc_tbl))
+        return(list(
+            perf_metrics = metrics,
+            roc_curve = roc_tbl,
+            lambda_1se = sel_lambda,
+            beta_1se = beta_df
+        ))
     }
 }
 
@@ -202,6 +215,14 @@ fit_and_save_one_split <- function(
             model_seed = model_seed
         )
 
+        lambda_1se <- if (!is.null(res$lambda_1se)) {
+            as.numeric(res$lambda_1se)
+        } else {
+            NA_real_
+        }
+
+        beta_1se <- if (!is.null(res$beta_1se)) res$beta_1se else NA
+
         out <- list(
             split_seed = split_seed,
             aug_strategy = aug_strategy,
@@ -211,7 +232,9 @@ fit_and_save_one_split <- function(
             train_idx = train_idx,
             test_idx = test_idx,
             perf_metrics = res$perf_metrics,
-            roc_curve = res$roc_curve
+            roc_curve = res$roc_curve,
+            lambda_1se = lambda_1se,
+            beta_1se = beta_1se
         )
 
         saveRDS(
@@ -247,6 +270,7 @@ sparse_log_cont_custom <- function(
     test_data,
     model_seed = 2025,
     cv_nfolds = 5,
+    min_frac = 1e-04, #default setting in trac v. 0.0.2
     split_seed,
     output_dir,
     train_idx = NULL,
@@ -279,7 +303,7 @@ sparse_log_cont_custom <- function(
     fit_log_contrast <- sparse_log_contrast(
         Z = z_tr,
         y = y_tr,
-        min_frac = 1e-04, #default setting in trac v. 0.0.2
+        min_frac = min_frac,
         nlam = 20, #default setting in trac v. 0.0.2
         method = "classif"
     )
@@ -298,6 +322,18 @@ sparse_log_cont_custom <- function(
     # Index of the lambda parameter in the fraclist that leads
     # to the predictive perfromance corresponding to lambda = 1se:
     lambda_1se_idx <- cvfit_log_contrast$cv$i1se
+
+    # Value of lambda 1-se
+    lambda_1se <- cvfit_log_contrast$cv$lambda_1se
+    # beta coefs corresponding to lambda 1-se
+    beta_1se <- data.frame(
+        estimate = fit_log_contrast$beta[, lambda_1se_idx]
+    ) |>
+        tibble::rownames_to_column(var = "term") |>
+        tibble::add_row(
+            term = "(Intercept)",
+            estimate = fit_log_contrast$beta0[lambda_1se_idx]
+        )
 
     # Predictions for all of fitted models (models fitted on all considered lambdas)
     # Values in pred are numeric values, can be negative or larger than 1
@@ -342,6 +378,8 @@ sparse_log_cont_custom <- function(
         aug_factor = aug_factor,
         model = "sparse_log_contrast",
         trees = NULL,
+        lambda_1se = lambda_1se,
+        beta_1se = beta_1se,
         train_idx = train_idx,
         test_idx = test_idx,
         perf_metrics = res$perf_metrics,
