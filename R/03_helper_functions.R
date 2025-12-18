@@ -94,11 +94,23 @@ train_model <- function(
             .pred_negative
         )
 
+        # Compute permutation feature importance
+        deriv_imp <- importance_perm(
+            model_fit,
+            data = test_data,
+            metrics = metric_set(roc_auc),
+            times = 50
+        )
+
         # Cleanup
         rm(model_fit)
         gc(FALSE)
 
-        return(list(perf_metrics = metrics, roc_curve = roc_tbl))
+        return(list(
+            perf_metrics = metrics,
+            roc_curve = roc_tbl,
+            vimp = deriv_imp
+        ))
     } else if (model == "l1_logistic_reg") {
         # L1-penalized logistic regression
         set.seed(model_seed)
@@ -223,6 +235,8 @@ fit_and_save_one_split <- function(
 
         beta_1se <- if (!is.null(res$beta_1se)) res$beta_1se else NA
 
+        vimp <- if (!is.null(res$vimp)) res$vimp else NA
+
         out <- list(
             split_seed = split_seed,
             aug_strategy = aug_strategy,
@@ -234,7 +248,8 @@ fit_and_save_one_split <- function(
             perf_metrics = res$perf_metrics,
             roc_curve = res$roc_curve,
             lambda_1se = lambda_1se,
-            beta_1se = beta_1se
+            beta_1se = beta_1se,
+            vimp = vimp
         )
 
         saveRDS(
@@ -304,7 +319,8 @@ sparse_log_cont_custom <- function(
         Z = z_tr,
         y = y_tr,
         min_frac = min_frac,
-        nlam = 20, #default setting in trac v. 0.0.2
+        nlam = 20, # nlam kept at default setting from trac v. 0.0.2 -->
+        # tested higher values - 20 is enough
         method = "classif"
     )
 
