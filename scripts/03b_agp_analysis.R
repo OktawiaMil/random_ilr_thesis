@@ -3,18 +3,22 @@
 # one of Rodriguez methds vs.
 # augmented by both random ILR + Rodriguez
 #%%
-# RUN BELOW CODE ONCE to create environment - needed for trac
-# reticulate::install_miniconda() # one-time: installs a private Miniconda for R
+# Install trac and augmentR
+# create environment - needed to install trac
+# reticulate::install_miniconda() # one-time: installs Miniconda for R
 # reticulate::conda_create("trac", packages = "python=3.10") # one-time: creates env 'trac'
+## Install needed libraries in the trac environment
 # reticulate::conda_install(
 #     "trac",
 #     c("c-lasso", "numpy", "scipy", "pandas", "matplotlib"),
 #     pip = TRUE
 # )
-# %%
+# py <- reticulate::conda_python("trac")
+# Sys.setenv(RETICULATE_PYTHON = py)
+# reticulate::use_python(Sys.getenv("RETICULATE_PYTHON"), required = TRUE)
 # install.packages("devtools")
-# devtools::install_github("bio-datascience/augmentR")
 # devtools::install_github("viettr/trac")
+# devtools::install_github("bio-datascience/augmentR")
 
 suppressPackageStartupMessages({
     library(dplyr)
@@ -27,6 +31,7 @@ suppressPackageStartupMessages({
     library(future)
     library(future.apply)
     library(trac)
+    library(important)
 })
 
 # Source helper functions - when running local
@@ -38,29 +43,31 @@ if (file.exists(helpers_file)) {
 # Read in data
 data_dir <- here::here("data", "data_agp", "data_preproc")
 output_dir <- here::here("results", "agp_results")
-#dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 data_agp <- readRDS(file.path(data_dir, "data_agp_prep.rds"))
 
 # Create df with necessary data
 agp_df <- data_agp$prop_pc |> bind_cols(outcome = data_agp$y)
 
 #%% Config
-# TODO: change values below once you fully test your workflow
 model_seed <- 2025
 aug_factor <- 3
 rf_trees <- 500
 xgb_trees <- 100
 split_seeds <- 1:20
+sel_density <- 0.1
 
 # Wrapper for a single split seed
 run_one_split <- function(split_seed) {
+    # List to store ilr matricies
+    ilr_list <- list()
+
+    # Train-test split
     set.seed(split_seed)
     split <- initial_split(
         agp_df,
         strata = "outcome",
         prop = 0.8
     )
-
     # Get directly train - test data - used in the benchmark and Rodriguez
     train_data <- training(split)
     test_data <- testing(split)
@@ -71,11 +78,17 @@ run_one_split <- function(split_seed) {
 
     # Benchmark model fit
     # ILR transformation
-    train_df_ilr <- train_data |>
+    train_ilr <- train_data |>
         select(-outcome) |>
-        ilr() |>
+        ilr()
+
+    train_df_ilr <- train_ilr |>
         as.data.frame() |>
         bind_cols(train_data |> select(outcome))
+
+    # Save ILR matrix - needed to decode important predictors
+    # The same ILR matrix used in benchmark and Rodriguez aug. method
+    ilr_list$standard_ilr <- ilrBase(z = train_ilr)
 
     test_df_ilr <- test_data |>
         select(-outcome) |>
@@ -108,7 +121,10 @@ run_one_split <- function(split_seed) {
         split_seed = split_seed,
         output_dir = output_dir,
         train_idx = train_idx,
-        test_idx = test_idx
+        test_idx = test_idx,
+        min_frac = 6e-03 # I change this parameter because in
+        # my experiance the default setting leads to fitting many empty
+        # models & increases runtime
     )
 
     # Rodriguez augmentation method
@@ -147,34 +163,6 @@ run_one_split <- function(split_seed) {
         aug_factor = aug_factor
     )
 
-    # Sparse log contrast on Aitchison augmented data + log transformed
-    # data_aitch_log <- data_aug_rod |>
-    #     select(-outcome) |>
-    #     log() |>
-    #     as.data.frame() |>
-    #     bind_cols(
-    #         data_aug_rod |>
-    #             select(outcome)
-    #     )
-
-    # test_aitch_log <- test_data |>
-    #     select(-outcome) |>
-    #     log() |>
-    #     as.data.frame() |>
-    #     bind_cols(test_data |> select(outcome))
-
-    # Fit and save sparse log contrast model trained on Rodriguez augmented data
-    # sparse_log_cont_custom(
-    #     train_data = data_aitch_log,
-    #     test_data = test_aitch_log,
-    #     split_seed = split_seed,
-    #     output_dir = output_dir,
-    #     train_idx = train_idx,
-    #     test_idx = test_idx,
-    #     aug_strategy = "aitchison_mixup",
-    #     aug_factor = aug_factor
-    # )
-
     # Random ILR
     # Prepare x and y data (whole dataset)
     x_data <- agp_df |> select(-outcome)
@@ -184,11 +172,12 @@ run_one_split <- function(split_seed) {
         x_data = x_data,
         y_data = y_data,
         multiplier = aug_factor,
-        density = sel_density
+        density = sel_density,
+        return_ilr_bases = TRUE
     )
     # Get train and test data
-    aug_p_train <- aug_p_data[train_idx, ]
-    aug_p_test <- aug_p_data[test_idx, ]
+    aug_p_train <- aug_p_data$data_aug[train_idx, ]
+    aug_p_test <- aug_p_data$data_aug[test_idx, ]
 
     # Fit and save models on aug_in_p augmented data
     fit_and_save_one_split(
@@ -202,17 +191,8 @@ run_one_split <- function(split_seed) {
         aug_factor = aug_factor
     )
 
-    # Fit and save sparse log-contrast model on aug_in_p augmented data
-    # sparse_log_cont_custom(
-    #     train_data = aug_p_train,
-    #     test_data = aug_p_test,
-    #     split_seed = split_seed,
-    #     output_dir = output_dir,
-    #     train_idx = train_idx,
-    #     test_idx = test_idx,
-    #     aug_strategy = "aug_in_p",
-    #     aug_factor = aug_factor
-    # )
+    # Save ilr matrix
+    ilr_list$aug_p <- aug_p_data$ilr_base
 
     # 2 stage augmentation
     # 1. Aitchison on train set - we reuse already augmented data (data_aug_rod)
@@ -236,12 +216,13 @@ run_one_split <- function(split_seed) {
         id_col = "id",
         density = sel_density,
         multiplier = aug_factor,
-        id_action = "keep"
+        id_action = "keep",
+        return_ilr_bases = TRUE
     )
 
     # Split into train and test again
-    train_stage2 <- data_aug_p |> filter(id == "train") |> select(-id)
-    test_stage2 <- data_aug_p |> filter(id == "test") |> select(-id)
+    train_stage2 <- data_aug_p$data_aug |> filter(id == "train") |> select(-id)
+    test_stage2 <- data_aug_p$data_aug |> filter(id == "test") |> select(-id)
 
     fit_and_save_one_split(
         train_df = train_stage2,
@@ -254,29 +235,19 @@ run_one_split <- function(split_seed) {
         aug_factor = aug_factor
     )
 
-    # sparse_log_cont_custom(
-    #     train_data = train_stage2,
-    #     test_data = test_stage2,
-    #     split_seed = split_seed,
-    #     output_dir = output_dir,
-    #     train_idx = train_idx,
-    #     test_idx = test_idx,
-    #     aug_strategy = "aitchison_aug_in_p",
-    #     aug_factor = aug_factor
-    # )
+    # Save ilr matrix
+    ilr_list$aitchison_aug_p <- data_aug_p$ilr_base
+
+    # Save list with ILR matricies
+    saveRDS(
+        ilr_list,
+        file.path(output_dir, paste0("ilr_basis_split_", split_seed, ".rds"))
+    )
 }
 
 #%%
-py <- reticulate::conda_python("trac")
-Sys.setenv(RETICULATE_PYTHON = py)
-
 # Small initializer that runs inside every worker
 .worker_init <- function() {
-    library(reticulate)
-    reticulate::use_python(Sys.getenv("RETICULATE_PYTHON"), required = TRUE)
-    if (!reticulate::py_module_available("classo")) {
-        stop("Python module 'classo' not found in the 'trac' env")
-    }
     # load R packages used inside run_one_split() (workers are fresh R sessions)
     for (p in c(
         "dplyr",
@@ -288,7 +259,8 @@ Sys.setenv(RETICULATE_PYTHON = py)
         "here",
         "future",
         "future.apply",
-        "trac"
+        "trac",
+        "important"
     )) {
         requireNamespace(p, quietly = TRUE)
     }
@@ -297,7 +269,7 @@ Sys.setenv(RETICULATE_PYTHON = py)
 
 #%%
 # Execute workflow for all seeds
-plan(multisession, workers = 5)
+plan(multisession, workers = 7)
 res <- future_lapply(
     split_seeds,
     function(s) {
