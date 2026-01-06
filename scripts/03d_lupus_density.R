@@ -2,8 +2,6 @@
 # data augmented in p (random ILR) vs. one of Rodriguez methds vs.
 # augmented by both random ILR + Rodriguez
 # %%
-# install.packages("devtools")
-# devtools::install_github("bio-datascience/augmentR")
 suppressPackageStartupMessages({
   library(dplyr)
   library(stringr)
@@ -15,6 +13,7 @@ suppressPackageStartupMessages({
   library(future)
   library(future.apply)
   library(trac)
+  library(important)
 })
 
 # Source helper functions
@@ -26,19 +25,13 @@ if (file.exists(helpers_file)) {
 # Read in data
 data_dir <- here::here("data", "data_lupus", "data_preproc")
 data_lupus <- readRDS(file.path(data_dir, "data_lupus_prep.RDS"))
-
-# TODO: change back to the correct output dir
-# output_dir <- here::here("results", "lupus_results")
 output_dir <- here::here("results", "lupus_density_results")
-
-#dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 # Create df with necessary data
 lupus_df <- data_lupus$prop_pc |>
   bind_cols(outcome = data_lupus$y, data_lupus$covariates |> select(id))
 
 #%% Config
-#TODO : change for the values you really want to have there
 model_seed <- 2025
 aug_factor <- 3
 sel_dens_vec <- c(NA, seq(0.05, 0.5, by = 0.05))
@@ -212,17 +205,7 @@ run_one_split <- function(split_seed, sel_density) {
 
 #%%
 # Execute workflow for all seeds
-py <- reticulate::conda_python("trac")
-Sys.setenv(RETICULATE_PYTHON = py)
-
-# Small initializer that runs inside every worker
 .worker_init <- function() {
-  library(reticulate)
-  reticulate::use_python(Sys.getenv("RETICULATE_PYTHON"), required = TRUE)
-  if (!reticulate::py_module_available("classo")) {
-    stop("Python module 'classo' not found in the 'trac' env")
-  }
-  # load R packages used inside run_one_split() (workers are fresh R sessions)
   for (p in c(
     "dplyr",
     "stringr",
@@ -233,7 +216,8 @@ Sys.setenv(RETICULATE_PYTHON = py)
     "here",
     "future",
     "future.apply",
-    "trac"
+    "trac",
+    "important"
   )) {
     requireNamespace(p, quietly = TRUE)
   }
