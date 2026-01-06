@@ -103,6 +103,7 @@ summary_tbl_mean_perf(res$lasso, res$sparse_log_contrast)
 
 ## Boxplots of performance metrics
 ```{r}
+#| label: boxplots_lasso
 boxplot_metric(res$lasso, res$sparse_log_contrast, plot_metric = "roc_auc")
 boxplot_metric(res$lasso, res$sparse_log_contrast, 
 plot_metric = "misclassification_rate")
@@ -121,6 +122,188 @@ dir_results_density <- here::here("results", "lupus_density_results")
 res_density <- read_results(dir_results_density)
 boxplot_density(res_density$lasso, plot_metric = "roc_auc")
 boxplot_density(res_density$lasso, plot_metric = "misclassification_rate")
+```
+
+## Interpretability
+The purpose of the below two subchapters is to understand better which original features (or which contrasts) are most influential for a specific data augmentation strategy.
+
+### Global view
+Below tables shows the avergae number of $\beta$ coeffcients (average over $20$ train-test splits of the dataset) that were estimated to be non-zero in the logistic regression model with $L1$ penalty and the total number of estimated coefficients for different variants of the model. 
+
+```{r}
+log_reg_summary_tbl(res)
+```
+
+In the case of random ilr augmentatin in p and teh combination of Aitchison Mixup and augmentation in p, one cas analyse how many times, on average among $20$ train-test splits, the $\beta$ coeffcients that were estimated to be non-zero, are associated with the standard or random ilr transformation. Below table provieds such summary:
+
+```{r}
+avg_random_vs_standard(res)
+```
+
+The purpose of the below section is to gain better understaniding on the original features that contribute to standard ilr coordinates and if applicable, to the random ilr coordinates that were selected by the model (have non-zero beta coefficients). The below table shows the original features that contribute in numerator to the standard ILR coordinates that are selected (almost) in all 20 data splits. For example, in the model trained on the data augmented in p ILR coordinate associated with standard ILR transformation that has in the numerator feature T4_em is selected in all 20 data splits.
+
+```{r}
+# Get names of the features in the input data:
+data_dir_lupus <- here::here("data", "data_lupus", "data_preproc")
+data_lupus <- readRDS(file.path(data_dir_lupus, "data_lupus_prep.RDS"))
+cov_names <- tibble(row_idx = 1:ncol(data_lupus$prop_pc), 
+  covariate = data_lupus$prop_pc |> colnames()
+) |>
+mutate(covariate = str_remove(covariate, "g__"))
+rm(data_lupus)
+
+# Get contributors to the ilr coordinates that are selected by a models from all 20 test-train splits
+# benchmark
+benchmark_contr_tbl <- contr_standard_ilr_all_splits(res, dir_results =  dir_results, sel_aug_strategy = NA, model = "lasso")
+# Aitchison Mixup
+aitchison_contr_tbl <- contr_standard_ilr_all_splits(res, dir_results =  dir_results, sel_aug_strategy = "aitchison_mixup", model = "lasso")
+# Augmentation in p
+aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aug_in_p", top_contr = 3, res = res, model = "lasso")
+# Aitchison + augmentation in p
+aitchison_aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aitchison_aug_in_p", top_contr = 3, res = res, model = "lasso")
+
+# Most influential contributors for standard ILR across 20 data splits
+top_k_standard_ilr(
+  tbls = list(
+    benchmark_contr_tbl,
+    aitchison_contr_tbl,
+    aug_p_contr_tbl,
+    aitchison_aug_p_contr_tbl
+  ),
+  top_n = c(6, 10, 5, 7),
+  section_titles = c(
+    "Benchmark",
+    "Aitchison Mixup",
+    "Augmentation in p",
+    "Aitchison Mixup & Augmentation in p"
+  ),
+  cov_names = cov_names
+)
+```
+
+The below table summarizes the original features that are most often in the top 3 contributors to the random ILR coordinates that get selected by the model ($\beta \neq  0$). For example, in the case of data augmented in p, feature Prolif is within top 3 contributors to the 31 random ILR coordinates that are selected by the models obtained from 20 data splits. 
+
+```{r}
+### Random ILR part
+aug_random_tbl <- aug_p_contr_tbl |>
+ unnest(random_ilr) |> 
+ count(row_idx) |>
+ arrange(desc(n)) |>
+ left_join(cov_names, by = "row_idx") |>
+ select(covariate, n) |>
+ head(n = 5)
+
+aitchison_random_tbl <- aitchison_aug_p_contr_tbl |>
+ unnest(random_ilr) |> 
+ count(row_idx) |>
+ arrange(desc(n)) |>
+ left_join(cov_names, by = "row_idx") |>
+ select(covariate, n) |>
+ head(n = 6)
+
+# Table showing features that are most often among top 3 contributors
+bind_rows(
+ aug_random_tbl,
+ aitchison_random_tbl
+) |>
+ knitr::kable(
+  col.names = c("Original feature", "# of random ILR coordinates"),
+  caption = "Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates",
+  escape = FALSE,
+  align = c("l", "c", "c")
+ ) |>
+ kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
+ kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
+ kableExtra::kable_styling(full_width = TRUE)
+```
+
+### Local view
+
+Below I focus only on one test-train split and try to understand which original features constitute the ilr coordinates that are selected by model. I analyse data split number 11 because for majority of augmentation strategies this split leads to the highest ROC AUC on the test data. 
+
+#### Benchmark
+```{r}
+#| include: false
+sel_coords <- benchmark_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+```
+
+For analysed data split, in the benchmark model `` `r sel_coords` `` standard ILR coordinates were selected.
+
+```{r}
+# Benchmark
+standard_ilr_one_split(benchmark_contr_tbl, 11)
+```
+
+#### Aitchison Mixup
+```{r}
+#| include: false
+sel_coords <- aitchison_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+```
+
+For analysed data split, in the model trained on Aitchison Mixup augmented data `` `r sel_coords` `` standard ILR coordinates were selected.
+
+```{r}
+# Aitchison Mixup
+standard_ilr_one_split(aitchison_contr_tbl, 11)
+```
+
+#### Augmentation in p
+
+```{r}
+#| include: false
+sel_coords_st <- aug_p_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+
+sel_coord_rand <- aug_p_contr_tbl |> 
+  filter(split == 11)  |>
+  unnest(random_ilr) |> 
+  distinct(segment, ilr_coordinate) |> 
+  nrow()
+```
+
+For analysed data split, in the model trained on data augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` ``were selected.
+
+```{r}
+# Aug in p
+## Random ilr part
+heatmap_contr(aug_p_contr_tbl, sel_split = 11, cov_names = cov_names)
+
+## Standard ilr part
+standard_ilr_one_split(aug_p_contr_tbl, 11)
+```
+
+#### Aitchison Mixup + Augmentation in p
+
+```{r}
+#| include: false
+sel_coords_st <- aitchison_aug_p_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+
+sel_coord_rand <- aitchison_aug_p_contr_tbl |> 
+  filter(split == 11)  |>
+  unnest(random_ilr) |> 
+  distinct(segment, ilr_coordinate) |> 
+  nrow()
+```
+
+For analysed data split, in the model trained on data augmented by Aitchison Mixup and augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` ``were selected.
+
+
+```{r}
+# Aitchison + aug in p
+heatmap_contr(aitchison_aug_p_contr_tbl, sel_split = 11, cov_names = cov_names)
+
+standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11)
 ```
 
 # Random Forest
@@ -147,6 +330,164 @@ boxplot_density(res_density$RF, plot_metric = "roc_auc")
 boxplot_density(res_density$RF, plot_metric = "misclassification_rate")
 ```
 
+## Feature Importance
+Feature importance is computed on the test data. Below table shows original features that contribute most often to standard ILR coordiantes that achieve the highest VIMP scores. For example, feature T4_em contributes in numerator of the standard ILR coordinate that is selected by all models in nearly all data splits.
+
+```{r}
+# Get contributors to the ilr coordinates that achieve the highest VIMP in a model across all 20 test-train splits
+# for each model (trained on 1 data split) select num_top_feat ilr coordinates that in this model achieved the highest VIMP --> decode original features that contributed most to this ilr coordinates
+# benchmark
+benchmark_contr_tbl <- contr_standard_ilr_all_splits(res, dir_results =  dir_results, sel_aug_strategy = NA, model = "RF", num_top_feat = 5)
+# Aitchison Mixup
+aitchison_contr_tbl <- contr_standard_ilr_all_splits(res, dir_results =  dir_results, sel_aug_strategy = "aitchison_mixup", model = "RF", num_top_feat = 5)
+# Augmentation in p
+aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aug_in_p", top_contr = 3, res = res, model = "RF", num_top_feat = 5)
+# Aitchison + augmentation in p
+aitchison_aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aitchison_aug_in_p", top_contr = 3, res = res, model = "RF", num_top_feat = 5)
+
+# Most influential contributors for standard ILR across 20 data splits
+top_k_standard_ilr(
+  tbls = list(
+    benchmark_contr_tbl,
+    aitchison_contr_tbl,
+    aug_p_contr_tbl,
+    aitchison_aug_p_contr_tbl
+  ),
+  top_n = rep(3, 4),
+  section_titles = c(
+    "Benchmark",
+    "Aitchison Mixup",
+    "Augmentation in p",
+    "Aitchison Mixup & Augmentation in p"
+  ),
+  cov_names = cov_names
+)
+
+```
+
+The below table summarizes the original features that are most often in the top 3 contributors to the random ILR coordinates that achieve the highest VIMP. Below frequencies are significantly smaller than in the case or logistic regression with L1 penalty. This is the consequence of the fact that I filter out all ILR coordinates that have negative importance so we might end up with no features from a given segment (standard or random ILR).
+
+```{r}
+### Random ILR part
+aug_random_tbl <- aug_p_contr_tbl |>
+ unnest(random_ilr) |> 
+ count(row_idx) |>
+ arrange(desc(n)) |>
+ left_join(cov_names, by = "row_idx") |>
+ select(covariate, n) |>
+ head(n = 5)
+
+aitchison_random_tbl <- aitchison_aug_p_contr_tbl |>
+ unnest(random_ilr) |> 
+ count(row_idx) |>
+ arrange(desc(n)) |>
+ left_join(cov_names, by = "row_idx") |>
+ select(covariate, n) |>
+ head(n = 4)
+
+# Table showing features that are most often among top 3 contributors
+bind_rows(
+ aug_random_tbl,
+ aitchison_random_tbl
+) |>
+ knitr::kable(
+  col.names = c("Original feature", "# of random ILR coordinates"),
+  caption = "Summary of features that are most often within top 3 contributors to the **random ILR** coordinates with the highest VIMP",
+  escape = FALSE,
+  align = c("l", "c", "c")
+ ) |>
+ kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
+ kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
+ kableExtra::kable_styling(full_width = TRUE)
+```
+
+### Local view
+
+Below I focus only on one test-train split and try to understand which original features constitute the ilr coordinates that obtain high VIMP. I analyse data split number 11 because for all augmentation strategies this split leads to the highest ROC AUC on the test data. 
+
+#### Benchmark
+```{r}
+#| include: false
+sel_coords <- benchmark_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+```
+
+For analysed data split, in the benchmark model `` `r sel_coords` `` standard ILR coordinates were selected.
+
+```{r}
+# Benchmark
+standard_ilr_one_split(benchmark_contr_tbl, 11)
+```
+
+#### Aitchison Mixup
+```{r}
+#| include: false
+sel_coords <- aitchison_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+```
+
+For analysed data split, in the model trained on Aitchison Mixup augmented data `` `r sel_coords` `` standard ILR coordinates were selected.
+
+```{r}
+# Aitchison Mixup
+standard_ilr_one_split(aitchison_contr_tbl, 11)
+```
+
+#### Augmentation in p
+
+```{r}
+#| include: false
+sel_coords_st <- aug_p_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+
+sel_coord_rand <- aug_p_contr_tbl |> 
+  filter(split == 11)  |>
+  unnest(random_ilr) |> 
+  summarise(val = if (n() == 0) 0 else n_distinct(segment, ilr_coordinate)) |>
+  pull(val)
+```
+
+For analysed data split, in the model trained on data augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` `` random ILR coordinates were selected.
+
+```{r}
+# Aug in p
+## Random ilr part
+heatmap_contr(aug_p_contr_tbl, sel_split = 11, cov_names = cov_names)
+
+## Standard ilr part
+standard_ilr_one_split(aug_p_contr_tbl, 11)
+```
+
+#### Aitchison Mixup + Augmentation in p
+
+```{r}
+#| include: false
+sel_coords_st <- aitchison_aug_p_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+
+sel_coord_rand <- aitchison_aug_p_contr_tbl |>
+  filter(split == 11) |>
+  unnest(random_ilr) |>
+  summarise(val = if (n() == 0) 0 else n_distinct(segment, ilr_coordinate)) |>
+  pull(val)
+```
+
+For analysed data split, in the model trained on data augmented by Aitchison Mixup and augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` `` random ILR coordinates were selected.
+
+
+```{r}
+standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11)
+```
+
+
 # XGBoost
 ## Summary Table
 ```{r}
@@ -170,3 +511,157 @@ roc_curve_plot(res$XGB)
 boxplot_density(res_density$XGB, plot_metric = "roc_auc")
 boxplot_density(res_density$XGB, plot_metric = "misclassification_rate")
 ```
+
+## Feature Importance
+Feature importance is computed on the test data. Below table shows original features that contribute most often to standard ILR coordiantes that achieve the highest VIMP scores. For example, feature T4_em contributes in numerator of the standard ILR coordinate that is selected by all models in nearly all data splits.
+
+```{r}
+# Get contributors to the ilr coordinates that achieve the highest VIMP in a model across all 20 test-train splits
+# for each model (trained on 1 data split) select num_top_feat ilr coordinates that in this model achieved the highest VIMP --> decode original features that contributed most to this ilr coordinates
+# benchmark
+benchmark_contr_tbl <- contr_standard_ilr_all_splits(res, dir_results =  dir_results, sel_aug_strategy = NA, model = "XGB", num_top_feat = 5)
+# Aitchison Mixup
+aitchison_contr_tbl <- contr_standard_ilr_all_splits(res, dir_results =  dir_results, sel_aug_strategy = "aitchison_mixup", model = "XGB", num_top_feat = 5)
+# Augmentation in p
+aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aug_in_p", top_contr = 3, res = res, model = "XGB", num_top_feat = 5)
+
+# Aitchison + augmentation in p
+aitchison_aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aitchison_aug_in_p", top_contr = 3, res = res, model = "XGB", num_top_feat = 5)
+
+# Most influential contributors for standard ILR across 20 data splits
+top_k_standard_ilr(
+  tbls = list(
+    benchmark_contr_tbl,
+    aitchison_contr_tbl,
+    aug_p_contr_tbl,
+    aitchison_aug_p_contr_tbl
+  ),
+  top_n = rep(4, 4),
+  section_titles = c(
+    "Benchmark",
+    "Aitchison Mixup",
+    "Augmentation in p",
+    "Aitchison Mixup & Augmentation in p"
+  ),
+  cov_names = cov_names
+)
+```
+
+The below table summarizes the original features that are most often in the top 3 contributors to the random ILR coordinates that achieve the highest VIMP. Below frequencies are significantly smaller than in the case or logistic regression with L1 penalty. This is the consequence of the fact that I filter out all ILR coordinates that have negative importance so we might end up with no features from a given segment (standard or random ILR).
+
+```{r}
+### Random ILR part
+aug_random_tbl <- aug_p_contr_tbl |>
+ unnest(random_ilr) |> 
+ count(row_idx) |>
+ arrange(desc(n)) |>
+ left_join(cov_names, by = "row_idx") |>
+ select(covariate, n) |>
+ head(n = 5)
+
+aitchison_random_tbl <- aitchison_aug_p_contr_tbl |>
+ unnest(random_ilr) |> 
+ count(row_idx) |>
+ arrange(desc(n)) |>
+ left_join(cov_names, by = "row_idx") |>
+ select(covariate, n) |>
+ head(n = 4)
+
+# Table showing features that are most often among top 3 contributors
+bind_rows(
+ aug_random_tbl,
+ aitchison_random_tbl
+) |>
+ knitr::kable(
+  col.names = c("Original feature", "# of random ILR coordinates"),
+  caption = "Summary of features that are most often within top 3 contributors to the **random ILR** coordinates with the highest VIMP",
+  escape = FALSE,
+  align = c("l", "c", "c")
+ ) |>
+ kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
+ kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
+ kableExtra::kable_styling(full_width = TRUE)
+```
+
+### Local view
+
+Below I focus only on one test-train split and try to understand which original features constitute the ilr coordinates that obtain the highest VIMP. I analyse data split number 11 because for all augmentation strategies this split leads to the highest ROC AUC on the test data. 
+
+#### Benchmark
+```{r}
+#| include: false
+sel_coords <- benchmark_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+```
+
+For analysed data split, in the benchmark model `` `r sel_coords` `` standard ILR coordinates were selected.
+
+```{r}
+# Benchmark
+standard_ilr_one_split(benchmark_contr_tbl, 11)
+```
+
+#### Aitchison Mixup
+```{r}
+#| include: false
+sel_coords <- aitchison_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+```
+
+For analysed data split, in the model trained on Aitchison Mixup augmented data `` `r sel_coords` `` standard ILR coordinates were selected.
+
+```{r}
+# Aitchison Mixup
+standard_ilr_one_split(aitchison_contr_tbl, 11)
+```
+
+#### Augmentation in p
+
+```{r}
+#| include: false
+sel_coords_st <- aug_p_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+
+sel_coord_rand <- aug_p_contr_tbl |> 
+  filter(split == 11)  |>
+  unnest(random_ilr) |> 
+  summarise(val = if (n() == 0) 0 else n_distinct(segment, ilr_coordinate)) |>
+  pull(val)
+```
+
+For analysed data split, in the model trained on data augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` `` random ILR coordinates were selected.
+
+```{r}
+# Aug in p
+## Standard ilr part
+standard_ilr_one_split(aug_p_contr_tbl, 11)
+```
+
+#### Aitchison Mixup + Augmentation in p
+
+```{r}
+#| include: false
+sel_coords_st <- aitchison_aug_p_contr_tbl |> 
+  filter(split == 11) |> 
+  unnest(standard_ilr) |>  
+  nrow()
+
+sel_coord_rand <- aitchison_aug_p_contr_tbl |>
+  filter(split == 11) |>
+  unnest(random_ilr) |>
+  summarise(val = if (n() == 0) 0 else n_distinct(segment, ilr_coordinate)) |>
+  pull(val)
+```
+
+For analysed data split, in the model trained on data augmented by Aitchison Mixup and augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` `` random ILR coordinates were selected.
+
+```{r}
+standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11)
+```
+
