@@ -101,14 +101,26 @@ To re-run the analysis, place original datasets downloaded from
 ([Vangay, Hillmann, and Knights 2019](#ref-vangay2019microbiome)) in
 `data/raw/`.
 
+## Data preprocessing
+
+Code used for data preprocessing can be found in `R/00_raw_data_prep.R`.
+
 ## Reproducibility
 
 The environment used for the local analysis can be recreated by running
 `renv::restore()`. Code on the computational server was executed inside
 a container built from a custom image. This image is based on Rocker
-Tidyverse 4.4.3 and includes several additional R packages. The image
-used in the analysis can be accessed at [project’s Zenodo
+Tidyverse 4.4.3 and includes several additional R packages
+(tidymodels, glmnet, ranger, xgboost, augmenter, compositions, rlang).
+The image used in the analysis can be accessed at [project’s Zenodo
 site](https://doi.org/10.5281/zenodo.17392972).
+
+## Results
+
+The results for each model, augmentation class (random ILR or Rodriguez
+techniques) / benchmark, and pseudo-count are available at [project’s
+Zenodo site](https://doi.org/10.5281/zenodo.17392972) as RDS files. The
+file-naming convention is: `augmentation_class_model_pseudo_count`.
 
 ## License
 

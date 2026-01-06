@@ -73,6 +73,7 @@ library(here)
 library(purrr)
 library(tidyr)
 library(stringr)
+library(kableExtra)
 
 # Create the tibble with data dimensionality and number of samples of preprcoessed datasets
 directory_preproc <- here::here("data", "data_preproc")
@@ -154,6 +155,11 @@ res <- res |>
 
 kable(res, format = "pipe", align = rep("c", 7))
 
+tab_latex <- kable(res, format = "latex", align = rep("c", 7), booktabs = TRUE,
+  caption = "overview of 12 binary classification datasets from the Microbiome Learning Repo: for each task, the number of samples (n) and features (p), outcome description, class counts, and the dataset reference are reported.") |>
+  kable_styling(latex_options = "hold_position")
+
+save_kable(tab_latex, "readme_files/datasets_table_latex.tex")
 ```
 
 To re-run the analysis, place original datasets downloaded from [@vangay2019microbiome] in `data/raw/`.
