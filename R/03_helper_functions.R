@@ -99,7 +99,7 @@ train_model <- function(
             model_fit,
             data = test_data,
             metrics = metric_set(roc_auc),
-            times = 50
+            times = 10
         )
 
         # Cleanup

@@ -3,11 +3,10 @@
 # one of Rodriguez methds vs.
 # augmented by both random ILR + Rodriguez
 #%%
-# Install trac and augmentR
+# Installation instrruction of trac and augmentR
 # create environment - needed to install trac
-# reticulate::install_miniconda() # one-time: installs Miniconda for R
 # reticulate::conda_create("trac", packages = "python=3.10") # one-time: creates env 'trac'
-## Install needed libraries in the trac environment
+# # Install needed libraries in the trac environment
 # reticulate::conda_install(
 #     "trac",
 #     c("c-lasso", "numpy", "scipy", "pandas", "matplotlib"),
@@ -20,6 +19,14 @@
 # devtools::install_github("viettr/trac")
 # devtools::install_github("bio-datascience/augmentR")
 
+# Hard-pin the interpreter
+library(reticulate)
+Sys.setenv(
+    RETICULATE_PYTHON = reticulate::conda_python("trac"),
+    RETICULATE_AUTOINSTALL_PYTHON = "FALSE"
+)
+reticulate::use_python(Sys.getenv("RETICULATE_PYTHON"), required = TRUE)
+
 suppressPackageStartupMessages({
     library(dplyr)
     library(stringr)
@@ -27,22 +34,46 @@ suppressPackageStartupMessages({
     library(glmnet)
     library(augmentR)
     library(compositions)
-    library(here)
-    library(future)
-    library(future.apply)
     library(trac)
     library(important)
 })
 
-# Source helper functions - when running local
-helpers_file <- file.path(here::here(), "R", "03_helper_functions.R")
+# AGP calculations are run on server
+## Robust sourcing of helpers from R/ folder
+script_args <- commandArgs(trailingOnly = FALSE)
+script_path <- normalizePath(sub(
+    "--file=",
+    "",
+    script_args[grep("^--file=", script_args)]
+))
+script_dir <- dirname(script_path)
+repo_root <- dirname(script_dir)
+
+helpers_file <- file.path(repo_root, "R", "03_helper_functions.R")
 if (file.exists(helpers_file)) {
     source(helpers_file)
 }
 
+# Parsing arguments
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) < 4) {
+    stop(
+        paste0(
+            "Expected 4 args: data_dir split_seed sel_density output_dir\n",
+            "Got ",
+            length(args),
+            ": ",
+            paste(args, collapse = " ")
+        )
+    )
+}
+
+data_dir <- args[1]
+split_seed <- as.integer(args[2])
+sel_density <- as.numeric(args[3])
+output_dir <- args[4]
+
 # Read in data
-data_dir <- here::here("data", "data_agp", "data_preproc")
-output_dir <- here::here("results", "agp_results")
 data_agp <- readRDS(file.path(data_dir, "data_agp_prep.rds"))
 
 # Create df with necessary data
@@ -53,12 +84,10 @@ model_seed <- 2025
 aug_factor <- 3
 rf_trees <- 500
 xgb_trees <- 100
-split_seeds <- 1:20
-sel_density <- 0.1
 
 # Wrapper for a single split seed
 run_one_split <- function(split_seed) {
-    # List to store ilr matricies
+    # List to store ilr matrices
     ilr_list <- list()
 
     # Train-test split
@@ -72,7 +101,7 @@ run_one_split <- function(split_seed) {
     train_data <- training(split)
     test_data <- testing(split)
 
-    # Get the indicies of both sets - needed in the aug_in_p
+    # Get the indices of both sets - needed in the aug_in_p
     train_idx <- split$in_id
     test_idx <- setdiff(seq_len(nrow(agp_df)), train_idx)
 
@@ -167,6 +196,7 @@ run_one_split <- function(split_seed) {
     # Prepare x and y data (whole dataset)
     x_data <- agp_df |> select(-outcome)
     y_data <- agp_df |> select(outcome)
+
     # Augment whole datset
     aug_p_data <- aug_p_randilr(
         x_data = x_data,
@@ -245,37 +275,5 @@ run_one_split <- function(split_seed) {
     )
 }
 
-#%%
-# Small initializer that runs inside every worker
-.worker_init <- function() {
-    # load R packages used inside run_one_split() (workers are fresh R sessions)
-    for (p in c(
-        "dplyr",
-        "stringr",
-        "tidymodels",
-        "glmnet",
-        "augmentR",
-        "compositions",
-        "here",
-        "future",
-        "future.apply",
-        "trac",
-        "important"
-    )) {
-        requireNamespace(p, quietly = TRUE)
-    }
-    invisible(TRUE)
-}
-
-#%%
-# Execute workflow for all seeds
-plan(multisession, workers = 7)
-res <- future_lapply(
-    split_seeds,
-    function(s) {
-        .worker_init()
-        run_one_split(s)
-    },
-    future.seed = TRUE
-)
-future::plan(sequential)
+# Server:
+run_one_split(split_seed)
