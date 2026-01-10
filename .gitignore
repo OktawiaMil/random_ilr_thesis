@@ -19,6 +19,7 @@ results/agp_results/**
 results/lupus_results/**
 !results/lupus_results/.gitkeep
 results/test_results/**
+results/lupus_density_results/
 
 # Ignoring ad-hoc files.rd
 temp/
@@ -48,3 +49,6 @@ content/_figures/*
 content/_tables/*
 !content/_tables/
 content/_freeze/
+
+# Readme artefacts
+readme_files/*.tex
