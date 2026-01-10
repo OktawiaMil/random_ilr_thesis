@@ -1,4 +1,4 @@
----
+﻿---
 title: "Results Summary: random ILR Augmentation Methods - Pseudo-count $0.5$"
 author: "Oktawia Miluch"
 date: today
@@ -236,7 +236,7 @@ render_boxplot_per_density(
 ```
 :::
 
-## Impact of the augmentation factor on the predictive perfromance 
+## Impact of the augmentation factor on the predictive performance 
 
 The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.
 
@@ -402,7 +402,7 @@ render_boxplot_per_density(
 ```
 :::
 
-## Impact of the augmentation factor on the predictive perfromance 
+## Impact of the augmentation factor on the predictive performance 
 
 The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.
 
@@ -569,7 +569,7 @@ render_boxplot_per_density(
 ```
 :::
 
-## Impact of the augmentation factor on the predictive perfromance 
+## Impact of the augmentation factor on the predictive performance 
 
 The plots below show the impact of the augmentation factor on the selected performance metric. Each tabset corresponds to a given density of the skew-symmetric matrix used for augmentation.
 
@@ -594,3 +594,4 @@ render_aug_imp_tabs(metric = "misclassification_rate", aug_results = xgboost_pc_
 
 ```
 :::
+

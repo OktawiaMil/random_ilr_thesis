@@ -1,4 +1,4 @@
----
+﻿---
 title: "Augmentation Methods: Performance Comparison"
 author: "Oktawia Miluch"
 date: today
@@ -180,11 +180,40 @@ render_mean_metric_sections(
     rod_max = rodriguez_lasso_pc_max_lib_size,
     plot_metric = "roc_auc"
 )
+
+sel_aug_factor <- 3
+sel_pseudo_count <- "half"
+
+tables_dir <- here::here("content", "_tables", "methods_comparison")
+dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
+
+mean_metric_rf <- summarise_best_by_group(
+    rand_ilr_half = random_ilr_lasso_pc_half,
+    rand_ilr_max = random_ilr_lasso_pc_max_lib_size,
+    benchmark_max = benchmark_lasso_pc_max_lib_size,
+    benchmark_half = benchmark_lasso_pc_half,
+    rod_half = rodriguez_lasso_pc_half,
+    rod_max = rodriguez_lasso_pc_max_lib_size,
+    plot_metric = "roc_auc",
+    sel_pseudo_count = sel_pseudo_count,
+    aug_factors = sel_aug_factor,
+    format = "latex"
+)
+
+mean_metric_rf_latex <- mean_metric_rf$tables[[paste0("k_", sel_aug_factor)]]
+
+kableExtra::save_kable(
+    mean_metric_rf_latex,
+    file = file.path(
+        tables_dir,
+        sprintf("roc_auc_mean_lasso_%s_k%s.tex", sel_pseudo_count, sel_aug_factor)
+    )
+)
 ```
 
 ### Heatmap of Mean Differences
 
-The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train-test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR augmented data outperformed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -234,7 +263,7 @@ render_metric_facets_tabset(
 #| label: n_p_of_datasets
 #| echo: false
 # Capture dimensionality (p) and sample size (n) for each preprocessed dataset
-# The resulst of this code snippet are re-used in multiple 
+# The results of this code snippet are re-used in multiple 
 directory_preproc <- here::here("data", "data_preproc")
 preproc_files <- list.files(
   directory_preproc,
@@ -259,13 +288,13 @@ data_dim <- preproc_files |>
 
 ### n/p Ratio
 
-The plots below show the gain in ROC AUC from augmentation as a function of the original dataset’s **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain is defined as follows:
+The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain is defined as follows:
 
 $$
 \mathrm{ROC\; AUC\; Gain} = \frac{1}{20}\sum_{i=1}^{20} \left(\mathrm{AUC}^{\text{test}}_{\text{aug},\,i} - \mathrm{AUC}^{\text{test}}_{\text{bench},\,i}\right)
 $$
 
-Gain in the AUC is the test-set ROC AUC of the model trained on augmented data minus test-set ROC AUC of its corresponding benchmark, averaged over 20 train–test splits.
+Gain in the AUC is the test-set ROC AUC of the model trained on augmented data minus test-set ROC AUC of its corresponding benchmark, averaged over 20 train-test splits.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -344,7 +373,7 @@ render_mean_metric_sections(
 
 ### Heatmap of Mean Differences
 
-The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train-test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR augmented data outperformed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -391,7 +420,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in misclassification rate from augmentation as a function of the original dataset’s **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain in the misclassification rate is the test-set misclassification rate of the model trained on augmented data minus test-set misclassification rate of its corresponding benchmark, averaged over 20 train–test splits.
+The plots below show the gain in misclassification rate from augmentation as a function of the original dataset's **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain in the misclassification rate is the test-set misclassification rate of the model trained on augmented data minus test-set misclassification rate of its corresponding benchmark, averaged over 20 train-test splits.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -467,10 +496,39 @@ render_mean_metric_sections(
     rod_max = rodriguez_random_forest_pc_max_lib_size,
     plot_metric = "roc_auc"
 )
+
+sel_aug_factor <- 3
+sel_pseudo_count <- "half"
+
+tables_dir <- here::here("content", "_tables", "methods_comparison")
+dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
+
+mean_metric_rf <- summarise_best_by_group(
+    rand_ilr_half = random_ilr_random_forest_pc_half,
+    rand_ilr_max = random_ilr_random_forest_pc_max_lib_size,
+    benchmark_max = benchmark_random_forest_pc_max_lib_size,
+    benchmark_half = benchmark_random_forest_pc_half,
+    rod_half = rodriguez_random_forest_pc_half,
+    rod_max = rodriguez_random_forest_pc_max_lib_size,
+    plot_metric = "roc_auc",
+    sel_pseudo_count = sel_pseudo_count,
+    aug_factors = sel_aug_factor,
+    format = "latex"
+)
+
+mean_metric_rf_latex <- mean_metric_rf$tables[[paste0("k_", sel_aug_factor)]]
+
+kableExtra::save_kable(
+    mean_metric_rf_latex,
+    file = file.path(
+        tables_dir,
+        sprintf("roc_auc_mean_rf_%s_k%s.tex", sel_pseudo_count, sel_aug_factor)
+    )
+)
 ```
 
 ### Heatmap of Mean Differences
-The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train-test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR augmented data outperformed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -594,7 +652,7 @@ render_mean_metric_sections(
 ```
 
 ### Heatmap of Mean Differences
-The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train-test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR augmented data outperformed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -717,11 +775,34 @@ render_mean_metric_sections(
     rod_max = rodriguez_xgboost_pc_max_lib_size,
     plot_metric = "roc_auc"
 )
+
+mean_metric_rf <- summarise_best_by_group(
+    rand_ilr_half = random_ilr_xgboost_pc_half,
+    rand_ilr_max = random_ilr_xgboost_pc_max_lib_size,
+    benchmark_max = benchmark_xgboost_pc_max_lib_size,
+    benchmark_half = benchmark_xgboost_pc_half,
+    rod_half = rodriguez_xgboost_pc_half,
+    rod_max = rodriguez_xgboost_pc_max_lib_size,
+    plot_metric = "roc_auc",
+    sel_pseudo_count = sel_pseudo_count,
+    aug_factors = sel_aug_factor,
+    format = "latex"
+)
+
+mean_metric_rf_latex <- mean_metric_rf$tables[[paste0("k_", sel_aug_factor)]]
+
+kableExtra::save_kable(
+    mean_metric_rf_latex,
+    file = file.path(
+        tables_dir,
+        sprintf("roc_auc_mean_xgb_%s_k%s.tex", sel_pseudo_count, sel_aug_factor)
+    )
+)
 ```
 
 ### Heatmap of Mean Differences
 
-The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in ROC AUC between the random ILR and Rodriguez augmentation techniques, averaged over 20 train-test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR augmented data outperformed** (achieved a higher ROC AUC) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -844,7 +925,7 @@ render_mean_metric_sections(
 
 ### Heatmap of Mean Differences
 
-The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train–test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR–augmented data outperfromed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
+The heatmaps below show, for each pseudo-count and augmentation factor, the mean difference in misclassification rate between the random ILR and Rodriguez augmentation techniques, averaged over 20 train-test splits (performance measured on the test set). The color scale is defined so that **blue** indicates the model trained on **random ILR augmented data outperformed** (achieved a lower misclassification rate) the corresponding Rodriguez model, whereas **red** indicates the **Rodriguez model performed better**.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -948,3 +1029,4 @@ plot_aug_in_p_density_boxplot(
   model_name = "XGBoost", 
   pseudo_count = "Pseudo-count = 1/ max library size")
 ```
+

@@ -186,7 +186,7 @@ render_roc_curve_panels(
 :::
 
 
-## Impact of the augmentation factor on the predictive perfromance 
+## Impact of the augmentation factor on the predictive performance 
 ### ROC AUC 
 
 ```{r}
@@ -196,7 +196,7 @@ render_roc_curve_panels(
 aug_factor_impact(data = lasso_pc_half, plot_metric = "roc_auc")
 ```
 
-### Missclasification Rate
+### Misclassification Rate
 
 ```{r}
 #| label: lasso_aug_fac_imp_misclas
@@ -295,7 +295,7 @@ render_roc_curve_panels(
 :::
 
 
-## Impact of the augmentation factor on the predictive perfromance 
+## Impact of the augmentation factor on the predictive performance 
 ### ROC AUC 
 
 ```{r}
@@ -305,7 +305,7 @@ render_roc_curve_panels(
 aug_factor_impact(data = lasso_ilr_pc_half, plot_metric = "roc_auc")
 ```
 
-### Missclasification Rate
+### Misclassification Rate
 
 ```{r}
 #| label: lasso_ilr_aug_fac_imp_misclas
@@ -405,7 +405,7 @@ render_roc_curve_panels(
 :::
 
 
-## Impact of the augmentation factor on the predictive perfromance 
+## Impact of the augmentation factor on the predictive performance 
 ### ROC AUC 
 
 ```{r}
@@ -415,7 +415,7 @@ render_roc_curve_panels(
 aug_factor_impact(data = random_forest_pc_half, plot_metric = "roc_auc")
 ```
 
-### Missclasification Rate
+### Misclassification Rate
 
 ```{r}
 #| label: rf_aug_fac_imp_misclas
@@ -520,7 +520,7 @@ render_roc_curve_panels(
 :::
 
 
-## Impact of the augmentation factor on the predictive perfromance 
+## Impact of the augmentation factor on the predictive performance 
 ### ROC AUC 
 ```{r}
 #| label: xgb_aug_fac_imp_roc
@@ -529,10 +529,11 @@ render_roc_curve_panels(
 aug_factor_impact(data = xgboost_pc_half, plot_metric = "roc_auc")
 ```
 
-### Missclasification Rate
+### Misclassification Rate
 ```{r}
 #| label: xgb_aug_fac_imp_misclas
 #| echo: false
 #| results: asis
 aug_factor_impact(data = xgboost_pc_half, plot_metric = "misclassification_rate")
 ```
+

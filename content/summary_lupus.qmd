@@ -1,4 +1,4 @@
----
+﻿---
 title: "Results Summary: Lupus Dataset"
 author: "Oktawia Miluch"
 date: today
@@ -66,7 +66,7 @@ dir_results <- here::here("results", "lupus_results")
 res <- read_results(dir_results)
 ```
 
-In this script 4 models are considered: 3 already used in the previous scripts, namely: logistic regression with L1 penalty, Random Forest and XGBoost. The fourth used model is the sparse log-contrast classification model as implemented in the R package `trac` version 0.0.2 (see [viettr/trac](https://github.com/viettr/trac/tree/master) GitHub repository for the implementation details). 
+In this script, 4 models are considered: 3 already used in the previous scripts, namely logistic regression with L1 penalty, Random Forest, and XGBoost. The fourth model is the sparse log-contrast classification model as implemented in the R package `trac` version 0.0.2 (see [viettr/trac](https://github.com/viettr/trac/tree/master) GitHub repository for implementation details). 
 
 **Sparse log-contrast classification model with square hinge loss:**  The model can be described as follows:
 $$
@@ -93,7 +93,7 @@ $$
 \end{cases}
 $$
 
-Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast model. The sparse log contrast modle is fitted only on the original data (not augmented) and its purpose is to provide additional benchmark for the logistic regression model with L1 penalty.
+Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast model. The sparse log contrast model is fitted only on the original data (not augmented) and its purpose is to provide an additional benchmark for the logistic regression model with L1 penalty.
 
 # Logistic regression with L1 penalty
 ## Summary Table
@@ -125,22 +125,42 @@ boxplot_density(res_density$lasso, plot_metric = "misclassification_rate")
 ```
 
 ## Interpretability
-The purpose of the below two subchapters is to understand better which original features (or which contrasts) are most influential for a specific data augmentation strategy.
+The purpose of the two subchapters below is to better understand which original features (or which contrasts) are most influential for a specific data augmentation strategy.
 
 ### Global view
-Below tables shows the avergae number of $\beta$ coeffcients (average over $20$ train-test splits of the dataset) that were estimated to be non-zero in the logistic regression model with $L1$ penalty and the total number of estimated coefficients for different variants of the model. 
+The table below shows the average number of $\beta$ coefficients (average over $20$ train-test splits of the dataset) that were estimated to be non-zero in the logistic regression model with $L1$ penalty and the total number of estimated coefficients for different variants of the model. 
 
 ```{r}
-log_reg_summary_tbl(res)
+#| label: lasso_non_zero_coefs_avg
+tables_dir <- here::here("content", "_tables", "summary_lupus")
+dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
+
+log_reg_tbl <- log_reg_summary_tbl(res)
+log_reg_tbl_latex <- log_reg_summary_tbl(res, format = "latex")
+
+kableExtra::save_kable(
+  log_reg_tbl_latex,
+  file = file.path(tables_dir, "lasso_non_zero_coefs_avg.tex")
+)
+
+log_reg_tbl
 ```
 
-In the case of random ilr augmentatin in p and teh combination of Aitchison Mixup and augmentation in p, one cas analyse how many times, on average among $20$ train-test splits, the $\beta$ coeffcients that were estimated to be non-zero, are associated with the standard or random ilr transformation. Below table provieds such summary:
+In the case of random ilr augmentation in p and the combination of Aitchison Mixup and augmentation in p, one can analyse how many times, on average among $20$ train-test splits, the $\beta$ coefficients that were estimated to be non-zero are associated with the standard or random ilr transformation. The table below provides such a summary:
 
 ```{r}
-avg_random_vs_standard(res)
+avg_random_tbl <- avg_random_vs_standard(res)
+avg_random_tbl_latex <- avg_random_vs_standard(res, format = "latex")
+
+kableExtra::save_kable(
+  avg_random_tbl_latex,
+  file = file.path(tables_dir, "avg_random_vs_standard.tex")
+)
+
+avg_random_tbl
 ```
 
-The purpose of the below section is to gain better understaniding on the original features that contribute to standard ilr coordinates and if applicable, to the random ilr coordinates that were selected by the model (have non-zero beta coefficients). The below table shows the original features that contribute in numerator to the standard ILR coordinates that are selected (almost) in all 20 data splits. For example, in the model trained on the data augmented in p ILR coordinate associated with standard ILR transformation that has in the numerator feature T4_em is selected in all 20 data splits.
+The purpose of the section below is to gain a better understanding of the original features that contribute to standard ilr coordinates and, if applicable, to the random ilr coordinates that were selected by the model (have non-zero beta coefficients). The table below shows the original features that contribute to the numerator of the standard ILR coordinates that are selected in (almost) all 20 data splits. For example, in the model trained on the data augmented in p, the ILR coordinate associated with the standard ILR transformation that has the feature T4_em in the numerator is selected in all 20 data splits.
 
 ```{r}
 # Get names of the features in the input data:
@@ -163,7 +183,7 @@ aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_st
 aitchison_aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aitchison_aug_in_p", top_contr = 3, res = res, model = "lasso")
 
 # Most influential contributors for standard ILR across 20 data splits
-top_k_standard_ilr(
+top_k_standard_tbl <- top_k_standard_ilr(
   tbls = list(
     benchmark_contr_tbl,
     aitchison_contr_tbl,
@@ -179,11 +199,38 @@ top_k_standard_ilr(
   ),
   cov_names = cov_names
 )
+
+top_k_standard_tbl_latex <- top_k_standard_ilr(
+  tbls = list(
+    benchmark_contr_tbl,
+    aitchison_contr_tbl,
+    aug_p_contr_tbl,
+    aitchison_aug_p_contr_tbl
+  ),
+  top_n = c(6, 10, 5, 7),
+  section_titles = c(
+    "Benchmark",
+    "Aitchison Mixup",
+    "Augmentation in p",
+    "Aitchison Mixup & Augmentation in p"
+  ),
+  cov_names = cov_names,
+  format = "latex",
+  latex_table_env = "tabularx"
+)
+
+kableExtra::save_kable(
+  top_k_standard_tbl_latex,
+  file = file.path(tables_dir, "top_k_standard_ilr.tex")
+)
+
+top_k_standard_tbl
 ```
 
 The below table summarizes the original features that are most often in the top 3 contributors to the random ILR coordinates that get selected by the model ($\beta \neq  0$). For example, in the case of data augmented in p, feature Prolif is within top 3 contributors to the 31 random ILR coordinates that are selected by the models obtained from 20 data splits. 
 
 ```{r}
+#| lable: random_ilr_contr_lasso
 ### Random ILR part
 aug_random_tbl <- aug_p_contr_tbl |>
  unnest(random_ilr) |> 
@@ -202,19 +249,40 @@ aitchison_random_tbl <- aitchison_aug_p_contr_tbl |>
  head(n = 6)
 
 # Table showing features that are most often among top 3 contributors
-bind_rows(
- aug_random_tbl,
- aitchison_random_tbl
-) |>
- knitr::kable(
-  col.names = c("Original feature", "# of random ILR coordinates"),
-  caption = "Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates",
-  escape = FALSE,
-  align = c("l", "c", "c")
- ) |>
- kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
- kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
- kableExtra::kable_styling(full_width = TRUE)
+random_ilr_combined <- bind_rows(
+  aug_random_tbl,
+  aitchison_random_tbl
+)
+
+random_ilr_tbl <- random_ilr_combined |>
+  knitr::kable(
+    col.names = c("Original feature", "# of random ILR coordinates"),
+    caption = "Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates",
+    escape = FALSE,
+    align = c("l", "c")
+  ) |>
+  kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
+  kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
+  kableExtra::kable_styling(full_width = TRUE)
+
+random_ilr_tbl_latex <- random_ilr_combined |>
+  knitr::kable(
+    col.names = c("Original feature", "# of random ILR coordinates"),
+    caption = "Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates",
+    escape = FALSE,
+    align = c("l", "c"),
+    format = "latex"
+  ) |>
+  kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
+  kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
+  kableExtra::kable_styling(full_width = FALSE, latex_table_env = "tabularx")
+
+kableExtra::save_kable(
+  random_ilr_tbl_latex,
+  file = file.path(tables_dir, "random_ilr_contr_lasso.tex")
+)
+
+random_ilr_tbl
 ```
 
 ### Local view
@@ -228,13 +296,23 @@ sel_coords <- benchmark_contr_tbl |>
   filter(split == 11) |> 
   unnest(standard_ilr) |>  
   nrow()
+
 ```
 
 For analysed data split, in the benchmark model `` `r sel_coords` `` standard ILR coordinates were selected.
 
 ```{r}
 # Benchmark
-standard_ilr_one_split(benchmark_contr_tbl, 11)
+standard_ilr_one_split(benchmark_contr_tbl, 11, cov_names = cov_names)
+
+standard_ilr_one_split(
+  benchmark_contr_tbl,
+  11,
+  cov_names = cov_names,
+  format = "latex",
+  output_dir = tables_dir,
+  file_name = "standard_ilr_one_split_benchmark_11.tex"
+)
 ```
 
 #### Aitchison Mixup
@@ -250,7 +328,7 @@ For analysed data split, in the model trained on Aitchison Mixup augmented data 
 
 ```{r}
 # Aitchison Mixup
-standard_ilr_one_split(aitchison_contr_tbl, 11)
+standard_ilr_one_split(aitchison_contr_tbl, 11, cov_names = cov_names)
 ```
 
 #### Augmentation in p
@@ -277,7 +355,87 @@ For analysed data split, in the model trained on data augmented in p `` `r sel_c
 heatmap_contr(aug_p_contr_tbl, sel_split = 11, cov_names = cov_names)
 
 ## Standard ilr part
-standard_ilr_one_split(aug_p_contr_tbl, 11)
+standard_ilr_one_split(aug_p_contr_tbl, 11, cov_names = cov_names)
+standard_ilr_one_split(
+  aug_p_contr_tbl,
+  11,
+  cov_names = cov_names,
+  format = "latex",
+  output_dir = tables_dir,
+  file_name = "standard_ilr_one_split_aug_p_11.tex"
+)
+```
+
+Below plotsshow estimated coefficients for he analyse data split for the 
+```{r}
+#\ label: lollipop_plot_lasso
+# Lolipop plot with coefficients 
+df_plot <- res$lasso |> 
+  filter(aug_strategy == "aug_in_p", split_seed == 11) |> 
+  select(-c(aug_factor:lambda_1se)) |> 
+  unnest(beta_1se) |> 
+  filter(estimate != 0, term != "(Intercept)") |>
+  mutate(
+      base_id = if_else(str_detect(term, "_\\d+$"),
+                        str_extract(term, "(?<=_)\\d+$"),
+                        "standard"),
+      base = if_else(base_id == "standard",
+                    "Standard ILR",
+                    paste("Random ILR base", base_id)),
+      coord = str_remove(term, "_\\d+$") |> str_remove("^V") |> as.integer(),
+      coord_label = paste0("Coordinate ", coord)
+    )
+
+base_levels <- c(
+  "Standard ILR",
+  paste("Random ILR base", sort(unique(df_plot$base_id[df_plot$base_id != "standard"])))
+)
+
+df_plot <- df_plot |>
+  mutate(base = factor(base, levels = base_levels)) |>
+  arrange(base, desc(abs(estimate))) |>
+  mutate(y = row_number())
+
+base_bounds <- df_plot |>
+  group_by(base) |>
+  summarise(
+    y_min = min(y),
+    y_max = max(y),
+    y_mid = (y_min + y_max) / 2,
+    .groups = "drop"
+  ) |>
+  arrange(base)
+
+sep_lines <- base_bounds |>
+  mutate(y_sep = y_max + 0.5) |>
+  slice_head(n = 2)
+
+x_lab_inside <- 1
+x_min <- min(df_plot$estimate, 0, x_lab_inside)
+x_max <- max(df_plot$estimate, x_lab_inside)
+
+ggplot(df_plot, aes(x = estimate, y = y, color = base)) +
+  geom_segment(aes(x = 0, xend = estimate, yend = y), linewidth = 1.1) +
+  geom_point(size = 3.2) +
+  geom_hline(data = sep_lines, aes(yintercept = y_sep), color = "grey70") +
+  geom_text(
+    data = base_bounds,
+    aes(x = x_lab_inside, y = y_mid, label = base),
+    hjust = 0,
+    fontface = "bold",
+    size = 4.5,
+    color = "grey20"
+  ) +
+  scale_y_continuous(breaks = df_plot$y, labels = df_plot$coord_label) +
+  scale_color_viridis_d(option = "D", end = 0.9, guide = "none")  +
+  labs(
+    x = expression(paste("Estimates of ", beta, " coefficients")),
+    y = NULL,
+    title = "Coefficients of L1-penalized logistic regression by ILR basis",
+    subtitle = "Data split: 11"
+  ) +
+  coord_cartesian(xlim = c(x_min, x_max)) +
+  theme_bw()
 ```
 
 #### Aitchison Mixup + Augmentation in p
@@ -303,7 +461,7 @@ For analysed data split, in the model trained on data augmented by Aitchison Mix
 # Aitchison + aug in p
 heatmap_contr(aitchison_aug_p_contr_tbl, sel_split = 11, cov_names = cov_names)
 
-standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11)
+standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11, cov_names = cov_names)
 ```
 
 # Random Forest
@@ -331,7 +489,8 @@ boxplot_density(res_density$RF, plot_metric = "misclassification_rate")
 ```
 
 ## Feature Importance
-Feature importance is computed on the test data. Below table shows original features that contribute most often to standard ILR coordiantes that achieve the highest VIMP scores. For example, feature T4_em contributes in numerator of the standard ILR coordinate that is selected by all models in nearly all data splits.
+Feature importance is computed on the test data. For each model trained on one data split 5 ilr coordinates with the higest variable importance scores are identified. Then, for those coordinates, 3 original features that contributed most to them are identified. 
+Below table shows original features that contribute most often to standard ILR coordiantes that achieve the highest VIMP scores. For example, feature T4_em contributes in numerator of the standard ILR coordinate that is selected by all models in nearly all data splits.
 
 ```{r}
 # Get contributors to the ilr coordinates that achieve the highest VIMP in a model across all 20 test-train splits
@@ -346,7 +505,7 @@ aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_st
 aitchison_aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aitchison_aug_in_p", top_contr = 3, res = res, model = "RF", num_top_feat = 5)
 
 # Most influential contributors for standard ILR across 20 data splits
-top_k_standard_ilr(
+top_k_standard_tbl <- top_k_standard_ilr(
   tbls = list(
     benchmark_contr_tbl,
     aitchison_contr_tbl,
@@ -363,11 +522,38 @@ top_k_standard_ilr(
   cov_names = cov_names
 )
 
+top_k_standard_tbl_latex <- top_k_standard_ilr(
+  tbls = list(
+    benchmark_contr_tbl,
+    aitchison_contr_tbl,
+    aug_p_contr_tbl,
+    aitchison_aug_p_contr_tbl
+  ),
+  top_n = rep(3, 4),
+  section_titles = c(
+    "Benchmark",
+    "Aitchison Mixup",
+    "Augmentation in p",
+    "Aitchison Mixup & Augmentation in p"
+  ),
+  cov_names = cov_names,
+  format = "latex",
+  latex_table_env = "tabularx"
+)
+
+kableExtra::save_kable(
+  top_k_standard_tbl_latex,
+  file = file.path(tables_dir, "top_k_standard_ilr_RF.tex")
+)
+
+top_k_standard_tbl
+
 ```
 
 The below table summarizes the original features that are most often in the top 3 contributors to the random ILR coordinates that achieve the highest VIMP. Below frequencies are significantly smaller than in the case or logistic regression with L1 penalty. This is the consequence of the fact that I filter out all ILR coordinates that have negative importance so we might end up with no features from a given segment (standard or random ILR).
 
 ```{r}
+#| label: random_ilr_contr_rf
 ### Random ILR part
 aug_random_tbl <- aug_p_contr_tbl |>
  unnest(random_ilr) |> 
@@ -386,19 +572,40 @@ aitchison_random_tbl <- aitchison_aug_p_contr_tbl |>
  head(n = 4)
 
 # Table showing features that are most often among top 3 contributors
-bind_rows(
+random_ilr_combined <- bind_rows(
  aug_random_tbl,
  aitchison_random_tbl
-) |>
+)
+
+random_ilr_tbl <- random_ilr_combined |>
  knitr::kable(
   col.names = c("Original feature", "# of random ILR coordinates"),
   caption = "Summary of features that are most often within top 3 contributors to the **random ILR** coordinates with the highest VIMP",
   escape = FALSE,
-  align = c("l", "c", "c")
+  align = c("l", "c")
  ) |>
  kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
  kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
  kableExtra::kable_styling(full_width = TRUE)
+
+random_ilr_tbl_latex <- random_ilr_combined |>
+ knitr::kable(
+  col.names = c("Original feature", "# of random ILR coordinates"),
+  caption = "Summary of features that are most often within top 3 contributors to the **random ILR** coordinates with the highest VIMP",
+  escape = FALSE,
+  align = c("l", "c"),
+  format = "latex"
+ ) |>
+ kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
+ kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
+ kableExtra::kable_styling(full_width = FALSE, latex_table_env = "tabularx")
+
+kableExtra::save_kable(
+  random_ilr_tbl_latex,
+  file = file.path(tables_dir, "random_ilr_contr_rf.tex")
+)
+
+random_ilr_tbl
 ```
 
 ### Local view
@@ -418,7 +625,7 @@ For analysed data split, in the benchmark model `` `r sel_coords` `` standard IL
 
 ```{r}
 # Benchmark
-standard_ilr_one_split(benchmark_contr_tbl, 11)
+standard_ilr_one_split(benchmark_contr_tbl, 11, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup
@@ -434,7 +641,7 @@ For analysed data split, in the model trained on Aitchison Mixup augmented data 
 
 ```{r}
 # Aitchison Mixup
-standard_ilr_one_split(aitchison_contr_tbl, 11)
+standard_ilr_one_split(aitchison_contr_tbl, 11, cov_names = cov_names)
 ```
 
 #### Augmentation in p
@@ -461,7 +668,7 @@ For analysed data split, in the model trained on data augmented in p `` `r sel_c
 heatmap_contr(aug_p_contr_tbl, sel_split = 11, cov_names = cov_names)
 
 ## Standard ilr part
-standard_ilr_one_split(aug_p_contr_tbl, 11)
+standard_ilr_one_split(aug_p_contr_tbl, 11, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup + Augmentation in p
@@ -484,7 +691,7 @@ For analysed data split, in the model trained on data augmented by Aitchison Mix
 
 
 ```{r}
-standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11)
+standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11, cov_names = cov_names)
 ```
 
 
@@ -600,7 +807,7 @@ For analysed data split, in the benchmark model `` `r sel_coords` `` standard IL
 
 ```{r}
 # Benchmark
-standard_ilr_one_split(benchmark_contr_tbl, 11)
+standard_ilr_one_split(benchmark_contr_tbl, 11, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup
@@ -616,7 +823,7 @@ For analysed data split, in the model trained on Aitchison Mixup augmented data 
 
 ```{r}
 # Aitchison Mixup
-standard_ilr_one_split(aitchison_contr_tbl, 11)
+standard_ilr_one_split(aitchison_contr_tbl, 11, cov_names = cov_names)
 ```
 
 #### Augmentation in p
@@ -640,7 +847,7 @@ For analysed data split, in the model trained on data augmented in p `` `r sel_c
 ```{r}
 # Aug in p
 ## Standard ilr part
-standard_ilr_one_split(aug_p_contr_tbl, 11)
+standard_ilr_one_split(aug_p_contr_tbl, 11, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup + Augmentation in p
@@ -662,6 +869,8 @@ sel_coord_rand <- aitchison_aug_p_contr_tbl |>
 For analysed data split, in the model trained on data augmented by Aitchison Mixup and augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` `` random ILR coordinates were selected.
 
 ```{r}
-standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11)
+standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11, cov_names = cov_names)
 ```
+
+
 

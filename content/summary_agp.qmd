@@ -1,4 +1,4 @@
----
+﻿---
 title: "Results Summary: AGP Dataset"
 author: "Oktawia Miluch"
 date: today
@@ -67,7 +67,7 @@ dir_results <- file.path(here::here(), "results", "agp_results")
 res <- read_results(dir_results)
 ```
 
-In this script 4 models are considered: 3 already used in the previous scripts, namely: logistic regression with L1 penalty, Random Forest and XGBoost. The fourth used model is the sparse log-contrast classification model as implemented in the R package `trac` version 0.0.2 (see [viettr/trac](https://github.com/viettr/trac/tree/master) GitHub repository for the implementation details). 
+In this script, 4 models are considered: 3 already used in the previous scripts, namely logistic regression with L1 penalty, Random Forest, and XGBoost. The fourth model is the sparse log-contrast classification model as implemented in the R package `trac` version 0.0.2 (see [viettr/trac](https://github.com/viettr/trac/tree/master) GitHub repository for implementation details). 
 
 **Sparse log-contrast classification model with square hinge loss:**  The model can be described as follows:
 $$
@@ -94,7 +94,7 @@ $$
 \end{cases}
 $$
 
-Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast models. The sparse log contrast modle is fitted only on the original data (not augmented) and its purpose is to provide additional benchmark for the logistic regression model with L1 penalty.
+Given this setup, the fitted model outputs a score for each observation, which can be thresholded to obtain class predictions. To obtain probabilities, an additional step is required (e.g., additional model transforming scores into probabilities). Consequently, Brier scores are not reported for the sparse log-contrast models. The sparse log contrast model is fitted only on the original data (not augmented) and its purpose is to provide an additional benchmark for the logistic regression model with L1 penalty.
 
 # Logistic regression with L1 penalty
 ## Summary Table
@@ -116,24 +116,46 @@ roc_curve_plot(res$lasso, res$sparse_log_contrast)
 ```
 
 ## Interpretability
-The purpose of the below two subchapters is to understand better which original features (or which contrasts) are most influential for a specific data augmentation strategy.
+The purpose of the two subchapters below is to better understand which original features (or which contrasts) are most influential for a specific data augmentation strategy.
 
 ### Global view
-Below tables shows the avergae number of $\beta$ coeffcients (average over $20$ train-test splits of the dataset) that were estimated to be non-zero in the logistic regression model with $L1$ penalty and the total number of estimated coefficients for different variants of the model. 
+The table below shows the average number of $\beta$ coefficients (average over $20$ train-test splits of the dataset) that were estimated to be non-zero in the logistic regression model with $L1$ penalty and the total number of estimated coefficients for different variants of the model. 
 
 ```{r}
-log_reg_summary_tbl(res)
+#| label: lasso_non_zero_coefs_avg
+tables_dir <- here::here("content", "_tables", "summary_agp")
+dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
+
+log_reg_tbl <- log_reg_summary_tbl(res)
+log_reg_tbl_latex <- log_reg_summary_tbl(res, format = "latex")
+
+kableExtra::save_kable(
+  log_reg_tbl_latex,
+  file = file.path(tables_dir, "lasso_non_zero_coefs_avg.tex")
+)
+
+log_reg_tbl
 ```
 
-In the case of random ilr augmentatin in p and teh combination of Aitchison Mixup and augmentation in p, one cas analyse how many times, on average among $20$ train-test splits, the $\beta$ coeffcients that were estimated to be non-zero, are associated with the standard or random ilr transformation. Below table provieds such summary:
+In the case of random ilr augmentation in p and the combination of Aitchison Mixup and augmentation in p, one can analyse how many times, on average among $20$ train-test splits, the $\beta$ coefficients that were estimated to be non-zero are associated with the standard or random ilr transformation. The table below provides such a summary:
 
 ```{r}
-avg_random_vs_standard(res)
+#| label: standard_vs_random_lasso
+avg_random_tbl <- avg_random_vs_standard(res)
+avg_random_tbl_latex <- avg_random_vs_standard(res, format = "latex")
+
+kableExtra::save_kable(
+  avg_random_tbl_latex,
+  file = file.path(tables_dir, "avg_random_vs_standard.tex")
+)
+
+avg_random_tbl
 ```
 
-The purpose of the below section is to gain better understaniding on the original features that contribute to standard ilr coordinates and if applicable, to the random ilr coordinates that were selected by the model (have non-zero beta coefficients). 
+The purpose of the section below is to gain a better understanding of the original features that contribute to standard ilr coordinates and, if applicable, to the random ilr coordinates that were selected by the model (have non-zero beta coefficients). 
 
 ```{r}
+#| label: lasso_top_k_standard_ilr
 # Get names of the features in the input data:
 data_dir_agp <- here::here("data", "data_agp", "data_preproc")
 data_agp <- readRDS(file.path(data_dir_agp, "data_agp_prep.rds"))
@@ -158,7 +180,7 @@ aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_st
 aitchison_aug_p_contr_tbl <- contributors_all_splits(dir_results = dir_results, sel_aug_strategy = "aitchison_aug_in_p", top_contr = 3, res = res, model = "lasso")
 
 # Most influential contributors for standard ILR across 20 data splits
-top_k_standard_ilr(
+top_k_standard_tbl <- top_k_standard_ilr(
   tbls = list(
     benchmark_contr_tbl,
     aitchison_contr_tbl,
@@ -174,11 +196,38 @@ top_k_standard_ilr(
   ),
   cov_names = cov_names
 )
+
+top_k_standard_tbl_latex <- top_k_standard_ilr(
+  tbls = list(
+    benchmark_contr_tbl,
+    aitchison_contr_tbl,
+    aug_p_contr_tbl,
+    aitchison_aug_p_contr_tbl
+  ),
+  top_n = c(5, 9, 3, 4),
+  section_titles = c(
+    "Benchmark",
+    "Aitchison Mixup",
+    "Augmentation in p",
+    "Aitchison Mixup & Augmentation in p"
+  ),
+  cov_names = cov_names,
+  format = "latex",
+  latex_table_env = "tabularx"
+)
+
+kableExtra::save_kable(
+  top_k_standard_tbl_latex,
+  file = file.path(tables_dir, "top_k_standard_ilr.tex")
+)
+
+top_k_standard_tbl
 ```
 
 The below table summarizes the original features that are most often in the top 3 contributors to the random ILR coordinates that get selected by the model ($\beta \neq  0$).
 
 ```{r}
+#| lable: random_ilr_contr_lasso
 ### Random ILR part
 aug_random_tbl <- aug_p_contr_tbl |>
  unnest(random_ilr) |> 
@@ -197,19 +246,40 @@ aitchison_random_tbl <- aitchison_aug_p_contr_tbl |>
  head(n = 5)
 
 # Table showing features that are most often among top 3 contributors
-bind_rows(
- aug_random_tbl,
- aitchison_random_tbl
-) |>
- knitr::kable(
-  col.names = c("Original feature", "# of random ILR coordinates"),
-  caption = "Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates",
-  escape = FALSE,
-  align = c("l", "c", "c")
- ) |>
- kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
- kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
- kableExtra::kable_styling(full_width = TRUE)
+random_ilr_combined <- bind_rows(
+  aug_random_tbl,
+  aitchison_random_tbl
+)
+
+random_ilr_tbl <- random_ilr_combined |>
+  knitr::kable(
+    col.names = c("Original feature", "# of random ILR coordinates"),
+    caption = "Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates",
+    escape = FALSE,
+    align = c("l", "c")
+  ) |>
+  kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
+  kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
+  kableExtra::kable_styling(full_width = TRUE)
+
+random_ilr_tbl_latex <- random_ilr_combined |>
+  knitr::kable(
+    col.names = c("Original feature", "# of random ILR coordinates"),
+    caption = "Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates",
+    escape = FALSE,
+    align = c("l", "c"),
+    format = "latex"
+  ) |>
+  kableExtra::group_rows("Augmentation in p", 1, nrow(aug_random_tbl)) |>
+  kableExtra::group_rows("Aitchison Mixup & Augmentation in p", nrow(aug_random_tbl) + 1, nrow(aug_random_tbl) + nrow(aitchison_random_tbl)) |>
+  kableExtra::kable_styling(full_width = FALSE, latex_table_env = "tabularx")
+
+kableExtra::save_kable(
+  random_ilr_tbl_latex,
+  file = file.path(tables_dir, "random_ilr_contr_lasso.tex")
+)
+
+random_ilr_tbl
 ```
 
 ### Local view
@@ -230,7 +300,7 @@ For analysed data split, in the benchmark model `` `r sel_coords` `` standard IL
 
 ```{r}
 # Benchmark
-standard_ilr_one_split(benchmark_contr_tbl, 14)
+standard_ilr_one_split(benchmark_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup
@@ -248,7 +318,7 @@ For analysed data split, in the model trained on Aitchison Mixup augmented data 
 
 ```{r}
 # Aitchison Mixup
-standard_ilr_one_split(aitchison_contr_tbl, 14)
+standard_ilr_one_split(aitchison_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Augmentation in p
@@ -275,7 +345,7 @@ For analysed data split, in the model trained on data augmented in p `` `r sel_c
 heatmap_contr(aug_p_contr_tbl, sel_split = 14, cov_names = cov_names)
 
 ## Standard ilr part
-standard_ilr_one_split(aug_p_contr_tbl, 14)
+standard_ilr_one_split(aug_p_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup + Augmentation in p
@@ -306,6 +376,16 @@ heatmap_contr(aitchison_aug_p_contr_tbl, sel_split = 14, cov_names = cov_names)
 # Random Forest
 ## Summary Table
 ```{r}
+#| label: summary_perf_rf
+tables_dir <- here::here("content", "_tables", "summary_agp")
+dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
+
+summary_perf_rf_latex <- summary_tbl_mean_perf(res$RF, format = "latex")
+kableExtra::save_kable(
+  summary_perf_rf_latex,
+  file = file.path(tables_dir, "summary_perf_rf.tex")
+)
+
 summary_tbl_mean_perf(res$RF)
 ```
 
@@ -410,7 +490,7 @@ For analysed data split, in the benchmark model `` `r sel_coords` `` standard IL
 
 ```{r}
 # Benchmark
-standard_ilr_one_split(benchmark_contr_tbl, 14)
+standard_ilr_one_split(benchmark_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup
@@ -426,7 +506,7 @@ For analysed data split, in the model trained on Aitchison Mixup augmented data 
 
 ```{r}
 # Aitchison Mixup
-standard_ilr_one_split(aitchison_contr_tbl, 14)
+standard_ilr_one_split(aitchison_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Augmentation in p
@@ -451,7 +531,7 @@ For analysed data split, in the model trained on data augmented in p `` `r sel_c
 # Aug in p
 ## Random ilr part
 heatmap_contr(aug_p_contr_tbl, sel_split = 14, cov_names = cov_names)
-standard_ilr_one_split(aug_p_contr_tbl, 14)
+standard_ilr_one_split(aug_p_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup + Augmentation in p
@@ -474,12 +554,22 @@ For analysed data split, in the model trained on data augmented by Aitchison Mix
 
 ```{r}
 heatmap_contr(aitchison_aug_p_contr_tbl, sel_split = 14, cov_names = cov_names)
-standard_ilr_one_split(aitchison_aug_p_contr_tbl, 14)
+standard_ilr_one_split(aitchison_aug_p_contr_tbl, 14, cov_names = cov_names)
 ```
 
 # XGBoost
 ## Summary Table
 ```{r}
+#| label: summary_perf_xgb
+tables_dir <- here::here("content", "_tables", "summary_agp")
+dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
+
+summary_perf_xgb_latex <- summary_tbl_mean_perf(res$XGB, format = "latex")
+kableExtra::save_kable(
+  summary_perf_xgb_latex,
+  file = file.path(tables_dir, "summary_perf_xgb.tex")
+)
+
 summary_tbl_mean_perf(res$XGB)
 ```
 
@@ -584,7 +674,7 @@ For analysed data split, in the benchmark model `` `r sel_coords` `` standard IL
 
 ```{r}
 # Benchmark
-standard_ilr_one_split(benchmark_contr_tbl, 14)
+standard_ilr_one_split(benchmark_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup
@@ -600,7 +690,7 @@ For analysed data split, in the model trained on Aitchison Mixup augmented data 
 
 ```{r}
 # Aitchison Mixup
-standard_ilr_one_split(aitchison_contr_tbl, 14)
+standard_ilr_one_split(aitchison_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Augmentation in p
@@ -625,7 +715,7 @@ For analysed data split, in the model trained on data augmented in p `` `r sel_c
 # Aug in p
 ## Random ilr part
 heatmap_contr(aug_p_contr_tbl, sel_split = 14, cov_names = cov_names)
-standard_ilr_one_split(aug_p_contr_tbl, 14)
+standard_ilr_one_split(aug_p_contr_tbl, 14, cov_names = cov_names)
 ```
 
 #### Aitchison Mixup + Augmentation in p
@@ -649,3 +739,5 @@ For analysed data split, in the model trained on data augmented by Aitchison Mix
 ```{r}
 heatmap_contr(aitchison_aug_p_contr_tbl, sel_split = 14, cov_names = cov_names)
 ```
+
+
