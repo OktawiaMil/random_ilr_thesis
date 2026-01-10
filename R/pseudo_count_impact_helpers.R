@@ -246,13 +246,23 @@ mean_diff_heatmap <- function(
     limit <- max(abs(range(data_plot$mean_diff, na.rm = TRUE)))
     limit <- round(limit, 3)
 
+    # Scale color depends on the metric(good means something different for 2 metrics)
+    # negative misclassification rate is good, whereas for roc auc positive change is good
+    if (
+        plot_metric %in% c("misclassification_rate", "missclassification_rate")
+    ) {
+        col_scale <- list(negative_chg = "#2b83ba", positive_chg = "#d7191c")
+    } else {
+        col_scale <- list(negative_chg = "#d7191c", positive_chg = "#2b83ba")
+    }
+
     metric_name <- unique(data_plot$.metric)
     ggplot(data_plot, aes(x = data_id, y = augmentation, fill = mean_diff)) +
-        geom_tile(color = "white") +
+        geom_tile(color = "grey85") +
         scale_fill_gradient2(
-            low = "blue",
+            low = col_scale$negative_chg,
             mid = "white",
-            high = "red",
+            high = col_scale$positive_chg,
             midpoint = 0,
             limits = c(-limit, limit),
             name = "Mean difference"
@@ -274,7 +284,7 @@ mean_diff_heatmap <- function(
         ) +
         theme_bw() +
         theme(
-            #legend.position = "bottom",
+            legend.position = "bottom",
             plot.title = element_text(size = 16),
             plot.subtitle = element_text(size = 14),
             axis.title.x = element_text(size = 12),

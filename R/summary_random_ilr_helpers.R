@@ -495,6 +495,113 @@ save_metric_table_latex_random_ilr <- function(
 # Function that creates the plot showing the impact of augmentation factor on
 # selected performance metric, 1 plot in 1 tabset corresponds to 1 density of
 # GHL matrix
+aug_factor_impact_boxplot_random_ilr <- function(
+  data,
+  plot_metric = c(
+    "roc_auc",
+    "accuracy",
+    "misclassification_rate"
+  )
+) {
+  plot_metric <- match.arg(plot_metric)
+
+  if (plot_metric != "misclassification_rate") {
+    metric_data <- data |>
+      unnest(perf_metrics) |>
+      filter(.metric == plot_metric) |>
+      mutate(
+        .metric = if_else(
+          .metric == "roc_auc",
+          "ROC AUC",
+          .metric |> str_replace("_", " ") |> str_to_title()
+        )
+      )
+  } else {
+    metric_data <- data |>
+      unnest(perf_metrics) |>
+      filter(.metric == "accuracy") |>
+      mutate(misclas = 1 - .estimate, .metric = "Misclassification Rate") |>
+      select(-c(".estimate")) |>
+      rename(.estimate = misclas)
+  }
+
+  metric_data <- metric_data |>
+    filter(augmentation %in% c("aug_in_n", "aug_in_p")) |>
+    mutate(
+      data_id = factor(data_id, levels = sort(unique(data_id))),
+      augmentation_factor = factor(
+        augmentation_factor,
+        levels = sort(unique(augmentation_factor))
+      ),
+      augmentation = case_when(
+        augmentation == "aug_in_n" ~ "randomILR Augmentation in n",
+        augmentation == "aug_in_p" ~ "randomILR Augmentation in p"
+      )
+    )
+
+  plot_metric_name <- unique(metric_data$.metric)
+  model <- unique(metric_data$model)
+
+  if (model == "lasso") {
+    model <- "Logistic Regression with L1 Penalty"
+  } else if (model == "lasso_ilr") {
+    model <- "Logistic Regression (ILR-trans. Data) with L1 Penalty"
+  } else if (model == "xgboost") {
+    model <- "XGBoost"
+  } else {
+    model <- model |> str_replace("_", " ") |> str_to_title()
+  }
+
+  y_limits <- if (plot_metric == "roc_auc") {
+    c(0.25, 1)
+  } else if (
+    plot_metric %in% c("misclassification_rate", "missclassification_rate")
+  ) {
+    c(0, 0.75)
+  } else {
+    c(0.25, 1)
+  }
+
+  metric_data |>
+    ggplot(
+      aes(
+        x = augmentation_factor,
+        y = .estimate,
+        fill = augmentation,
+        group = interaction(augmentation_factor, augmentation)
+      )
+    ) +
+    geom_boxplot(
+      position = position_dodge(width = 0.8),
+      width = 0.7,
+      outlier.size = 0.8
+    ) +
+    facet_wrap(~data_id, ncol = 3) +
+    scale_fill_viridis_d(direction = -1) +
+    labs(
+      title = paste(
+        "Effect of Augmentation Factor on",
+        model,
+        plot_metric_name
+      ),
+      x = "Augmentation Factor",
+      y = plot_metric_name,
+      fill = ""
+    ) +
+    theme_bw() +
+    theme(
+      legend.position = "bottom",
+      plot.title = element_text(size = 16),
+      plot.subtitle = element_text(size = 14),
+      axis.title.x = element_text(size = 12),
+      axis.title.y = element_text(size = 12),
+      axis.text.x = element_text(size = 12),
+      axis.text.y = element_text(size = 12),
+      strip.text = element_text(size = 12)
+    ) +
+    coord_cartesian(ylim = y_limits)
+}
+
 render_aug_imp_tabs <- function(metric, aug_results) {
   unique_densities <- aug_results |> pull(density) |> unique()
   ordered_non_na <- sort(unique_densities[!is.na(unique_densities)])
@@ -511,12 +618,11 @@ render_aug_imp_tabs <- function(metric, aug_results) {
     }
 
     if (nrow(data_slice) > 0) {
-      print(
-        aug_factor_impact(
-          data = data_slice,
-          plot_metric = metric
-        )
+      plot_obj <- aug_factor_impact_boxplot_random_ilr(
+        data = data_slice,
+        plot_metric = metric
       )
+      print(plot_obj)
     } else {
       cat("No observations available for this density value.\n\n")
     }
@@ -551,16 +657,27 @@ render_boxplot_per_density <- function(
   benchmark_results <- benchmark_results |>
     filter(transform == "standard_ilr")
 
+  y_limits <- if (metric == "roc_auc") {
+    c(0.25, 1)
+  } else if (metric %in% c("misclassification_rate", "missclassification_rate")) {
+    c(0, 0.75)
+  } else {
+    NULL
+  }
+
   for (k in aug_factors) {
     cat("### ", heading_prefix, k, "\n\n", sep = "")
-    print(
+    plot_obj <-
       boxplot_perf_metric(
         aug_res = aug_results,
         benchmark_res = benchmark_results,
         plot_metric = metric,
         aug_factor = k
       )
-    )
+    if (!is.null(y_limits)) {
+      plot_obj <- plot_obj + coord_cartesian(ylim = y_limits)
+    }
+    print(plot_obj)
     cat("\n\n")
   }
 

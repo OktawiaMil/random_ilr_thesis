@@ -183,6 +183,16 @@ plot_metric_facets <- function(
     ))
     rod_cut <- which(levels(plot_data$label) == "Comp. Feature Dropout")
 
+    y_limits <- if (plot_metric == "roc_auc") {
+        c(0.25, 1)
+    } else if (
+        plot_metric %in% c("misclassification_rate", "missclassification_rate")
+    ) {
+        c(0, 0.75)
+    } else {
+        c(0, 1)
+    }
+
     ggplot(
         plot_data,
         aes(x = label, y = .estimate, fill = pseudo_count)
@@ -222,7 +232,7 @@ plot_metric_facets <- function(
             panel.grid.major.x = element_blank(),
             plot.margin = margin(l = 16, r = 12, t = 10, b = 18),
         ) +
-        ylim(0, 1)
+        ylim(y_limits)
 }
 
 # Function that creates tabsets with a selected perfromance metric of a given model
@@ -1255,6 +1265,16 @@ plot_aug_in_p_density_boxplot <- function(
         TRUE ~ plot_metric |> str_replace_all("_", " ") |> str_to_title()
     )
 
+    y_limits <- if (plot_metric == "roc_auc") {
+        c(0.25, 1)
+    } else if (
+        plot_metric %in% c("misclassification_rate", "missclassification_rate")
+    ) {
+        c(0, 0.75)
+    } else {
+        NULL
+    }
+
     ggplot(
         plot_data,
         aes(
@@ -1295,5 +1315,5 @@ plot_aug_in_p_density_boxplot <- function(
             axis.text.y = element_text(size = 12),
             strip.text = element_text(size = 12)
         ) +
-        ylim(0, 1)
+        scale_y_continuous(limits = y_limits)
 }

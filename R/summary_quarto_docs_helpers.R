@@ -92,6 +92,13 @@ boxplot_perf_metric <- function(
     )
 
   plot_metric_name <- unique(data_plot$.metric)
+  y_limits <- if (plot_metric == "roc_auc") {
+    c(0.25, 1)
+  } else if (plot_metric %in% c("misclassification_rate", "missclassification_rate")) {
+    c(0, 0.75)
+  } else {
+    c(0, 1)
+  }
 
   data_plot |>
     ggplot(aes(x = data_id, y = .estimate, fill = augmentation)) +
@@ -115,7 +122,7 @@ boxplot_perf_metric <- function(
       axis.text.y = element_text(size = 12),
       strip.text = element_text(size = 12)
     ) +
-    ylim(0, 1)
+    ylim(y_limits)
 }
 
 
@@ -275,6 +282,10 @@ aug_factor_impact <- function(
     mutate(
       data_id = as.numeric(data_id),
       data_id = factor(data_id, levels = sort(unique(data_id))),
+      augmentation_factor = factor(
+        augmentation_factor,
+        levels = sort(unique(augmentation_factor))
+      ),
       augmentation = case_when(
         augmentation == "aitchison_mixup" ~ "Aitchison Mixup",
         augmentation == "comp_cutmix" ~ "Comp. Cutmix",
@@ -283,10 +294,6 @@ aug_factor_impact <- function(
         augmentation == "aug_in_p" ~ "randomILR Augmentation in p"
       )
     )
-
-  mean_metric <- metric_data |>
-    group_by(data_id, augmentation, augmentation_factor) |>
-    summarise(mean_val = mean(.estimate, na.rm = TRUE), .groups = "drop")
 
   plot_metric_name <- unique(data$.metric)
   model <- unique(data$model)
@@ -302,21 +309,20 @@ aug_factor_impact <- function(
   }
 
   plot <- metric_data |>
-    ggplot(aes(x = augmentation_factor, y = .estimate, color = augmentation)) +
-    geom_line(
-      aes(group = interaction(augmentation, split)),
-      alpha = 0.20,
-      linewidth = 0.5
+    ggplot(
+      aes(
+        x = augmentation_factor,
+        y = .estimate,
+        fill = augmentation
+      )
     ) +
-    geom_line(
-      data = mean_metric,
-      aes(y = mean_val, group = augmentation),
-      linewidth = 1.3
+    geom_boxplot(
+      position = position_dodge(width = 0.8),
+      width = 0.7,
+      outlier.size = 0.8
     ) +
     facet_wrap(~data_id, ncol = 3) +
-    scale_color_viridis_d(
-      direction = -1
-    ) +
+    scale_fill_viridis_d(direction = -1) +
     labs(
       title = paste(
         "Effect of Augmentation Factor on",
@@ -325,7 +331,7 @@ aug_factor_impact <- function(
       ),
       x = "Augmentation Factor",
       y = plot_metric_name,
-      color = ""
+      fill = ""
     ) +
     theme_bw() +
     theme(
@@ -337,8 +343,18 @@ aug_factor_impact <- function(
       axis.text.x = element_text(size = 12),
       axis.text.y = element_text(size = 12),
       strip.text = element_text(size = 12)
-    ) +
-    ylim(0, 1)
+    )
+
+  y_limits <- if (plot_metric == "roc_auc") {
+    c(0.25, 1)
+  } else if (plot_metric == "misclassification_rate") {
+    c(0, 0.75)
+  } else {
+    c(0.25, 1)
+  }
+
+  plot <- plot +
+    coord_cartesian(ylim = y_limits)
 
   return(plot)
 }

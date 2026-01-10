@@ -110,6 +110,19 @@ boxplot_metric <- function(data, add_data = NULL, plot_metric) {
         distinct(aug_factor) |>
         pull(aug_factor)
 
+    y_limits <- if (plot_metric == "roc_auc") {
+        c(0.25, 1)
+    } else if (
+        plot_metric %in%
+            c(
+                "misclassification_rate",
+                "missclassification_rate",
+                "brier_class"
+            )
+    ) {
+        c(0, 0.75)
+    }
+
     data_plot |>
         ggplot(aes(x = aug_strategy, y = .estimate)) +
         # geom_violin(fill = viridis(1), aes()) +
@@ -139,7 +152,7 @@ boxplot_metric <- function(data, add_data = NULL, plot_metric) {
             axis.text.y = element_text(size = 12),
             strip.text = element_text(size = 12)
         ) +
-        ylim(0, 1)
+        coord_cartesian(ylim = y_limits)
 }
 
 # Plot of ROC Curve, oneplot per augmentation strategy/ benchmark
@@ -321,7 +334,7 @@ roc_curve_plot <- function(data, add_data = NULL) {
 }
 
 # Function to create summary table
-summary_tbl_mean_perf <- function(data, add_data = NULL) {
+summary_tbl_mean_perf <- function(data, add_data = NULL, format = NULL) {
     if (!is.null(add_data)) {
         add_data <- add_data |>
             mutate(aug_strategy = "none_slc", model = "l1_logistic_reg")
@@ -402,6 +415,7 @@ summary_tbl_mean_perf <- function(data, add_data = NULL) {
 
     knitr::kable(
         data_summary,
+        format = format,
         captation = "Mean perfromance metrics across augmentation strategies"
     )
 }
@@ -476,10 +490,10 @@ boxplot_density <- function(data, plot_metric) {
 
     y_limits <- switch(
         plot_metric_name,
-        "ROC AUC" = c(0.5, 1),
-        "Misclassification Rate" = c(0, 0.5),
-        "Accuracy" = c(0.5, 1),
-        "Brier Class" = c(0, 0.5),
+        "ROC AUC" = c(0.75, 1),
+        "Misclassification Rate" = c(0, 0.25),
+        "Accuracy" = c(0.75, 1),
+        "Brier Class" = c(0, 0.25),
         NULL
     )
 
@@ -521,7 +535,7 @@ boxplot_density <- function(data, plot_metric) {
 
 # Table summarising total number of beta coefficients and average
 # number of non-zero beta coefs (average across all 20 test-train splits)
-log_reg_summary_tbl <- function(res) {
+log_reg_summary_tbl <- function(res, format = NULL) {
     res$lasso |>
         select(split_seed, aug_strategy, aug_factor, beta_1se) |>
         unnest(beta_1se) |>
@@ -578,6 +592,7 @@ log_reg_summary_tbl <- function(res) {
         ) |>
         arrange(aug_strategy) |>
         knitr::kable(
+            format = format,
             col.names = c(
                 "Data Variant",
                 "Average # of non‑zero $\\beta$’s",
@@ -591,7 +606,7 @@ log_reg_summary_tbl <- function(res) {
 # On avg, the number of standard vs random ilr coordinates selected in:
 #   aug in p
 #   Aitchison + aug in p
-avg_random_vs_standard <- function(res) {
+avg_random_vs_standard <- function(res, format = NULL) {
     selected_ilr <- res$lasso |>
         filter(aug_strategy %in% c("aug_in_p", "aitchison_aug_in_p")) |>
         select(-c(train_idx:roc_curve)) |>
@@ -645,13 +660,14 @@ avg_random_vs_standard <- function(res) {
 
     knitr::kable(
         avg_part_counts,
+        format = format,
         col.names = c(
             "Data Variant",
             "Average # of non‑zero $\\beta$’s - standard ILR coordinate",
             "Average # of non‑zero $\\beta$’s - random ILR coordinate"
         ),
         escape = FALSE,
-        caption = "Non-zero $\\beta$ coefficients: standard vs. random ILR coordinates"
+        caption = "Average Non‑Zero $\\beta$ coefficient by ILR coordinate type and augmentation strategy"
     )
 }
 
@@ -925,7 +941,7 @@ heatmap_contr <- function(contr_tbl, sel_split, cov_names) {
             x = "Original feature",
             y = "Selected ILR coordinate",
             fill = "Contribution",
-            title = "Top 3 contributors to ILR coordinates selected by a model",
+            title = "Top 3 contributors to random ILR coordinates selected by a model",
             subtitle = paste("Data split:", sel_split)
         ) +
         theme_bw() +
@@ -936,11 +952,57 @@ heatmap_contr <- function(contr_tbl, sel_split, cov_names) {
 }
 # Summary of contributors form standard ilr part for 1 data split
 # This function takes as the input tibble with the structure as produced by contributors_all_splits()
-standard_ilr_one_split <- function(contr_tbl, sel_split) {
-    contr_tbl |>
+standard_ilr_one_split <- function(
+    contr_tbl,
+    sel_split,
+    cov_names = NULL,
+    format = NULL,
+    output_dir = NULL,
+    file_name = NULL
+) {
+    table_data <- contr_tbl |>
         filter(split == sel_split) |>
         unnest(standard_ilr) |>
-        select(-split, -any_of("random_ilr")) |>
+        select(-split, -any_of("random_ilr"))
+
+    if (!is.null(cov_names)) {
+        if (
+            !"row_idx" %in% names(cov_names) && "row_ids" %in% names(cov_names)
+        ) {
+            cov_names <- cov_names |>
+                rename(row_idx = row_ids)
+        }
+
+        stopifnot(all(c("row_idx", "covariate") %in% names(cov_names)))
+
+        table_data <- table_data |>
+            mutate(
+                positive = purrr::map_chr(
+                    positive,
+                    function(x) {
+                        if (is.na(x)) {
+                            return(NA_character_)
+                        }
+                        parts <- stringr::str_split(x, "\\s*,\\s*")[[1]]
+                        mapped <- purrr::map_chr(parts, function(val) {
+                            if (stringr::str_detect(val, "^\\d+$")) {
+                                idx <- match(as.integer(val), cov_names$row_idx)
+                                if (is.na(idx)) {
+                                    val
+                                } else {
+                                    cov_names$covariate[[idx]]
+                                }
+                            } else {
+                                val
+                            }
+                        })
+                        paste(mapped, collapse = ", ")
+                    }
+                )
+            )
+    }
+
+    table_obj <- table_data |>
         rename(
             `ILR coordinate` = ilr_coordinate,
             `Numerator features` = positive,
@@ -950,8 +1012,26 @@ standard_ilr_one_split <- function(contr_tbl, sel_split) {
             caption = paste(
                 "Selected ILR coordinates (standard ILR transformation) and their contributors - data split",
                 sel_split
-            )
+            ),
+            format = format
         )
+
+    if (
+        !is.null(format) &&
+            format == "latex" &&
+            !is.null(output_dir)
+    ) {
+        dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+        if (is.null(file_name)) {
+            file_name <- sprintf("standard_ilr_one_split_%s.tex", sel_split)
+        }
+        kableExtra::save_kable(
+            table_obj,
+            file = file.path(output_dir, file_name)
+        )
+    }
+
+    table_obj
 }
 
 # Get contributors from models trained on only standard ilr transformed data
@@ -1047,7 +1127,14 @@ contr_standard_ilr_all_splits <- function(
 
 
 # Helper to summarise and display the most frequent numerator contributors in the standard ILR coordinates
-top_k_standard_ilr <- function(tbls, top_n, section_titles, cov_names) {
+top_k_standard_ilr <- function(
+    tbls,
+    top_n,
+    section_titles,
+    cov_names,
+    format = NULL,
+    latex_table_env = "tabular"
+) {
     stopifnot(
         length(tbls) == length(top_n),
         length(section_titles) == length(tbls),
@@ -1066,7 +1153,6 @@ top_k_standard_ilr <- function(tbls, top_n, section_titles, cov_names) {
                     covariate,
                     as.character(row_idx)
                 ),
-                row_idx,
                 n
             ) |>
             arrange(desc(n), feature) |>
@@ -1089,14 +1175,23 @@ top_k_standard_ilr <- function(tbls, top_n, section_titles, cov_names) {
         knitr::kable(
             col.names = c(
                 "Original feature in numerator",
-                "Feature column idx",
                 "# of appearances"
             ),
             caption = "Features contibuting in numerator most often to the selected standard ILR coordinates",
-            align = c("l", "c", "c"),
-            escape = FALSE
-        ) |>
-        kableExtra::kable_styling(full_width = TRUE)
+            align = c("l", "c"),
+            escape = FALSE,
+            format = format
+        )
+
+    combined_tbl <- if (!is.null(format) && format == "latex") {
+        kableExtra::kable_styling(
+            combined_tbl,
+            full_width = FALSE,
+            latex_table_env = latex_table_env
+        )
+    } else {
+        kableExtra::kable_styling(combined_tbl, full_width = TRUE)
+    }
 
     reduce(
         seq_len(nrow(section_info)),
