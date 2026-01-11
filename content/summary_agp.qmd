@@ -99,6 +99,8 @@ Given this setup, the fitted model outputs a score for each observation, which c
 # Logistic regression with L1 penalty
 ## Summary Table
 ```{r}
+#| message: false
+#| warning: false
 summary_tbl_mean_perf(res$lasso, res$sparse_log_contrast)
 ```
 
@@ -377,6 +379,8 @@ heatmap_contr(aitchison_aug_p_contr_tbl, sel_split = 14, cov_names = cov_names)
 ## Summary Table
 ```{r}
 #| label: summary_perf_rf
+#| message: false
+#| warning: false
 tables_dir <- here::here("content", "_tables", "summary_agp")
 dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
 
@@ -561,6 +565,8 @@ standard_ilr_one_split(aitchison_aug_p_contr_tbl, 14, cov_names = cov_names)
 ## Summary Table
 ```{r}
 #| label: summary_perf_xgb
+#| message: false
+#| warning: false
 tables_dir <- here::here("content", "_tables", "summary_agp")
 dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
 

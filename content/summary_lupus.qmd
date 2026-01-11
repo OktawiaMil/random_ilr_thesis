@@ -98,6 +98,8 @@ Given this setup, the fitted model outputs a score for each observation, which c
 # Logistic regression with L1 penalty
 ## Summary Table
 ```{r}
+#| message: false
+#| warning: false
 summary_tbl_mean_perf(res$lasso, res$sparse_log_contrast)
 ```
 
@@ -347,7 +349,7 @@ sel_coord_rand <- aug_p_contr_tbl |>
   nrow()
 ```
 
-For analysed data split, in the model trained on data augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` ``were selected.
+For analysed data split, in the model trained on data augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` `` random ILR were selected.
 
 ```{r}
 # Aug in p
@@ -366,7 +368,8 @@ standard_ilr_one_split(
 )
 ```
 
-Below plotsshow estimated coefficients for he analyse data split for the 
+The plot below shows the estimated values of the $\beta$ coefficients in the model fitted on the data  augmented in p, corresponding to the analysed data split. The coefficients are grouped by the ILR base used to create the feature with that coefficient. As can be seen, the largest coefficients are assigned to the coordinates originating from the standard ILR transformation.
+
 ```{r}
 #\ label: lollipop_plot_lasso
 # Lolipop plot with coefficients 
@@ -454,7 +457,7 @@ sel_coord_rand <- aitchison_aug_p_contr_tbl |>
   nrow()
 ```
 
-For analysed data split, in the model trained on data augmented by Aitchison Mixup and augmented in p `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` ``were selected.
+For analysed data split, in the model trained on data augmented by Aitchison Mixup and augmented in p, `` `r sel_coords_st` `` standard ILR coordinates and `` `r sel_coord_rand` `` random ilr coordinates were selected.
 
 
 ```{r}
@@ -467,6 +470,8 @@ standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11, cov_names = cov_names)
 # Random Forest
 ## Summary Table
 ```{r}
+#| message: false
+#| warning: false
 summary_tbl_mean_perf(res$RF)
 ```
 
@@ -489,7 +494,7 @@ boxplot_density(res_density$RF, plot_metric = "misclassification_rate")
 ```
 
 ## Feature Importance
-Feature importance is computed on the test data. For each model trained on one data split 5 ilr coordinates with the higest variable importance scores are identified. Then, for those coordinates, 3 original features that contributed most to them are identified. 
+Feature importance is computed on the test data. For each model trained on one data split, 5 ilr coordinates with the higest variable importance scores are identified. Then, for those coordinates, 3 original features that contributed most to them are identified. 
 Below table shows original features that contribute most often to standard ILR coordiantes that achieve the highest VIMP scores. For example, feature T4_em contributes in numerator of the standard ILR coordinate that is selected by all models in nearly all data splits.
 
 ```{r}
@@ -698,6 +703,8 @@ standard_ilr_one_split(aitchison_aug_p_contr_tbl, 11, cov_names = cov_names)
 # XGBoost
 ## Summary Table
 ```{r}
+#| message: false
+#| warning: false
 summary_tbl_mean_perf(res$XGB)
 ```
 

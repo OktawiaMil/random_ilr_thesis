@@ -156,7 +156,7 @@ walk2(bench_data_half, bench_names_half, ~ assign(.y, .x, envir = .GlobalEnv))
 rm(bench_data_half)
 ```
 
-The purpose of this document is to analyse how the pseudo-count affects model performance depending on the augmentation strategy and the augmentation factor. In all plots below, the phrase “mean difference of the selected performance metric” for a given augmentation strategy, augmentation factor and dataset refers to:
+The purpose of this document is to analyse how the pseudo-count affects model performance depending on the augmentation strategy and the augmentation factor. In all plots below, the phrase **mean difference of the selected performance metric** for a given augmentation strategy, augmentation factor and dataset refers to:
 
 $$
 \begin{aligned}
@@ -168,7 +168,7 @@ $$
 \end{aligned}
 $$
 
-The mean of the performance metric is computed over $20$ train–test data splits. Below, each plot corresponds to one model (logistic regression with $\text{L}_1$ penalty, random forest, or XGBoost) and one performance metric (ROC AUC or misclassification rate). Each tabset corresponds to a selected augmentation factor.
+The mean of the performance metric is computed over $20$ train–test data splits. Below, each plot corresponds to one model (logistic regression with $\text{L}_1$ penalty, Random Forest, or XGBoost) and one performance metric (ROC AUC or misclassification rate). Each tabset corresponds to a selected augmentation factor.
 
 # Logistic regression with $\text{L}_1$ penalty 
 ## ROC AUC

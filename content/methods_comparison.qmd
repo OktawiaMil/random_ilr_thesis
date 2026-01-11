@@ -288,7 +288,7 @@ data_dim <- preproc_files |>
 
 ### n/p Ratio
 
-The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain is defined as follows:
+The plots below show the gain in ROC AUC from augmentation as a function of the dataset's **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain is defined as follows:
 
 $$
 \mathrm{ROC\; AUC\; Gain} = \frac{1}{20}\sum_{i=1}^{20} \left(\mathrm{AUC}^{\text{test}}_{\text{aug},\,i} - \mathrm{AUC}^{\text{test}}_{\text{bench},\,i}\right)
@@ -420,7 +420,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in misclassification rate from augmentation as a function of the original dataset's **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain in the misclassification rate is the test-set misclassification rate of the model trained on augmented data minus test-set misclassification rate of its corresponding benchmark, averaged over 20 train-test splits.
+The plots below show the gain in misclassification rate from augmentation as a function of the dataset's **n/p ratio before augmentation** (the ratio of number of samples to number of features). Each tab corresponds to a single augmentation factor. Gain in the misclassification rate is the test-set misclassification rate of the model trained on augmented data minus test-set misclassification rate of its corresponding benchmark, averaged over 20 train-test splits.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -575,7 +575,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in ROC AUC from augmentation as a function of the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single augmentation factor.
+The plots below show the gain in ROC AUC from augmentation as a function of the dataset's **n/p ratio before augmentation**. Each tab corresponds to a single augmentation factor.
 
 #### Pseudo-count 1/2
 ::: panel-tabset
@@ -699,7 +699,7 @@ render_metric_facets_tabset(
 
 ### n/p Ratio
 
-The plots below show the gain in misclassification rate from augmentation (difference relative to the benchmark) against the original dataset's **n/p ratio before augmentation**. Each tab corresponds to a single augmentation factor.
+The plots below show the gain in misclassification rate from augmentation (difference relative to the benchmark) against the dataset's **n/p ratio before augmentation**. Each tab corresponds to a single augmentation factor.
 
 #### Pseudo-count 1/2
 ::: panel-tabset

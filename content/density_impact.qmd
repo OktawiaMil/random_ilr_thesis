@@ -57,7 +57,7 @@ library(readr)
 
 The purpose of this document is to show the influence of the density of a skew-symmetric matrix used for a generation of a GHL matrix used in the random ILR augmentation methods.
 
-**Reminder**: Density $\delta=0.1$ means that $10\%$ of the off-diagonal entries in the skew-symmetric matrix $S$ are non-zero; each such non-zero value is drawn from a standard normal distribution ($s_{ij}\sim\mathcal{N}(0,1)$) and $s_{ji}=-s_{ij}$. The **default density** refers to the very sparse case in which exactly one off-diagonal element in the lower triangle and its mirror element in the upper triangle are non-zero; all other off-diagonal entries are zero.
+**Reminder**: Density $\delta=0.1$ means that $10\%$ of the off-diagonal entries in the skew-symmetric matrix $S$ are non-zero; each such non-zero value is drawn from a standard normal distribution $(s_{ij}\sim\mathcal{N}(0,1) \; \text{and} \; s_{ji}=-s_{ij})$. The **unit density** refers to the very sparse case in which exactly one off-diagonal element in the lower triangle and its mirror element in the upper triangle are non-zero; all other off-diagonal entries are zero.
 
 To understand the impact of density of skew-symmetric matrix on the GHL matrix, and in consequence on the random ilr transformation, one needs to understand first in terms of the formulas how is the GHL matrix used in the random ilr transformation. In order to achieve it, let's have a look on the below example with the use of the four dimensional compositional vector $\mathbf{x},\, \mathbf{x} \in S^4$:
 
@@ -201,7 +201,7 @@ In the below analysis the following scenario is considered:
 
 -   input data has $20$ covariates,
 
--   analyzed density of skew-symmetric matrix : default density (very sparse skew-symmetric matrix) and $\delta \in (0.01, 0.02, \dots, 0.1, 0.2, 0.3, \dots, 0.9)$,
+-   analyzed density of skew-symmetric matrix : unit density (very sparse skew-symmetric matrix) and $\delta \in (0.01, 0.02, \dots, 0.1, 0.2, 0.3, \dots, 0.9)$,
 
 -   for each density level of a skew-symmetric matrix, $100$ independent GHL matrices are generated,
 
@@ -256,17 +256,18 @@ data_plt1 <- results |>
     mutate(
         feature = str_remove(feature, "org_"),
         feature = fct_reorder(feature, parse_number(feature)),
-        density = if_else(is.na(density), "Default", as.character(density)),
+        density = if_else(is.na(density), "Unit", as.character(density)),
         density = factor(density,
-            levels = c("Default", sort(as.numeric(setdiff(unique(density), "Default"))))
+            levels = c("Unit", sort(as.numeric(setdiff(unique(density), "Unit"))))
         ),
         part = str_to_title(part)
     )
 
 data_plt1 |>
-    filter(density %in% c("Default", seq(0.01, 0.09, by = 0.01))) |>
+    filter(density %in% c("Unit", seq(0.01, 0.09, by = 0.01))) |>
     ggplot(aes(x = feature, y = value, fill = part)) +
     geom_bar(position = "dodge", stat = "identity") +
+    scale_fill_manual(values = c(Numerator = "#2b83ba", Denominator = "#d7191c")) +
     facet_wrap(~density, ncol = 3) +
     theme_bw() +
     labs(
@@ -288,9 +289,10 @@ data_plt1 |>
     )
 
 data_plt1 |>
-    filter(density %in% c("Default", seq(0.1, 0.9, by = 0.1))) |>
+    filter(density %in% seq(0.1, 0.9, by = 0.1)) |>
     ggplot(aes(x = feature, y = value, fill = part)) +
     geom_bar(position = "dodge", stat = "identity") +
+    scale_fill_manual(values = c(Numerator = "#2b83ba", Denominator = "#d7191c")) +
     facet_wrap(~density, ncol = 3) +
     theme_bw() +
     # scale_y_continuous(breaks = scales::breaks_width(10), minor_breaks = NULL) +
@@ -326,18 +328,18 @@ data_plt2 <- results |>
     count(density, feature, name = "times_top_k") |>
     mutate(
         times_top_k = times_top_k / n_iters,
-        density = if_else(is.na(density), "Default", as.character(density)),
+        density = if_else(is.na(density), "Unit", as.character(density)),
         density = factor(density,
-            levels = c("Default", sort(as.numeric(setdiff(unique(density), "Default"))))
+            levels = c("Unit", sort(as.numeric(setdiff(unique(density), "Unit"))))
         ),
         feature = str_remove(feature, "org_"),
         feature = fct_reorder(feature, parse_number(feature))
     )
 
 data_plt2 |>
-    filter(density %in% c("Default", seq(0.01, 0.09, by = 0.01))) |>
+    filter(density %in% c("Unit", seq(0.01, 0.09, by = 0.01))) |>
     ggplot(aes(x = feature, y = times_top_k)) +
-    geom_point() +
+    geom_point(aes(size =4)) +
     facet_wrap(~density, ncol = 3) +
     theme_bw() +
     labs(
@@ -347,7 +349,7 @@ data_plt2 |>
         subtitle = paste("Aggregated over", n_iters, "GHL simulations, panels split by GHL density")
     ) +
     theme(
-        legend.position = "bottom",
+        #legend.position = "bottom",
         legend.title = element_blank(),
         plot.title = element_text(size = 16),
         plot.subtitle = element_text(size = 14),
@@ -359,9 +361,9 @@ data_plt2 |>
     )
 
 data_plt2 |>
-    filter(density %in% c("Default", seq(0.1, 0.9, by = 0.1))) |>
+    filter(density %in% seq(0.1, 0.9, by = 0.1)) |>
     ggplot(aes(x = feature, y = times_top_k)) +
-    geom_point() +
+    geom_point(aes(size =4))+
     facet_wrap(~density, ncol = 3) +
     theme_bw() +
     labs(
@@ -371,7 +373,7 @@ data_plt2 |>
         subtitle = paste("Aggregated over", n_iters, "GHL simulations, panels split by GHL density")
     ) +
     theme(
-        legend.position = "bottom",
+        #legend.position = "bottom",
         legend.title = element_blank(),
         plot.title = element_text(size = 16),
         plot.subtitle = element_text(size = 14),
