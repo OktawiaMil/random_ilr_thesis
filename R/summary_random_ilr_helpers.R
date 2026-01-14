@@ -591,18 +591,27 @@ aug_factor_impact_boxplot_random_ilr <- function(
     theme_bw() +
     theme(
       legend.position = "bottom",
-      plot.title = element_text(size = 16),
-      plot.subtitle = element_text(size = 14),
-      axis.title.x = element_text(size = 12),
-      axis.title.y = element_text(size = 12),
-      axis.text.x = element_text(size = 12),
-      axis.text.y = element_text(size = 12),
+      legend.title = element_blank(),
+      plot.title = element_text(size = 26),
+      plot.subtitle = element_text(size = 22),
+      axis.title.x = element_text(size = 22),
+      axis.title.y = element_text(size = 22),
+      axis.text.x = element_text(size = 22),
+      axis.text.y = element_text(size = 22),
+      legend.text = element_text(size = 22),
       strip.text = element_text(size = 12)
     ) +
     coord_cartesian(ylim = y_limits)
 }
 
 render_aug_imp_tabs <- function(metric, aug_results) {
+  data_id_chr <- as.character(aug_results$data_id)
+  data_id_int <- suppressWarnings(as.integer(data_id_chr))
+  if (all(!is.na(data_id_int))) {
+    aug_results <- aug_results |>
+      mutate(data_id = data_id_int)
+  }
+
   unique_densities <- aug_results |> pull(density) |> unique()
   ordered_non_na <- sort(unique_densities[!is.na(unique_densities)])
   ordered_densities <- c(NA, ordered_non_na)

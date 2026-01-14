@@ -114,12 +114,13 @@ boxplot_perf_metric <- function(
     theme(
       legend.position = "bottom",
       legend.title = element_blank(),
-      plot.title = element_text(size = 16),
-      plot.subtitle = element_text(size = 14),
-      axis.title.x = element_text(size = 12),
-      axis.title.y = element_text(size = 12),
-      axis.text.x = element_text(size = 12),
-      axis.text.y = element_text(size = 12),
+      plot.title = element_text(size = 26),
+      plot.subtitle = element_text(size = 22),
+      axis.title.x = element_text(size = 22),
+      axis.title.y = element_text(size = 22),
+      axis.text.x = element_text(size = 22),
+      axis.text.y = element_text(size = 22),
+      legend.text = element_text(size = 22),
       strip.text = element_text(size = 12)
     ) +
     ylim(y_limits)
@@ -234,12 +235,14 @@ roc_curve_summary <- function(aug_res, sel_id) {
     coord_cartesian(clip = "off") +
     theme_bw() +
     theme(
-      plot.title = element_text(size = 16),
-      plot.subtitle = element_text(size = 14),
-      axis.title.x = element_text(size = 12),
-      axis.title.y = element_text(size = 12),
-      axis.text.x = element_text(size = 12),
-      axis.text.y = element_text(size = 12),
+      legend.title = element_blank(),
+      plot.title = element_text(size = 26),
+      plot.subtitle = element_text(size = 22),
+      axis.title.x = element_text(size = 22),
+      axis.title.y = element_text(size = 22),
+      axis.text.x = element_text(size = 22),
+      axis.text.y = element_text(size = 22),
+      legend.text = element_text(size = 22),
       strip.text = element_text(size = 12)
     )
 }
@@ -336,12 +339,14 @@ aug_factor_impact <- function(
     theme_bw() +
     theme(
       legend.position = "bottom",
-      plot.title = element_text(size = 16),
-      plot.subtitle = element_text(size = 14),
-      axis.title.x = element_text(size = 12),
-      axis.title.y = element_text(size = 12),
-      axis.text.x = element_text(size = 12),
-      axis.text.y = element_text(size = 12),
+      legend.title = element_blank(),
+      plot.title = element_text(size = 26),
+      plot.subtitle = element_text(size = 22),
+      axis.title.x = element_text(size = 22),
+      axis.title.y = element_text(size = 22),
+      axis.text.x = element_text(size = 22),
+      axis.text.y = element_text(size = 22),
+      legend.text = element_text(size = 22),
       strip.text = element_text(size = 12)
     )
 

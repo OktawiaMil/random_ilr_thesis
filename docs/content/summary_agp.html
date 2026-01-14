@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Oktawia Miluch">
-<meta name="dcterms.date" content="2026-01-10">
+<meta name="dcterms.date" content="2026-01-14">
 
 <title>summary_agp – Random ILR Thesis</title>
 <style>
@@ -290,7 +290,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 10, 2026</p>
+      <p class="date">January 14, 2026</p>
     </div>
   </div>
   
@@ -332,10 +332,6 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'aug_strategy'. You can override using the
-`.groups` argument.</code></pre>
-</div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -399,7 +395,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast, <span class="at">plot_metric =</span> <span class="st">"roc_auc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast, <span class="at">plot_metric =</span> <span class="st">"roc_auc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -410,8 +406,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">plot_metric =</span> <span class="st">"misclassification_rate"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">plot_metric =</span> <span class="st">"misclassification_rate"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -422,7 +418,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, <span class="at">plot_metric =</span> <span class="st">"brier_class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>lasso, <span class="at">plot_metric =</span> <span class="st">"brier_class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -438,7 +434,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>lasso, res<span class="sc">$</span>sparse_log_contrast)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -458,18 +454,18 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tables_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"content"</span>, <span class="st">"_tables"</span>, <span class="st">"summary_agp"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(tables_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>log_reg_tbl <span class="ot">&lt;-</span> <span class="fu">log_reg_summary_tbl</span>(res)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>log_reg_tbl_latex <span class="ot">&lt;-</span> <span class="fu">log_reg_summary_tbl</span>(res, <span class="at">format =</span> <span class="st">"latex"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  log_reg_tbl_latex,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"lasso_non_zero_coefs_avg.tex"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>log_reg_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tables_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"content"</span>, <span class="st">"_tables"</span>, <span class="st">"summary_agp"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(tables_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>log_reg_tbl <span class="ot">&lt;-</span> <span class="fu">log_reg_summary_tbl</span>(res)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>log_reg_tbl_latex <span class="ot">&lt;-</span> <span class="fu">log_reg_summary_tbl</span>(res, <span class="at">format =</span> <span class="st">"latex"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  log_reg_tbl_latex,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"lasso_non_zero_coefs_avg.tex"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>log_reg_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -520,15 +516,15 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>avg_random_tbl <span class="ot">&lt;-</span> <span class="fu">avg_random_vs_standard</span>(res)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>avg_random_tbl_latex <span class="ot">&lt;-</span> <span class="fu">avg_random_vs_standard</span>(res, <span class="at">format =</span> <span class="st">"latex"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  avg_random_tbl_latex,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"avg_random_vs_standard.tex"</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>avg_random_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>avg_random_tbl <span class="ot">&lt;-</span> <span class="fu">avg_random_vs_standard</span>(res)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>avg_random_tbl_latex <span class="ot">&lt;-</span> <span class="fu">avg_random_vs_standard</span>(res, <span class="at">format =</span> <span class="st">"latex"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  avg_random_tbl_latex,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"avg_random_vs_standard.tex"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>avg_random_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -564,72 +560,72 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get names of the features in the input data:</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>data_dir_agp <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"data_agp"</span>, <span class="st">"data_preproc"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>data_agp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(data_dir_agp, <span class="st">"data_agp_prep.rds"</span>))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>cov_names <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">row_idx =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(data_agp<span class="sc">$</span>prop_pc), </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">covariate =</span> data_agp<span class="sc">$</span>prop_pc <span class="sc">|&gt;</span> <span class="fu">colnames</span>()</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">covariate =</span> <span class="fu">str_remove</span>(covariate, <span class="st">"g__"</span>))</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(data_agp)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Get contributors to the ilr coordinates that are selected by a models from all 20 test-train splits</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># benchmark</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>benchmark_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="cn">NA</span>, <span class="at">model =</span> <span class="st">"lasso"</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>aitchison_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_mixup"</span>, <span class="at">model =</span> <span class="st">"lasso"</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># For LASSO model, parameter num_top_feat does not matter at all (it is the number of highest VIMP to filter, in LASSO number of "important" features is determined by the number of non-zero \beta coefficients)</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Augmentation in p</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"lasso"</span>)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison + augmentation in p</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>aitchison_aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"lasso"</span>)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Most influential contributors for standard ILR across 20 data splits</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>top_k_standard_tbl <span class="ot">&lt;-</span> <span class="fu">top_k_standard_ilr</span>(</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    benchmark_contr_tbl,</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    aitchison_contr_tbl,</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    aug_p_contr_tbl,</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    aitchison_aug_p_contr_tbl</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_titles =</span> <span class="fu">c</span>(</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Benchmark"</span>,</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup"</span>,</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Augmentation in p"</span>,</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup &amp; Augmentation in p"</span></span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov_names =</span> cov_names</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>top_k_standard_tbl_latex <span class="ot">&lt;-</span> <span class="fu">top_k_standard_ilr</span>(</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    benchmark_contr_tbl,</span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    aitchison_contr_tbl,</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    aug_p_contr_tbl,</span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    aitchison_aug_p_contr_tbl</span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_titles =</span> <span class="fu">c</span>(</span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Benchmark"</span>,</span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup"</span>,</span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Augmentation in p"</span>,</span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup &amp; Augmentation in p"</span></span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov_names =</span> cov_names,</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"latex"</span>,</span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">latex_table_env =</span> <span class="st">"tabularx"</span></span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>  top_k_standard_tbl_latex,</span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"top_k_standard_ilr.tex"</span>)</span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>top_k_standard_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get names of the features in the input data:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data_dir_agp <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"data_agp"</span>, <span class="st">"data_preproc"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>data_agp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(data_dir_agp, <span class="st">"data_agp_prep.rds"</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>cov_names <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">row_idx =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(data_agp<span class="sc">$</span>prop_pc), </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">covariate =</span> data_agp<span class="sc">$</span>prop_pc <span class="sc">|&gt;</span> <span class="fu">colnames</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">covariate =</span> <span class="fu">str_remove</span>(covariate, <span class="st">"g__"</span>))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(data_agp)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Get contributors to the ilr coordinates that are selected by a models from all 20 test-train splits</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># benchmark</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>benchmark_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="cn">NA</span>, <span class="at">model =</span> <span class="st">"lasso"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>aitchison_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_mixup"</span>, <span class="at">model =</span> <span class="st">"lasso"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># For LASSO model, parameter num_top_feat does not matter at all (it is the number of highest VIMP to filter, in LASSO number of "important" features is determined by the number of non-zero \beta coefficients)</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Augmentation in p</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"lasso"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison + augmentation in p</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>aitchison_aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"lasso"</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Most influential contributors for standard ILR across 20 data splits</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>top_k_standard_tbl <span class="ot">&lt;-</span> <span class="fu">top_k_standard_ilr</span>(</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    benchmark_contr_tbl,</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    aitchison_contr_tbl,</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    aug_p_contr_tbl,</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    aitchison_aug_p_contr_tbl</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_titles =</span> <span class="fu">c</span>(</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Benchmark"</span>,</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup"</span>,</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Augmentation in p"</span>,</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup &amp; Augmentation in p"</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov_names =</span> cov_names</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>top_k_standard_tbl_latex <span class="ot">&lt;-</span> <span class="fu">top_k_standard_ilr</span>(</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    benchmark_contr_tbl,</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    aitchison_contr_tbl,</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    aug_p_contr_tbl,</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    aitchison_aug_p_contr_tbl</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_titles =</span> <span class="fu">c</span>(</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Benchmark"</span>,</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup"</span>,</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Augmentation in p"</span>,</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup &amp; Augmentation in p"</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov_names =</span> cov_names,</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"latex"</span>,</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">latex_table_env =</span> <span class="st">"tabularx"</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>  top_k_standard_tbl_latex,</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"top_k_standard_ilr.tex"</span>)</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>top_k_standard_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
@@ -745,58 +741,58 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell" data-lable="random_ilr_contr_lasso">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random ILR part</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>aug_random_tbl <span class="ot">&lt;-</span> aug_p_contr_tbl <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">11</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>aitchison_random_tbl <span class="ot">&lt;-</span> aitchison_aug_p_contr_tbl <span class="sc">|&gt;</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Table showing features that are most often among top 3 contributors</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>random_ilr_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  aug_random_tbl,</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  aitchison_random_tbl</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>random_ilr_tbl <span class="ot">&lt;-</span> random_ilr_combined <span class="sc">|&gt;</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Original feature"</span>, <span class="st">"# of random ILR coordinates"</span>),</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates"</span>,</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>)</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Augmentation in p"</span>, <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl)) <span class="sc">|&gt;</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Aitchison Mixup &amp; Augmentation in p"</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="fu">nrow</span>(aitchison_random_tbl)) <span class="sc">|&gt;</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>random_ilr_tbl_latex <span class="ot">&lt;-</span> random_ilr_combined <span class="sc">|&gt;</span></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Original feature"</span>, <span class="st">"# of random ILR coordinates"</span>),</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates"</span>,</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>),</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"latex"</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Augmentation in p"</span>, <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl)) <span class="sc">|&gt;</span></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Aitchison Mixup &amp; Augmentation in p"</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="fu">nrow</span>(aitchison_random_tbl)) <span class="sc">|&gt;</span></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">latex_table_env =</span> <span class="st">"tabularx"</span>)</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>  random_ilr_tbl_latex,</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"random_ilr_contr_lasso.tex"</span>)</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>random_ilr_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random ILR part</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>aug_random_tbl <span class="ot">&lt;-</span> aug_p_contr_tbl <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">11</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>aitchison_random_tbl <span class="ot">&lt;-</span> aitchison_aug_p_contr_tbl <span class="sc">|&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Table showing features that are most often among top 3 contributors</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>random_ilr_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  aug_random_tbl,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  aitchison_random_tbl</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>random_ilr_tbl <span class="ot">&lt;-</span> random_ilr_combined <span class="sc">|&gt;</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Original feature"</span>, <span class="st">"# of random ILR coordinates"</span>),</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates"</span>,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Augmentation in p"</span>, <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl)) <span class="sc">|&gt;</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Aitchison Mixup &amp; Augmentation in p"</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="fu">nrow</span>(aitchison_random_tbl)) <span class="sc">|&gt;</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>random_ilr_tbl_latex <span class="ot">&lt;-</span> random_ilr_combined <span class="sc">|&gt;</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Original feature"</span>, <span class="st">"# of random ILR coordinates"</span>),</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Summary of features that are most often within top 3 contributors to the selected (est. coefs non-zero) **random ILR** coordinates"</span>,</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>),</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"latex"</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Augmentation in p"</span>, <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl)) <span class="sc">|&gt;</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Aitchison Mixup &amp; Augmentation in p"</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="fu">nrow</span>(aitchison_random_tbl)) <span class="sc">|&gt;</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">latex_table_env =</span> <span class="st">"tabularx"</span>)</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>  random_ilr_tbl_latex,</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"random_ilr_contr_lasso.tex"</span>)</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>random_ilr_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
@@ -892,8 +888,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Benchmark</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(benchmark_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Benchmark</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(benchmark_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -967,8 +963,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aitchison_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aitchison_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1042,9 +1038,9 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aug in p</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Random ilr part</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aug in p</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Random ilr part</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1055,8 +1051,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Standard ilr part</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aug_p_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Standard ilr part</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aug_p_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1085,8 +1081,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison + aug in p</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aitchison_aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison + aug in p</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aitchison_aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1107,28 +1103,17 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tables_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"content"</span>, <span class="st">"_tables"</span>, <span class="st">"summary_agp"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(tables_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>summary_perf_rf_latex <span class="ot">&lt;-</span> <span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>RF, <span class="at">format =</span> <span class="st">"latex"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tables_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"content"</span>, <span class="st">"_tables"</span>, <span class="st">"summary_agp"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(tables_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>summary_perf_rf_latex <span class="ot">&lt;-</span> <span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>RF, <span class="at">format =</span> <span class="st">"latex"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  summary_perf_rf_latex,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"summary_perf_rf.tex"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>RF)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'aug_strategy'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  summary_perf_rf_latex,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"summary_perf_rf.tex"</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>RF)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'aug_strategy'. You can override using the
-`.groups` argument.</code></pre>
-</div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -1186,7 +1171,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">"roc_auc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">"roc_auc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1197,7 +1182,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">"misclassification_rate"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">"misclassification_rate"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1208,7 +1193,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">"brier_class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>RF, <span class="at">plot_metric =</span> <span class="st">"brier_class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1224,7 +1209,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>RF)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>RF)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1241,34 +1226,34 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get contributors to the ilr coordinates that achieve the highest VIMP in a model across all 20 test-train splits</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for each model (trained on 1 data split) select num_top_feat ilr coordinates that in this model achieved the highest VIMP --&gt; decode original features that contributed most to this ilr coordinates</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># benchmark</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>benchmark_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="cn">NA</span>, <span class="at">model =</span> <span class="st">"RF"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>aitchison_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_mixup"</span>, <span class="at">model =</span> <span class="st">"RF"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Augmentation in p</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"RF"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison + augmentation in p</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>aitchison_aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"RF"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Most influential contributors for standard ILR across 20 data splits</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">top_k_standard_ilr</span>(</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    benchmark_contr_tbl,</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    aitchison_contr_tbl,</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    aug_p_contr_tbl,</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    aitchison_aug_p_contr_tbl</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_titles =</span> <span class="fu">c</span>(</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Benchmark"</span>,</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup"</span>,</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Augmentation in p"</span>,</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup &amp; Augmentation in p"</span></span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov_names =</span> cov_names</span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get contributors to the ilr coordinates that achieve the highest VIMP in a model across all 20 test-train splits</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for each model (trained on 1 data split) select num_top_feat ilr coordinates that in this model achieved the highest VIMP --&gt; decode original features that contributed most to this ilr coordinates</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># benchmark</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>benchmark_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="cn">NA</span>, <span class="at">model =</span> <span class="st">"RF"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>aitchison_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_mixup"</span>, <span class="at">model =</span> <span class="st">"RF"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Augmentation in p</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"RF"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison + augmentation in p</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>aitchison_aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"RF"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Most influential contributors for standard ILR across 20 data splits</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">top_k_standard_ilr</span>(</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    benchmark_contr_tbl,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    aitchison_contr_tbl,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    aug_p_contr_tbl,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    aitchison_aug_p_contr_tbl</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_titles =</span> <span class="fu">c</span>(</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Benchmark"</span>,</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup"</span>,</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Augmentation in p"</span>,</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup &amp; Augmentation in p"</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov_names =</span> cov_names</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
@@ -1352,37 +1337,37 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random ILR part</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>aug_random_tbl <span class="ot">&lt;-</span> aug_p_contr_tbl <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>aitchison_random_tbl <span class="ot">&lt;-</span> aitchison_aug_p_contr_tbl <span class="sc">|&gt;</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Table showing features that are most often among top 3 contributors</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a> aug_random_tbl,</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a> aitchison_random_tbl</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a> knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Original feature"</span>, <span class="st">"# of random ILR coordinates"</span>),</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Summary of features that are most often within top 3 contributors to the **random ILR** coordinates with the highest VIMP"</span>,</span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>)</span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">|&gt;</span></span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Augmentation in p"</span>, <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl)) <span class="sc">|&gt;</span></span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Aitchison Mixup &amp; Augmentation in p"</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="fu">nrow</span>(aitchison_random_tbl)) <span class="sc">|&gt;</span></span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random ILR part</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>aug_random_tbl <span class="ot">&lt;-</span> aug_p_contr_tbl <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>aitchison_random_tbl <span class="ot">&lt;-</span> aitchison_aug_p_contr_tbl <span class="sc">|&gt;</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Table showing features that are most often among top 3 contributors</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a> aug_random_tbl,</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a> aitchison_random_tbl</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a> knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Original feature"</span>, <span class="st">"# of random ILR coordinates"</span>),</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Summary of features that are most often within top 3 contributors to the **random ILR** coordinates with the highest VIMP"</span>,</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">|&gt;</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Augmentation in p"</span>, <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl)) <span class="sc">|&gt;</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Aitchison Mixup &amp; Augmentation in p"</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="fu">nrow</span>(aitchison_random_tbl)) <span class="sc">|&gt;</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
@@ -1445,8 +1430,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Benchmark</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(benchmark_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Benchmark</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(benchmark_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1495,8 +1480,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aitchison_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aitchison_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1545,9 +1530,9 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aug in p</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Random ilr part</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aug in p</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Random ilr part</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1558,7 +1543,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aug_p_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aug_p_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1587,7 +1572,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aitchison_aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aitchison_aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1598,7 +1583,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aitchison_aug_p_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aitchison_aug_p_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1631,28 +1616,17 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tables_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"content"</span>, <span class="st">"_tables"</span>, <span class="st">"summary_agp"</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(tables_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>summary_perf_xgb_latex <span class="ot">&lt;-</span> <span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>XGB, <span class="at">format =</span> <span class="st">"latex"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tables_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"content"</span>, <span class="st">"_tables"</span>, <span class="st">"summary_agp"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(tables_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>summary_perf_xgb_latex <span class="ot">&lt;-</span> <span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>XGB, <span class="at">format =</span> <span class="st">"latex"</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  summary_perf_xgb_latex,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"summary_perf_xgb.tex"</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>XGB)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'aug_strategy'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">save_kable</span>(</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  summary_perf_xgb_latex,</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">file.path</span>(tables_dir, <span class="st">"summary_perf_xgb.tex"</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary_tbl_mean_perf</span>(res<span class="sc">$</span>XGB)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'aug_strategy'. You can override using the
-`.groups` argument.</code></pre>
-</div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -1710,7 +1684,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">"roc_auc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">"roc_auc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1721,7 +1695,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">"misclassification_rate"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">"misclassification_rate"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1732,7 +1706,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">"brier_class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_metric</span>(res<span class="sc">$</span>XGB, <span class="at">plot_metric =</span> <span class="st">"brier_class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1748,7 +1722,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>XGB)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_curve_plot</span>(res<span class="sc">$</span>XGB)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1765,34 +1739,34 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get contributors to the ilr coordinates that achieve the highest VIMP in a model across all 20 test-train splits</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for each model (trained on 1 data split) select num_top_feat ilr coordinates that in this model achieved the highest VIMP --&gt; decode original features that contributed most to this ilr coordinates</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># benchmark</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>benchmark_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="cn">NA</span>, <span class="at">model =</span> <span class="st">"XGB"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>aitchison_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_mixup"</span>, <span class="at">model =</span> <span class="st">"XGB"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Augmentation in p</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"XGB"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison + augmentation in p</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>aitchison_aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"XGB"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Most influential contributors for standard ILR across 20 data splits</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="fu">top_k_standard_ilr</span>(</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    benchmark_contr_tbl,</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    aitchison_contr_tbl,</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    aug_p_contr_tbl,</span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    aitchison_aug_p_contr_tbl</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_titles =</span> <span class="fu">c</span>(</span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Benchmark"</span>,</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup"</span>,</span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Augmentation in p"</span>,</span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup &amp; Augmentation in p"</span></span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov_names =</span> cov_names</span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get contributors to the ilr coordinates that achieve the highest VIMP in a model across all 20 test-train splits</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for each model (trained on 1 data split) select num_top_feat ilr coordinates that in this model achieved the highest VIMP --&gt; decode original features that contributed most to this ilr coordinates</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># benchmark</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>benchmark_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="cn">NA</span>, <span class="at">model =</span> <span class="st">"XGB"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>aitchison_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contr_standard_ilr_all_splits</span>(res, <span class="at">dir_results =</span>  dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_mixup"</span>, <span class="at">model =</span> <span class="st">"XGB"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Augmentation in p</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"XGB"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison + augmentation in p</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>aitchison_aug_p_contr_tbl <span class="ot">&lt;-</span> <span class="fu">contributors_all_splits</span>(<span class="at">dir_results =</span> dir_results, <span class="at">sel_aug_strategy =</span> <span class="st">"aitchison_aug_in_p"</span>, <span class="at">top_contr =</span> <span class="dv">3</span>, <span class="at">res =</span> res, <span class="at">model =</span> <span class="st">"XGB"</span>, <span class="at">num_top_feat =</span> <span class="dv">5</span>)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Most influential contributors for standard ILR across 20 data splits</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="fu">top_k_standard_ilr</span>(</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    benchmark_contr_tbl,</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    aitchison_contr_tbl,</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    aug_p_contr_tbl,</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    aitchison_aug_p_contr_tbl</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_titles =</span> <span class="fu">c</span>(</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Benchmark"</span>,</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup"</span>,</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Augmentation in p"</span>,</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aitchison Mixup &amp; Augmentation in p"</span></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov_names =</span> cov_names</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
@@ -1856,37 +1830,37 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random ILR part</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>aug_random_tbl <span class="ot">&lt;-</span> aug_p_contr_tbl <span class="sc">|&gt;</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>aitchison_random_tbl <span class="ot">&lt;-</span> aitchison_aug_p_contr_tbl <span class="sc">|&gt;</span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Table showing features that are most often among top 3 contributors</span></span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a> aug_random_tbl,</span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a> aitchison_random_tbl</span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a> knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Original feature"</span>, <span class="st">"# of random ILR coordinates"</span>),</span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Summary of features that are most often within top 3 contributors to the **random ILR** coordinates with the highest VIMP"</span>,</span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>)</span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">|&gt;</span></span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Augmentation in p"</span>, <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl)) <span class="sc">|&gt;</span></span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Aitchison Mixup &amp; Augmentation in p"</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="fu">nrow</span>(aitchison_random_tbl)) <span class="sc">|&gt;</span></span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random ILR part</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>aug_random_tbl <span class="ot">&lt;-</span> aug_p_contr_tbl <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>aitchison_random_tbl <span class="ot">&lt;-</span> aitchison_aug_p_contr_tbl <span class="sc">|&gt;</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">unnest</span>(random_ilr) <span class="sc">|&gt;</span> </span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(row_idx) <span class="sc">|&gt;</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(cov_names, <span class="at">by =</span> <span class="st">"row_idx"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(covariate, n) <span class="sc">|&gt;</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Table showing features that are most often among top 3 contributors</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a> aug_random_tbl,</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a> aitchison_random_tbl</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a> knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Original feature"</span>, <span class="st">"# of random ILR coordinates"</span>),</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Summary of features that are most often within top 3 contributors to the **random ILR** coordinates with the highest VIMP"</span>,</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>)</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">|&gt;</span></span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Augmentation in p"</span>, <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl)) <span class="sc">|&gt;</span></span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">group_rows</span>(<span class="st">"Aitchison Mixup &amp; Augmentation in p"</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">nrow</span>(aug_random_tbl) <span class="sc">+</span> <span class="fu">nrow</span>(aitchison_random_tbl)) <span class="sc">|&gt;</span></span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
@@ -1949,8 +1923,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Benchmark</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(benchmark_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Benchmark</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(benchmark_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1999,8 +1973,8 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aitchison_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aitchison Mixup</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aitchison_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -2049,9 +2023,9 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aug in p</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Random ilr part</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aug in p</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Random ilr part</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -2062,7 +2036,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aug_p_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standard_ilr_one_split</span>(aug_p_contr_tbl, <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -2091,7 +2065,7 @@ y = X \beta + \sigma \epsilon \quad \text{subject to} \quad C \beta = 0
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aitchison_aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap_contr</span>(aitchison_aug_p_contr_tbl, <span class="at">sel_split =</span> <span class="dv">14</span>, <span class="at">cov_names =</span> cov_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>

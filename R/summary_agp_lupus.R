@@ -144,12 +144,13 @@ boxplot_metric <- function(data, add_data = NULL, plot_metric) {
         theme(
             legend.position = "bottom",
             legend.title = element_blank(),
-            plot.title = element_text(size = 16),
-            plot.subtitle = element_text(size = 14),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 12),
-            axis.text.y = element_text(size = 12),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22),
             strip.text = element_text(size = 12)
         ) +
         coord_cartesian(ylim = y_limits)
@@ -323,12 +324,14 @@ roc_curve_plot <- function(data, add_data = NULL) {
         coord_cartesian(clip = "off", xlim = c(0, 1), ylim = c(0, 1)) +
         theme_bw() +
         theme(
-            plot.title = element_text(size = 16),
-            plot.subtitle = element_text(size = 14),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 12),
-            axis.text.y = element_text(size = 12),
+            legend.title = element_blank(),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22),
             strip.text = element_text(size = 12)
         )
 }
@@ -522,12 +525,13 @@ boxplot_density <- function(data, plot_metric) {
         theme(
             legend.position = "bottom",
             legend.title = element_blank(),
-            plot.title = element_text(size = 16),
-            plot.subtitle = element_text(size = 14),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 12),
-            axis.text.y = element_text(size = 12),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22),
             strip.text = element_text(size = 12)
         ) +
         (if (is.null(y_limits)) NULL else coord_cartesian(ylim = y_limits))
@@ -946,8 +950,15 @@ heatmap_contr <- function(contr_tbl, sel_split, cov_names) {
         ) +
         theme_bw() +
         theme(
-            axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-            legend.position = "bottom"
+            legend.position = "bottom",
+            legend.title = element_blank(),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22, angle = 90, vjust = 0.5, hjust = 1),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22)
         )
 }
 # Summary of contributors form standard ilr part for 1 data split

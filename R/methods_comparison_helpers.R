@@ -222,12 +222,14 @@ plot_metric_facets <- function(
         coord_cartesian(clip = "off") +
         theme(
             legend.position = "bottom",
-            plot.title = element_text(size = 16),
-            plot.subtitle = element_text(size = 14),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 12, angle = 45, hjust = 1),
-            axis.text.y = element_text(size = 12),
+            legend.title = element_blank(),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22, angle = 45, hjust = 1),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22),
             strip.text = element_text(size = 12),
             panel.grid.major.x = element_blank(),
             plot.margin = margin(l = 16, r = 12, t = 10, b = 18),
@@ -830,12 +832,14 @@ plot_augmentation_gain <- function(
         ) +
         theme(
             legend.position = "bottom",
-            plot.title = element_text(size = 16),
-            plot.subtitle = element_text(size = 14),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 12),
-            axis.text.y = element_text(size = 12),
+            legend.title = element_blank(),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22),
             strip.text = element_text(size = 12)
         ) +
         ylim(-0.15, 0.15)
@@ -1158,12 +1162,14 @@ plot_pairwise_metric_heatmap <- function(
         ggplot2::theme_bw() +
         theme(
             legend.position = "bottom",
-            plot.title = element_text(size = 16),
-            plot.subtitle = element_text(size = 14),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 12),
-            axis.text.y = element_text(size = 12),
+            legend.title = element_blank(),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22),
             strip.text = element_text(size = 12),
             plot.title.position = "plot",
             plot.margin = margin(t = 12, r = 12, b = 12, l = 12)
@@ -1307,12 +1313,14 @@ plot_aug_in_p_density_boxplot <- function(
         theme_bw() +
         theme(
             legend.position = "bottom",
-            plot.title = element_text(size = 16),
-            plot.subtitle = element_text(size = 14),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 12, hjust = 1),
-            axis.text.y = element_text(size = 12),
+            legend.title = element_blank(),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22, hjust = 1),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22),
             strip.text = element_text(size = 12)
         ) +
         scale_y_continuous(limits = y_limits)

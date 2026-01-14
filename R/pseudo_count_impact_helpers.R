@@ -285,12 +285,14 @@ mean_diff_heatmap <- function(
         theme_bw() +
         theme(
             legend.position = "bottom",
-            plot.title = element_text(size = 16),
-            plot.subtitle = element_text(size = 14),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 12),
-            axis.text.y = element_text(size = 12),
+            legend.title = element_blank(),
+            plot.title = element_text(size = 26),
+            plot.subtitle = element_text(size = 22),
+            axis.title.x = element_text(size = 22),
+            axis.title.y = element_text(size = 22),
+            axis.text.x = element_text(size = 22),
+            axis.text.y = element_text(size = 22),
+            legend.text = element_text(size = 22),
             strip.text = element_text(size = 12)
         )
 }
