@@ -1138,11 +1138,13 @@ plot_pairwise_metric_heatmap <- function(
         ggplot2::geom_tile(color = "grey85") +
         ggplot2::scale_fill_gradient2(
             limits = c(-max_abs, max_abs),
+            breaks = c(-max_abs, max_abs),
             low = col_scale$negative_chg,
             mid = "white",
             high = col_scale$positive_chg,
             midpoint = 0,
-            oob = scales::squish
+            oob = scales::squish,
+            labels = function(x) formatC(x, format = "f", digits = 2),
         ) +
         ggplot2::labs(
             x = "Data ID",

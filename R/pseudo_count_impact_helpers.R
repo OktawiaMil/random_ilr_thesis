@@ -265,6 +265,8 @@ mean_diff_heatmap <- function(
             high = col_scale$positive_chg,
             midpoint = 0,
             limits = c(-limit, limit),
+            breaks = c(-limit, limit),
+            labels = function(x) formatC(x, format = "f", digits = 2),
             name = "Mean difference"
         ) +
         labs(
